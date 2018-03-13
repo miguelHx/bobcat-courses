@@ -1,0 +1,99 @@
+{
+  "Anthropology": {
+    "ANTH 001": { 
+      "info" : {
+        "CRN" : "30290",
+        "Course Number": "ANTH-001",
+        "Section Number": "01",
+        "Course Title": "Sociocultural Anthropology",
+        "Units": "4.0",
+        "Course Component": "LECT",
+        "Days": "MW",
+        "Start Time": "4:30pm",
+        "End Time": "5:45pm",
+        "Location": "COB2 110",
+        "Start Date": "AUG 22",
+        "End Date": "DEC 07",
+        "Instructor": "DeLugan",
+        "Max Enrl": "180",
+        "Act Enrl": "0",
+        "Seats Avail": "180",
+        "Semester": "Fall 2018"
+      },
+      "exam": {
+        "Course Component": "EXAM",
+        "Days": "F",
+        "Start Time": "3:00pm",
+        "End Time": "6:00pm",
+        "Location": "COB2 110",
+        "Date": "DEC 14"
+      },
+      "sections": {
+        "1": {
+          "LECT": [
+            {
+              "CRN": "30290",
+              "Course Number": "ANTH-001",
+              "Section Number": "01",
+              "Course Title": "Sociocultural Anthropology",
+              "Units": "4.0",
+              "Course Component": "LECT",
+              "Days": "MW",
+              "Start Time": "4:30pm",
+              "End Time": "5:45pm",
+              "Location": "COB2 110",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "DeLugan",
+              "Max Enrl": "180",
+              "Act Enrl": "0",
+              "Seats Avail": "180",
+              "Semester": "Fall 2018"
+            }
+          ],
+          
+          "DISC": [
+            {
+              "CRN": "30291",
+              "Course Number": "ANTH-001",
+              "Section Number": "02D",
+              "Course Title": "Sociocultural Anthropology",
+              "Units": "0.0",
+              "Course Component": "DISC",
+              "Days": "F",
+              "Start Time": "9:30am",
+              "End Time": "10:20am",
+              "Location": "CLSSRM 282",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "30",
+              "Act Enrl": "0",
+              "Seats Avail": "30",
+              "Semester": "Fall 2018"
+            },
+            {
+              "CRN": "30292",
+              "Course Number": "ANTH-001",
+              "Section Number": "03D",
+              "Course Title": "Sociocultural Anthropology",
+              "Units": "0.0",
+              "Course Component": "DISC",
+              "Days": "F",
+              "Start Time": "10:30am",
+              "End Time": "11:20am",
+              "Location": "CLSSRM 276",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "30",
+              "Act Enrl": "0",
+              "Seats Avail": "30",
+              "Semester": "Fall 2018"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

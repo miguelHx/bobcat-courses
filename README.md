@@ -1,2 +1,11 @@
-# Bobcat-Courses
-Open Source Course Planner for UC Merced students.
+# Bobcat Courses Front End
+
+## Getting Started
+Install dependencies
+```bash
+yarn install
+```
+To run the dev server, run this command:
+```bash
+yarn run dev-server
+```
