@@ -397,5 +397,279 @@
         }
       }
     }
+  },
+  "Bio Engin Small Scale Tech": {
+    "BEST 204": {
+      "info": {
+        "CRN" : "35624",
+        "Course Number": "BEST-204",
+        "Section Number": "01",
+        "Course Title": "Kinetics and Processing",
+        "Units": "4.0",
+        "Course Component": "LECT",
+        "Days": "TR",
+        "Start Time": "2:30pm",
+        "End Time": "3:20pm",
+        "Location": "CLSSRM 127",
+        "Start Date": "AUG 22",
+        "End Date": "DEC 07",
+        "Instructor": "Viney",
+        "Max Enrl": "24",
+        "Act Enrl": "0",
+        "Seats Avail": "24",
+        "Semester": "Fall 2018"
+      },
+      "exam": {
+        "Course Component": "EXAM",
+        "Days": "F",
+        "Start Time": "11:30am",
+        "End Time": "2:30pm",
+        "Location": "CLSSRM 127",
+        "Date": "DEC 14"
+      },
+      "sections": {
+        "1": {
+          "LECT": [
+            {
+              "CRN" : "35624",
+              "Course Number": "BEST-204",
+              "Section Number": "01",
+              "Course Title": "Kinetics and Processing",
+              "Units": "4.0",
+              "Course Component": "LECT",
+              "Days": "TR",
+              "Start Time": "2:30pm",
+              "End Time": "3:20pm",
+              "Location": "CLSSRM 127",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Viney",
+              "Max Enrl": "24",
+              "Act Enrl": "0",
+              "Seats Avail": "24",
+              "Semester": "Fall 2018"
+            }
+          ],
+          "DISC": [
+            {
+              "CRN" : "35625",
+              "Course Number": "BEST-204",
+              "Section Number": "02D",
+              "Course Title": "Kinetics and Processing",
+              "Units": "0.0",
+              "Course Component": "DISC",
+              "Days": "T",
+              "Start Time": "5:30pm",
+              "End Time": "7:20pm",
+              "Location": "COB2 267",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Viney",
+              "Max Enrl": "24",
+              "Act Enrl": "0",
+              "Seats Avail": "24",
+              "Semester": "Fall 2018"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Computer Science & Engineering": {
+    "CSE 005": {
+      "info": {
+        "CRN" : "30363",
+        "Course Number": "CSE-005",
+        "Section Number": "01",
+        "Course Title": "Intro Computer Applications",
+        "Units": "4.0",
+        "Course Component": "LECT",
+        "Days": "MW",
+        "Start Time": "2:30pm",
+        "End Time": "3:20pm",
+        "Location": "SSB 130",
+        "Start Date": "AUG 22",
+        "End Date": "DEC 07",
+        "Instructor": "Staff",
+        "Max Enrl": "75",
+        "Act Enrl": "0",
+        "Seats Avail": "75",
+        "Semester": "Fall 2018"
+      },
+      "exam": {
+        "Course Component": "EXAM",
+        "Days": "W",
+        "Start Time": "8:00am",
+        "End Time": "11:00am",
+        "Location": "SSB 130",
+        "Date": "DEC 12"
+      },
+      "sections": {
+        "1": {
+          "LECT": [
+            {
+              "CRN" : "30363",
+              "Course Number": "CSE-005",
+              "Section Number": "01",
+              "Course Title": "Intro Computer Applications",
+              "Units": "4.0",
+              "Course Component": "LECT",
+              "Days": "MW",
+              "Start Time": "2:30pm",
+              "End Time": "3:20pm",
+              "Location": "SSB 130",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "75",
+              "Act Enrl": "0",
+              "Seats Avail": "75",
+              "Semester": "Fall 2018"
+            }
+          ],
+          "LAB": [
+            {
+              "CRN" : "30364",
+              "Course Number": "CSE-005",
+              "Section Number": "02L",
+              "Course Title": "Intro Computer Applications",
+              "Units": "0.0",
+              "Course Component": "LAB",
+              "Days": "TR",
+              "Start Time": "7:30am",
+              "End Time": "10:20am",
+              "Location": "KOLLIG 208",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "25",
+              "Act Enrl": "0",
+              "Seats Avail": "25",
+              "Semester": "Fall 2018"
+            },
+            {
+              "CRN" : "30365",
+              "Course Number": "CSE-005",
+              "Section Number": "03L",
+              "Course Title": "Intro Computer Applications",
+              "Units": "0.0",
+              "Course Component": "LAB",
+              "Days": "TR",
+              "Start Time": "10:30am",
+              "End Time": "1:20pm",
+              "Location": "KOLLIG 208",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "25",
+              "Act Enrl": "0",
+              "Seats Avail": "25",
+              "Semester": "Fall 2018"
+            },
+            {
+              "CRN" : "30366",
+              "Course Number": "CSE-005",
+              "Section Number": "04L",
+              "Course Title": "Intro Computer Applications",
+              "Units": "0.0",
+              "Course Component": "LAB",
+              "Days": "WF",
+              "Start Time": "7:30am",
+              "End Time": "10:20am",
+              "Location": "KOLLIG 208",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "25",
+              "Act Enrl": "0",
+              "Seats Avail": "25",
+              "Semester": "Fall 2018"
+            }
+          ]
+        },
+        "2": {
+          "LECT": [
+            {
+              "CRN" : "36098",
+              "Course Number": "CSE-005",
+              "Section Number": "10",
+              "Course Title": "Intro Computer Applications",
+              "Units": "4.0",
+              "Course Component": "LECT",
+              "Days": "MW",
+              "Start Time": "9:30am",
+              "End Time": "10:20am",
+              "Location": "COB2 170",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "75",
+              "Act Enrl": "0",
+              "Seats Avail": "75",
+              "Semester": "Fall 2018"
+            }
+          ],
+          "LAB": [
+            {
+              "CRN" : "33366",
+              "Course Number": "CSE-005",
+              "Section Number": "11L",
+              "Course Title": "Intro Computer Applications",
+              "Units": "0.0",
+              "Course Component": "LAB",
+              "Days": "WF",
+              "Start Time": "10:30am",
+              "End Time": "1:20pm",
+              "Location": "KOLLIG 208",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "25",
+              "Act Enrl": "0",
+              "Seats Avail": "25",
+              "Semester": "Fall 2018"
+            },
+            {
+              "CRN" : "34505",
+              "Course Number": "CSE-005",
+              "Section Number": "12L",
+              "Course Title": "Intro Computer Applications",
+              "Units": "0.0",
+              "Course Component": "LAB",
+              "Days": "WF",
+              "Start Time": "1:30pm",
+              "End Time": "4:20pm",
+              "Location": "KOLLIG 208",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "25",
+              "Act Enrl": "0",
+              "Seats Avail": "25",
+              "Semester": "Fall 2018"
+            },
+            {
+              "CRN" : "34878",
+              "Course Number": "CSE-005",
+              "Section Number": "13L",
+              "Course Title": "Intro Computer Applications",
+              "Units": "0.0",
+              "Course Component": "LAB",
+              "Days": "TR",
+              "Start Time": "1:30pm",
+              "End Time": "4:20pm",
+              "Location": "CLSSRM 281",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "25",
+              "Act Enrl": "0",
+              "Seats Avail": "25",
+              "Semester": "Fall 2018"
+            }
+          ]
+        }
+      }
+    }
   }
 }
