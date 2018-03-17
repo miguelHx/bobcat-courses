@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import courseJSON from './../data/courses_sample_data.json'
+import './styles/styles.css';
 
 class Template extends React.Component {
   state = {
