@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import courseJSON from './../data/courses_sample_data.json';
+import Courses from './components/Courses';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
+
+// TODO
+// * make a AddOption component for error checking
+// * refactor to separate components
 
 class Template extends React.Component {
   state = {
@@ -10,6 +15,7 @@ class Template extends React.Component {
     selectedDepartment: '',
     selectedCourse: '',
     jsonData: '',
+    courses: [],
   }
 
   componentDidMount() {
@@ -86,13 +92,45 @@ class Template extends React.Component {
     );
   }
 
+  handleDeleteCourses = () => {
+    this.setState(() => ({ courses: [] }));
+  }
+
+  handleDeleteOneCourse = (course) => {
+    this.setState((prevState) => ({
+      courses: prevState.courses.filter((currCourse) => {
+        return currCourse !== course
+      })
+    }));
+  }
+
+  handleAddCourse = (e) => {
+    e.preventDefault();
+    const department = e.target.elements[0].value.trim();
+    const course = e.target.elements[1].value.trim();
+    //const option = e.target.elements.option.value.trim();
+    console.log(department);
+    console.log(course);
+
+    if (!course) {
+      return "Enter a valid value to add item.";
+    }
+    else if (this.state.courses.indexOf(course) > -1) {
+      return "This course already exists";
+    }
+
+    this.setState((prevState) => ({
+      courses: prevState.courses.concat(course)
+    }));
+  };
+
   render() {
     return (
       <div>
         <h1>Bobcat Courses</h1>
         <p>Selected Department: {this.state.selectedDepartment}</p>
         <p>Selected Course: {this.state.selectedCourse}</p>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleAddCourse}>
           <select name="dept-dropdown" onChange={this.handleDeptDropdown}>
             {
               this.loadDepartmentOptions()
@@ -105,9 +143,11 @@ class Template extends React.Component {
           </select>
           <input type="submit" value="Add Course" />
         </form>
-        <h2>My Courses</h2>
-        
-        <button>Generate Schedules</button>
+        <Courses
+          courses={this.state.courses}
+          handleDeleteCourses={this.handleDeleteCourses}
+          handleDeleteOneCourse={this.handleDeleteOneCourse}
+        />
       </div>
     );
   }
