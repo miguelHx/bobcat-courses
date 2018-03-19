@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import courseJSON from './../data/courses_sample_data.json'
+import courseJSON from './../data/courses_sample_data.json';
+import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
 class Template extends React.Component {
@@ -104,6 +105,9 @@ class Template extends React.Component {
           </select>
           <input type="submit" value="Add Course" />
         </form>
+        <h2>My Courses</h2>
+        
+        <button>Generate Schedules</button>
       </div>
     );
   }
