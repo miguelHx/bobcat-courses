@@ -13,11 +13,6 @@ const Courses = (props) => {
         </button>
       </div>
       {
-        props.courses.length === 0 &&
-        <p>Please add a course to get started.</p>
-      }
-      
-      {
         props.courses.map((course, index) => {
           return (
             <Course
