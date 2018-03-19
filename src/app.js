@@ -15,8 +15,8 @@ class Template extends React.Component {
     // default state values
     selectedDepartment: '',
     selectedCourse: '',
-    courses: [],
-  }
+    courses: [], // maybe store array of course objects in here? will be easier for algorithm
+  };
 
   componentDidMount() {
     //initialize data
@@ -24,6 +24,10 @@ class Template extends React.Component {
     window.jsonData = courseJSON;
     const departments = Object.keys(window.jsonData);
     const courses = Object.keys(window.jsonData[departments[0]]);
+
+    const courseData = window.jsonData[departments[0]][courses[0]];
+    console.log("Course data:");
+    console.log(courseData);
 
     //const jsonObj = JSON.parse(courseJSON);
     console.log("JSON file: ");
@@ -44,16 +48,16 @@ class Template extends React.Component {
     const dept = event.target.value;
     const course = Object.keys(window.jsonData[dept])[0];
     this.setState(() => ({ selectedDepartment: dept, selectedCourse: course}));
-  }
+  };
 
   handleCourseDropdown = (event) => {
     const course = event.target.value;
     this.setState(() => ({ selectedCourse: course }));
-  }
+  };
 
   handleDeleteCourses = () => {
     this.setState(() => ({ courses: [] }));
-  }
+  };
 
   handleDeleteOneCourse = (course) => {
     this.setState((prevState) => ({
@@ -61,7 +65,7 @@ class Template extends React.Component {
         return currCourse !== course
       })
     }));
-  }
+  };
 
   handleAddCourse = (course) => {
     console.log(course);
@@ -78,6 +82,13 @@ class Template extends React.Component {
     }));
   };
 
+  generateSchedules = () => {
+    console.log("Want to first check size of courses array.");
+    console.log("Take courses, use courses array to get information from JSON, run algorithm.");
+    console.log("Decide what data we want to use to run the algorithm.");
+    console.log("Store result of algo in some sort of data structure, to be used by the Calendar component");
+  };
+
   render() {
     return (
       <div>
@@ -90,11 +101,18 @@ class Template extends React.Component {
           handleCourseDropdown={this.handleCourseDropdown}
           selectedDepartment={this.state.selectedDepartment}
         />
+        {
+          this.state.courses.length === 0 &&
+          <p>Please add a course to get started.</p>
+        }
         <Courses
           courses={this.state.courses}
           handleDeleteCourses={this.handleDeleteCourses}
           handleDeleteOneCourse={this.handleDeleteOneCourse}
         />
+        <button onClick={this.generateSchedules}>
+          Generate Schedules
+        </button>
       </div>
     );
   }
