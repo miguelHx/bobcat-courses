@@ -1,4 +1,10 @@
 import React from 'react';
+import { Dropdown } from 'semantic-ui-react';
+
+
+const stateOptions = [{key: 'Al', value: 'AL', text: 'Alabama'}, {key: 'BA', value: 'BA', text: 'Bammington'}]
+
+
 
 export default class AddCourse extends React.Component {
   state = {
@@ -51,6 +57,8 @@ export default class AddCourse extends React.Component {
   render() {
     return (
       <div>
+        <Dropdown placeholder='state' search selection options={stateOptions} />
+        <br></br>
         <form onSubmit={this.handleAddCourse}>
           <select name="dept-dropdown" onChange={this.props.handleDeptDropdown}>
             {
