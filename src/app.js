@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CourseSelector from './components/CourseSelector';
 import CourseDetail from './components/CourseDetail';
+import CourseSelector from './components/CourseSelector';
+import Schedules from './components/Schedules';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
@@ -22,6 +23,8 @@ class AppRoot extends React.Component {
   render() {
     // only render course detail if a course is selected
     // only render calendar component if valid schedules has size > 0
+    // if generate schedules is ran, but there is a conflict, then
+    // notify user and reset state
     const selectedCourse = this.state.selectedCourse;
     const validSchedules = this.state.validSchedules;
     return (
@@ -30,7 +33,13 @@ class AppRoot extends React.Component {
         <h1>Bobcat Courses</h1>
         <CourseSelector />
         { selectedCourse && <CourseDetail /> }
-        {/* { validSchedules.length > 0 && <Calendars /> } */}
+        {
+          // don't render calendars unless both conditions inside () are true
+          // note: selectedCourse must get reset to undefined when running
+          // the algorithm
+          (validSchedules.length > 0 && selectedCourse === undefined)
+           && <Schedules />
+        }
         {/* footer component will go here */}
       </div>
     );
