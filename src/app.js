@@ -40,7 +40,6 @@ class AppRoot extends React.Component {
     console.log("printing out courses from Anthropology");
     console.log(courses);
 
-
     this.setState(() => ({ selectedDepartment: departments[0] }));
   }
 
@@ -51,6 +50,16 @@ class AppRoot extends React.Component {
   handleCourseDropdown = (course) => {
     this.setState(() => ({ selectedCourse: course }));
   };
+
+
+  generateSchedules = () => {
+    console.log("IN ROOT COMPONENT");
+    console.log("Want to first check size of courses array.");
+    console.log("Take courses, use courses array to get information from JSON, run algorithm.");
+    console.log("Decide what data we want to use to run the algorithm.");
+    console.log("Store result of algo in some sort of data structure, to be used by the Calendar component");
+  };
+
 
   render() {
     // only render course detail if a course is selected
@@ -70,6 +79,7 @@ class AppRoot extends React.Component {
           selectedDepartment={selectedDepartment}
           handleDeptDropdown={this.handleDeptDropdown}
           handleCourseDropdown={this.handleCourseDropdown}
+          generateSchedules={this.generateSchedules}
         />
         { selectedCourse && <CourseDetail /> }
         {

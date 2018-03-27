@@ -56,14 +56,6 @@ class CourseSelector extends React.Component {
     }));
   };
 
-  // move generate schedules into root directory
-  generateSchedules = () => {
-    console.log("Want to first check size of courses array.");
-    console.log("Take courses, use courses array to get information from JSON, run algorithm.");
-    console.log("Decide what data we want to use to run the algorithm.");
-    console.log("Store result of algo in some sort of data structure, to be used by the Calendar component");
-  };
-
   render() {
     return (
       <div>
@@ -82,7 +74,7 @@ class CourseSelector extends React.Component {
           handleDeleteCourses={this.handleDeleteCourses}
           handleDeleteOneCourse={this.handleDeleteOneCourse}
         />
-        <button onClick={this.generateSchedules}>
+        <button onClick={this.props.generateSchedules}>
           Generate Schedules
         </button>
       </div>
