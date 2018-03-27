@@ -90,7 +90,6 @@ class CourseSelector extends React.Component {
   render() {
     return (
       <div>
-        <h1>Bobcat Courses</h1>
         <p>Selected Department: {this.state.selectedDepartment}</p>
         <p>Selected Course: {this.state.selectedCourse}</p>
         <AddCourse
