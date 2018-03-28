@@ -40,17 +40,18 @@ class AppRoot extends React.Component {
     console.log("printing out courses from Anthropology");
     console.log(courses);
 
-    this.setState(() => ({ selectedDepartment: departments[0] }));
+    //this.setState(() => ({ selectedDepartment: departments[0] }));
   }
 
-  handleDeptDropdown = (dept) => {
+  updateSelectedDept = (dept) => {
     this.setState(() => ({ selectedDepartment: dept }));
   };
 
-  handleCourseDropdown = (course) => {
+  updateSelectedCourse = (course) => {
     this.setState(() => ({ selectedCourse: course }));
   };
 
+  // add two more functions to clearSelectedCourse and clearSelectedDept
 
   generateSchedules = () => {
     console.log("IN ROOT COMPONENT");
@@ -77,8 +78,8 @@ class AppRoot extends React.Component {
         <p>Selected Course (in root comp.): {this.state.selectedCourse}</p>
         <CourseSelector
           selectedDepartment={selectedDepartment}
-          handleDeptDropdown={this.handleDeptDropdown}
-          handleCourseDropdown={this.handleCourseDropdown}
+          updateSelectedDept={this.updateSelectedDept}
+          updateSelectedCourse={this.updateSelectedCourse}
           generateSchedules={this.generateSchedules}
         />
         { selectedCourse && <CourseDetail /> }
