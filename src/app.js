@@ -52,6 +52,13 @@ class AppRoot extends React.Component {
   };
 
   // add two more functions to clearSelectedCourse and clearSelectedDept
+  clearSelectedDept = () => {
+    this.setState(() => ({ selectedDepartment: undefined }));
+  }
+
+  clearSelectedCourse = () => {
+    this.setState(() => ({ selectedCourse: undefined }));
+  }
 
   generateSchedules = () => {
     console.log("IN ROOT COMPONENT");
@@ -80,6 +87,8 @@ class AppRoot extends React.Component {
           selectedDepartment={selectedDepartment}
           updateSelectedDept={this.updateSelectedDept}
           updateSelectedCourse={this.updateSelectedCourse}
+          clearSelectedDept={this.clearSelectedDept}
+          clearSelectedCourse={this.clearSelectedCourse}
           generateSchedules={this.generateSchedules}
         />
         { selectedCourse && <CourseDetail /> }
