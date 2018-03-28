@@ -1,10 +1,7 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 
-
 const stateOptions = [{key: 'Al', value: 'AL', text: 'Alabama'}, {key: 'BA', value: 'BA', text: 'Bammington'}]
-
-
 
 export default class AddCourse extends React.Component {
   state = {
@@ -14,14 +11,12 @@ export default class AddCourse extends React.Component {
   loadDepartmentOptions = () => {
     // don't map until window.jsonData is loaded.
     if (!window.jsonData) {
-      return (
-        <option>Loading...</option>
-      );
+      return [];
     }
     return (
       Object.keys(window.jsonData).map((dept) => {
         return (
-          <option key={dept} value={dept}>{dept}</option>
+          { key: dept, value: dept, text: dept }
         );
       })
     );
@@ -30,48 +25,50 @@ export default class AddCourse extends React.Component {
   loadCourseOptions = () => {
     // don't map until window jsonData is loaded OR department is selected
     if (!window.jsonData || !this.props.selectedDepartment) {
-      return (
-        <option>Loading...</option>
-      );
+      return [];
     }
     // update state to first option in department
     return (
       Object.keys(window.jsonData[`${this.props.selectedDepartment}`]).map((course) => {
         return (
-          <option key={course} value={course}>{course}</option>
+          { key: course, value: course, text: course }
         );
       })
     );
   };
 
-  handleAddCourse = (e) => {
-    e.preventDefault();
-
-    const course = e.target.elements[1].value.trim();
+  handleCourseDropdown = (event, data) => {
+    // whenever course dropdown changes, we want to also add course to list
+    const course = data.value;
     const error = this.props.handleAddCourse(course);
 
-    this.setState(() => ({ error }));
-
-  };
+    if (error) {
+      console.log("error", error);
+      this.setState(() => ({ error: error }));
+      return;
+    }
+    // update selected course in root app
+    this.props.handleCourseDropdown(course);
+  }
 
   render() {
     return (
       <div>
-        <Dropdown placeholder='state' search selection options={stateOptions} />
+        <Dropdown
+          placeholder='Department'
+          search
+          selection
+          options={this.loadDepartmentOptions()}
+          onChange={this.props.handleDeptDropdown}
+        />
+        <Dropdown
+          placeholder='Course'
+          search
+          selection
+          options={this.loadCourseOptions()}
+          onChange={this.handleCourseDropdown}
+        />
         <br></br>
-        <form onSubmit={this.handleAddCourse}>
-          <select name="dept-dropdown" onChange={this.props.handleDeptDropdown}>
-            {
-              this.loadDepartmentOptions()
-            }
-          </select>
-          <select name="course-dropdown" onChange={this.props.handleCourseDropdown}>
-            {
-              this.loadCourseOptions()
-            }
-          </select>
-          <input type="submit" value="Add Course" />
-        </form>
         {this.state.error && <p>{this.state.error}</p>}
       </div>
     );
