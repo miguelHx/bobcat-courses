@@ -91,7 +91,12 @@ class AppRoot extends React.Component {
           clearSelectedCourse={this.clearSelectedCourse}
           generateSchedules={this.generateSchedules}
         />
-        { selectedCourse && <CourseDetail /> }
+        {
+          selectedCourse &&
+          <CourseDetail
+            course={selectedCourse}
+          />
+        }
         {
           // don't render calendars unless both conditions inside () are true
           // note: selectedCourse must get reset to undefined when running
