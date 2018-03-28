@@ -1,9 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Table } from 'semantic-ui-react';
+import { Checkbox, Table } from 'semantic-ui-react';
+
+const sampleData = ['data1': 99, 'data2': 123, 'data3': 349832];
 
 class CourseDetail extends React.Component {
+
+  courseTableHeaderRow = () => {
+    return (
+      <Table.Row>
+        <Table.HeaderCell>header</Table.HeaderCell>
+      </Table.Row>
+    );
+  };
+
+  renderTableData = (data, index) => {
+    console.log('data': data);
+    console.log('index', index);
+    return (
+      <Table.Row>
+        <Table.Cell>{data}</Table.Cell>
+      </Table.Row>
+    );
+  };
+
+
   render() {
     const dept = this.props.department;
     const course = this.props.course;
@@ -17,7 +39,9 @@ class CourseDetail extends React.Component {
       <div>
         <h1>{`${courseInfo['Course Number']} - ${courseInfo['Course Title']}`}</h1>
         <h4>Choose which courses you want us to pick when creating your schedule :)</h4>
-        <Table striped>
+        <Table
+          color='yellow'
+          >
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell></Table.HeaderCell>
@@ -35,10 +59,9 @@ class CourseDetail extends React.Component {
           <Table.Body>
               {
                 courseSections['1']['DISC'].map((entry) => {
-                  console.log(entry);
                   return (
                     <Table.Row key={entry['Section Number']}>
-                      <Table.Cell>Checkbox</Table.Cell>
+                      <Table.Cell><Checkbox defaultChecked={true} /></Table.Cell>
                       <Table.Cell>{`${entry['Section Number']} ${entry['Course Component']}`}</Table.Cell>
                       <Table.Cell>{entry['CRN']}</Table.Cell>
                       <Table.Cell>{`${entry['Start Time']}-${entry['End Time']}`}</Table.Cell>
@@ -53,10 +76,16 @@ class CourseDetail extends React.Component {
               }
 
           </Table.Body>
-
-
+        </Table>
+        <br></br>
+        <Table
+          headerRow={this.courseTableHeaderRow()}
+          renderBodyRow={this.renderTableData} // this will map over tableData
+          tableData={sampleData}
+        >
         </Table>
         {/* Want to render a table here, maybe create a table component? */}
+        {console.log('table:')}
       </div>
     );
   }
