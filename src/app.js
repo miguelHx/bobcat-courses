@@ -94,6 +94,7 @@ class AppRoot extends React.Component {
         {
           selectedCourse &&
           <CourseDetail
+            department={selectedDepartment}
             course={selectedCourse}
           />
         }
