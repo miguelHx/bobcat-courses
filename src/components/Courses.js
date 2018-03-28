@@ -20,6 +20,7 @@ const Courses = (props) => {
               courseText={course}
               count={index + 1}
               handleDeleteOneCourse={props.handleDeleteOneCourse}
+              updateSelectedCourse={props.updateSelectedCourse}
             />
           );
         })

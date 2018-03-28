@@ -14,12 +14,14 @@ class CourseSelector extends React.Component {
 
   handleDeptDropdown = (event, data) => {
     // want to update selectedCourse state as well by calling handler from app root
+    console.log(data);
     const dept = data.value;
     this.props.updateSelectedDept(dept);
   };
 
   handleDeleteCourses = () => {
     this.setState(() => ({ courses: [] }));
+    this.props.clearSelectedCourse();
   };
 
   handleDeleteOneCourse = (course) => {
@@ -28,6 +30,7 @@ class CourseSelector extends React.Component {
         return currCourse !== course
       })
     }));
+    this.props.clearSelectedCourse();
   };
 
   handleAddCourse = (course) => {
@@ -51,7 +54,7 @@ class CourseSelector extends React.Component {
         <AddCourse
           handleAddCourse={this.handleAddCourse}
           handleDeptDropdown={this.handleDeptDropdown}
-          handleCourseDropdown={this.props.updateSelectedCourse}
+          updateSelectedCourse={this.props.updateSelectedCourse}
           selectedDepartment={this.props.selectedDepartment}
         />
         {
@@ -63,6 +66,7 @@ class CourseSelector extends React.Component {
           courses={this.state.courses}
           handleDeleteCourses={this.handleDeleteCourses}
           handleDeleteOneCourse={this.handleDeleteOneCourse}
+          updateSelectedCourse={this.props.updateSelectedCourse}
         />
         <button onClick={this.props.generateSchedules}>
           Generate Schedules
