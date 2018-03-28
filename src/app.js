@@ -4,7 +4,7 @@ import CourseDetail from './components/CourseDetail';
 import CourseSelector from './components/CourseSelector';
 import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
-import 'normalize.css/normalize.css';
+import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
 
 
