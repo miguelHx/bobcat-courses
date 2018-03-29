@@ -26,8 +26,8 @@ class CourseSelector extends React.Component {
 
   handleDeleteOneCourse = (course) => {
     this.setState((prevState) => ({
-      courses: prevState.courses.filter((currCourse) => {
-        return currCourse !== course
+      courses: prevState.courses.filter((currCourseObj) => {
+        return currCourseObj.name !== course
       })
     }));
 
