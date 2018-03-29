@@ -5,7 +5,7 @@ import Courses from './Courses';
 
 class CourseSelector extends React.Component {
   state = {
-    courses: [], // maybe store array of course objects in here? will be easier for algorithm
+    courses: [], // array of course objects { name: '...', department: '...' }
   };
 
   componentDidMount() {
@@ -37,15 +37,26 @@ class CourseSelector extends React.Component {
   };
 
   handleAddCourse = (course) => {
+    const courses = this.state.courses;
     if (!course) {
       return "Select a valid course to add.";
     }
-    else if (this.state.courses.indexOf(course) > -1) {
-      return "This course already exists";
+
+    // loop through array of objects, and check if course already exists
+    for (let i = 0; i < courses.length; i++) {
+      let currObject = courses[i];
+      if (currObject.name === course) {
+        return "This course already exists.";
+      }
     }
 
+    const courseObj = {
+      name: course,
+      department: this.props.selectedDepartment
+    };
+
     this.setState((prevState) => ({
-      courses: prevState.courses.concat(course)
+      courses: prevState.courses.concat(courseObj)
     }));
   };
 
@@ -68,6 +79,8 @@ class CourseSelector extends React.Component {
           handleDeleteCourses={this.handleDeleteCourses}
           handleDeleteOneCourse={this.handleDeleteOneCourse}
           updateSelectedCourse={this.props.updateSelectedCourse}
+          updateSelectedDept={this.props.updateSelectedDept}
+          selectedDepartment={this.props.selectedDepartment}
         />
         <button onClick={this.props.generateSchedules}>
           Generate Schedules

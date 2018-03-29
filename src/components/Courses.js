@@ -14,13 +14,16 @@ const Courses = (props) => {
       </div>
       {
         props.courses.map((course, index) => {
+          // course is now an object containing dept AND course text
           return (
             <Course
-              key={course}
-              courseText={course}
+              key={course.name}
+              courseText={course.name}
+              deptText={course.department}
               count={index + 1}
               handleDeleteOneCourse={props.handleDeleteOneCourse}
               updateSelectedCourse={props.updateSelectedCourse}
+              updateSelectedDept={props.updateSelectedDept}
             />
           );
         })

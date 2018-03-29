@@ -4,7 +4,10 @@ const Course = (props) => {
   return (
     <div>
       <p>{props.count}. {props.courseText}</p>
-      <button onClick={() => { props.updateSelectedCourse(props.courseText) }}>
+      <button onClick={() => {
+        props.updateSelectedDept(props.deptText);
+        props.updateSelectedCourse(props.courseText);
+      }}>
         (sections)
       </button>
       <button
