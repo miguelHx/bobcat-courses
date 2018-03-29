@@ -54,6 +54,7 @@ const SectionsTable = (props) => {
         tableData={props.sectionsList}
         collapsing={true}
         selectable={true}
+        color='blue'
       >
       </Table>
     </div>
