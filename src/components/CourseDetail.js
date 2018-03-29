@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { Checkbox, Table } from 'semantic-ui-react';
 
 const sampleData = ['data1': 99, 'data2': 123, 'data3': 349832];
@@ -16,10 +15,10 @@ class CourseDetail extends React.Component {
   };
 
   renderTableData = (data, index) => {
-    console.log('data': data);
-    console.log('index', index);
+    //console.log('data': data);
+    //console.log('index', index);
     return (
-      <Table.Row>
+      <Table.Row key={index}>
         <Table.Cell>{data}</Table.Cell>
       </Table.Row>
     );
@@ -32,13 +31,13 @@ class CourseDetail extends React.Component {
     const courseInfo = window.jsonData[dept][course]['info'];
     const courseSections = window.jsonData[dept][course]['sections'];
 
-    console.log("Dept and Course from persp. of CourseDetail:");
-    console.log(dept, course);
-    console.log("Course sections: ", courseSections);
+    //console.log("Dept and Course from persp. of CourseDetail:");
+    //console.log(dept, course);
+    //console.log("Course sections: ", courseSections);
     return (
       <div>
         <h1>{`${courseInfo['Course Number']} - ${courseInfo['Course Title']}`}</h1>
-        <h4>Choose which courses you want us to pick when creating your schedule :)</h4>
+        <h4>Choose which sections you want us to pick when creating your schedule :)</h4>
         <Table
           color='yellow'
           >
@@ -58,7 +57,7 @@ class CourseDetail extends React.Component {
 
           <Table.Body>
               {
-                courseSections['1']['DISC'].map((entry) => {
+                courseSections['1']['LECT'].map((entry) => {
                   return (
                     <Table.Row key={entry['Section Number']}>
                       <Table.Cell><Checkbox defaultChecked={true} /></Table.Cell>
