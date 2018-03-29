@@ -14,7 +14,6 @@ class CourseSelector extends React.Component {
 
   handleDeptDropdown = (event, data) => {
     // want to update selectedCourse state as well by calling handler from app root
-    console.log(data);
     const dept = data.value;
     this.props.updateSelectedDept(dept);
   };
@@ -30,12 +29,13 @@ class CourseSelector extends React.Component {
         return currCourse !== course
       })
     }));
-    this.props.clearSelectedCourse();
+
+    if (course === this.props.selectedCourse) {
+      this.props.clearSelectedCourse();
+    }
   };
 
   handleAddCourse = (course) => {
-    console.log(course);
-
     if (!course) {
       return "Select a valid course to add.";
     }

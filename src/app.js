@@ -85,6 +85,7 @@ class AppRoot extends React.Component {
         <p>Selected Course (in root comp.): {this.state.selectedCourse}</p>
         <CourseSelector
           selectedDepartment={selectedDepartment}
+          selectedCourse={selectedCourse}
           updateSelectedDept={this.updateSelectedDept}
           updateSelectedCourse={this.updateSelectedCourse}
           clearSelectedDept={this.clearSelectedDept}

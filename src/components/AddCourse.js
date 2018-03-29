@@ -39,12 +39,10 @@ export default class AddCourse extends React.Component {
 
   handleCourseDropdown = (event, data) => {
     // whenever course dropdown changes, we want to also add course to list
-    console.log(event);
     const course = data.value;
     const error = this.props.handleAddCourse(course);
 
     if (error) {
-      console.log("error", error);
       this.setState(() => ({ error: error }));
       return;
     }
