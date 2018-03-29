@@ -23,7 +23,6 @@ const renderHeaderRow = () => {
 const renderTableData = (data, index) => {
   // want number of rows to equal number of LECT sections + number of DISC sections + number of XXXX sections
   // so each element in data array must have each element inside each sections array
-  console.log("data: ", data);
   return (
     <Table.Row key={index}>
       <Table.Cell><Checkbox defaultChecked={true} /></Table.Cell>
@@ -48,13 +47,15 @@ const SectionsTable = (props) => {
   return (
     <div>
       <Table
+        striped
+        unstackable
         headerRow={renderHeaderRow()}
         renderBodyRow={renderTableData} // this will map over tableData
         tableData={props.sectionsList}
+        collapsing={true}
+        selectable={true}
       >
       </Table>
-      {/* Want to render a table here, maybe create a table component? */}
-      {console.log('table:')}
     </div>
   );
 };
