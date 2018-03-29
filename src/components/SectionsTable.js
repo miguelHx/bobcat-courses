@@ -2,21 +2,39 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Checkbox, Table } from 'semantic-ui-react';
 
-const sampleData = ['data1': 99, 'data2': 123, 'data3': 349832];
+const sampleData = [{'key': 99}, {'key': 123}, {'key': 349832}];
 
 const renderHeaderRow = () => {
   return (
     <Table.Row>
-      <Table.HeaderCell>sample header</Table.HeaderCell>
+      <Table.HeaderCell></Table.HeaderCell>
+      <Table.HeaderCell>Section</Table.HeaderCell>
+      <Table.HeaderCell>CRN</Table.HeaderCell>
+      <Table.HeaderCell>Time</Table.HeaderCell>
+      <Table.HeaderCell>Day(s)</Table.HeaderCell>
+      <Table.HeaderCell>Location</Table.HeaderCell>
+      <Table.HeaderCell>Instructor</Table.HeaderCell>
+      <Table.HeaderCell>Units</Table.HeaderCell>
+      <Table.HeaderCell>Enrolled</Table.HeaderCell>
     </Table.Row>
   );
 };
 
 const renderTableData = (data, index) => {
-  console.log(data);
+  // want number of rows to equal number of LECT sections + number of DISC sections + number of XXXX sections
+  // so each element in data array must have each element inside each sections array
+  console.log("data: ", data);
   return (
     <Table.Row key={index}>
-      <Table.Cell>{data}</Table.Cell>
+      <Table.Cell><Checkbox defaultChecked={true} /></Table.Cell>
+      <Table.Cell>{`${data['Section Number']} ${data['Course Component']}`}</Table.Cell>
+      <Table.Cell>{data['CRN']}</Table.Cell>
+      <Table.Cell>{`${data['Start Time']}-${data['End Time']}`}</Table.Cell>
+      <Table.Cell>{data['Days']}</Table.Cell>
+      <Table.Cell>{data['Location']}</Table.Cell>
+      <Table.Cell>{data['Instructor']}</Table.Cell>
+      <Table.Cell>{data['Units']}</Table.Cell>
+      <Table.Cell>{`${data['Act Enrl']}/${data['Max Enrl']}`}</Table.Cell>
     </Table.Row>
   );
 };
@@ -30,48 +48,9 @@ const SectionsTable = (props) => {
   return (
     <div>
       <Table
-        color='yellow'
-        >
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Section</Table.HeaderCell>
-            <Table.HeaderCell>CRN</Table.HeaderCell>
-            <Table.HeaderCell>Time</Table.HeaderCell>
-            <Table.HeaderCell>Day(s)</Table.HeaderCell>
-            <Table.HeaderCell>Location</Table.HeaderCell>
-            <Table.HeaderCell>Instructor</Table.HeaderCell>
-            <Table.HeaderCell>Units</Table.HeaderCell>
-            <Table.HeaderCell>Enrolled</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-            {
-              courseSections['1']['LECT'].map((entry) => {
-                return (
-                  <Table.Row key={entry['Section Number']}>
-                    <Table.Cell><Checkbox defaultChecked={true} /></Table.Cell>
-                    <Table.Cell>{`${entry['Section Number']} ${entry['Course Component']}`}</Table.Cell>
-                    <Table.Cell>{entry['CRN']}</Table.Cell>
-                    <Table.Cell>{`${entry['Start Time']}-${entry['End Time']}`}</Table.Cell>
-                    <Table.Cell>{entry['Days']}</Table.Cell>
-                    <Table.Cell>{entry['Location']}</Table.Cell>
-                    <Table.Cell>{entry['Instructor']}</Table.Cell>
-                    <Table.Cell>{entry['Units']}</Table.Cell>
-                    <Table.Cell>{`${entry['Act Enrl']}/${entry['Max Enrl']}`}</Table.Cell>
-                  </Table.Row>
-                );
-              })
-            }
-
-        </Table.Body>
-      </Table>
-      <br></br>
-      <Table
         headerRow={renderHeaderRow()}
         renderBodyRow={renderTableData} // this will map over tableData
-        tableData={sampleData}
+        tableData={props.sectionsList}
       >
       </Table>
       {/* Want to render a table here, maybe create a table component? */}
