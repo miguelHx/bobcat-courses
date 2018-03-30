@@ -22,6 +22,7 @@ const CourseDetail = (props) => {
         department={dept}
         course={course}
         sectionsList={sectionsList} // instead of passing in sectionsList, pass in state from root component
+        updateSectionCheckboxToggle={props.updateSectionCheckboxToggle}
       />
     </div>
   );

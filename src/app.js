@@ -14,12 +14,6 @@ class AppRoot extends React.Component {
     selectedDepartment: undefined,
     selectedCourse: undefined, // for course detail table
     selectedSections: {}, // for algorithm, must be in same format at table row
-    // {
-    //     'course title': [list of section objects for table] },
-    //      'course title2': [same as above] },
-    //      ...
-    // }
-    //
     validSchedules: [], // for calendars
   };
 
@@ -56,6 +50,19 @@ class AppRoot extends React.Component {
 
   updateSelectedCourse = (course) => {
     this.setState(() => ({ selectedCourse: course }));
+  };
+
+  updateSectionCheckboxToggle = (sectionNumber) => {
+    const course = this.state.selectedCourse;
+    let sections = this.state.selectedSections; // accessing array of course
+    for (let i = 0; i < sections[course].length; i++) {
+      if (sections[course][i]['Section Number'] === sectionNumber) {
+        let checked = sections[course][i]['isSelected'];
+        // toggle checked
+        sections[course][i]['isSelected'] = !checked;
+      }
+    }
+    this.setState(() => ({ selectedSections: sections }));
   };
 
   addCourseSections = (dept, course) => {
@@ -132,6 +139,7 @@ class AppRoot extends React.Component {
             department={selectedDepartment}
             course={selectedCourse}
             selectedSections={selectedSections}
+            updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
           />
         }
         {
