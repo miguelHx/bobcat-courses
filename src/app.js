@@ -4,6 +4,7 @@ import CourseDetail from './components/CourseDetail';
 import CourseSelector from './components/CourseSelector';
 import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
+import extractSections from './lib/ExtractSections';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
 
@@ -12,7 +13,13 @@ class AppRoot extends React.Component {
   state = {
     selectedDepartment: undefined,
     selectedCourse: undefined, // for course detail table
-    selectedSections: [], // for algorithm, must be in same format at table row
+    selectedSections: {}, // for algorithm, must be in same format at table row
+    // {
+    //     'course title': [list of section objects for table] },
+    //      'course title2': [same as above] },
+    //      ...
+    // }
+    //
     validSchedules: [], // for calendars
   };
 
@@ -51,14 +58,32 @@ class AppRoot extends React.Component {
     this.setState(() => ({ selectedCourse: course }));
   };
 
+  addCourseSections = (dept, course) => {
+    // going to update based on this components state.
+    const courseSections = window.jsonData[dept][course]['sections'];
+    // extract courses using function from lib
+    const initialData = extractSections(courseSections);
+    // updated object that we want to add to selectedSections
+    // update state by adding new key-value pair
+    this.setState((prevState) => {
+      let sectionsObj = prevState.selectedSections; // object
+      // update it
+      sectionsObj[course] = initialData;
+      // return obj with prev and new key-value pair.
+      return {
+        selectedSections: sectionsObj
+      }
+    });
+  };
+
   // add two more functions to clearSelectedCourse and clearSelectedDept
   clearSelectedDept = () => {
     this.setState(() => ({ selectedDepartment: undefined }));
-  }
+  };
 
   clearSelectedCourse = () => {
     this.setState(() => ({ selectedCourse: undefined }));
-  }
+  };
 
   generateSchedules = () => {
     console.log("IN ROOT COMPONENT");
@@ -77,6 +102,8 @@ class AppRoot extends React.Component {
     const selectedDepartment = this.state.selectedDepartment;
     const selectedCourse = this.state.selectedCourse;
     const validSchedules = this.state.validSchedules;
+    const selectedSections = this.state.selectedSections;
+    console.log(this.state);
     return (
       <div>
         {/* header component will replace h1 below */}
@@ -88,6 +115,7 @@ class AppRoot extends React.Component {
           selectedCourse={selectedCourse}
           updateSelectedDept={this.updateSelectedDept}
           updateSelectedCourse={this.updateSelectedCourse}
+          addCourseSections={this.addCourseSections}
           clearSelectedDept={this.clearSelectedDept}
           clearSelectedCourse={this.clearSelectedCourse}
           generateSchedules={this.generateSchedules}
@@ -97,6 +125,7 @@ class AppRoot extends React.Component {
           <CourseDetail
             department={selectedDepartment}
             course={selectedCourse}
+            selectedSections={selectedSections}
           />
         }
         {
