@@ -39,6 +39,7 @@ class CourseSelector extends React.Component {
 
   handleAddCourse = (course) => {
     const courses = this.state.courses;
+    const dept = this.props.selectedDepartment;
     if (!course) {
       return "Select a valid course to add.";
     }
@@ -53,12 +54,13 @@ class CourseSelector extends React.Component {
 
     const courseObj = {
       name: course,
-      department: this.props.selectedDepartment
+      department: dept
     };
 
     this.setState((prevState) => ({
       courses: prevState.courses.concat(courseObj)
     }));
+    this.props.addCourseSections(dept, course);
   };
 
   render() {
