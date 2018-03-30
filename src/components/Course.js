@@ -7,7 +7,7 @@ const Course = (props) => {
       <p>{props.count}. {props.courseText}</p>
       <Button
         size='mini'
-        color='blue'
+        compact
         onClick={() => {
           props.updateSelectedDept(props.deptText);
           props.updateSelectedCourse(props.courseText);
@@ -17,6 +17,7 @@ const Course = (props) => {
       </Button>
       <Button
         size='mini'
+        compact
         color='red'
         onClick={() => { props.handleDeleteOneCourse(props.courseText) }}
         >
