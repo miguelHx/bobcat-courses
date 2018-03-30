@@ -1,16 +1,15 @@
 import React from 'react';
 import Course from './Course';
+import { Button } from 'semantic-ui-react';
 
 const Courses = (props) => {
   return (
     <div>
       <div>
         <h3>My Courses</h3>
-        <button
-          onClick={props.handleDeleteCourses}
-        >
+        <Button negative size='medium' onClick={props.handleDeleteCourses}>
           Remove All
-        </button>
+        </Button>
       </div>
       {
         props.courses.map((course, index) => {
@@ -28,6 +27,8 @@ const Courses = (props) => {
           );
         })
       }
+      <br></br>
+      <br></br>
     </div>
   );
 };

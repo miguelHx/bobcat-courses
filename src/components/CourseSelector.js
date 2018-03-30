@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AddCourse from './AddCourse';
 import Courses from './Courses';
+import { Button } from 'semantic-ui-react';
 
 class CourseSelector extends React.Component {
   state = {
@@ -82,9 +83,9 @@ class CourseSelector extends React.Component {
           updateSelectedDept={this.props.updateSelectedDept}
           selectedDepartment={this.props.selectedDepartment}
         />
-        <button onClick={this.props.generateSchedules}>
+        <Button primary onClick={this.props.generateSchedules}>
           Generate Schedules
-        </button>
+        </Button>
       </div>
     );
   }

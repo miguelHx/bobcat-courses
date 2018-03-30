@@ -1,22 +1,27 @@
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 
 const Course = (props) => {
   return (
     <div>
       <p>{props.count}. {props.courseText}</p>
-      <button onClick={() => {
-        props.updateSelectedDept(props.deptText);
-        props.updateSelectedCourse(props.courseText);
-      }}>
-        (sections)
-      </button>
-      <button
-        onClick={(e) => {
-          props.handleDeleteOneCourse(props.courseText);
+      <Button
+        size='mini'
+        color='blue'
+        onClick={() => {
+          props.updateSelectedDept(props.deptText);
+          props.updateSelectedCourse(props.courseText);
         }}
-      >
-        remove
-      </button>
+        >
+        (Sections)
+      </Button>
+      <Button
+        size='mini'
+        color='red'
+        onClick={() => { props.handleDeleteOneCourse(props.courseText) }}
+        >
+        X
+      </Button>
     </div>
   );
 };
