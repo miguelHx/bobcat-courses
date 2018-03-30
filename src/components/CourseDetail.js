@@ -11,8 +11,8 @@ const CourseDetail = (props) => {
   const dept = props.department;
   const course = props.course;
   const courseInfo = window.jsonData[dept][course]['info'];
-  const courseSections = window.jsonData[dept][course]['sections'];
-  const sectionsList = extractSections(courseSections);
+  // sections list will contains sections of selected course from root state
+  const sectionsList = props.selectedSections[course];
   //console.log("output of extractSections: ", sectionsList);
   return (
     <div>
@@ -21,7 +21,7 @@ const CourseDetail = (props) => {
       <SectionsTable
         department={dept}
         course={course}
-        sectionsList={sectionsList}
+        sectionsList={sectionsList} // instead of passing in sectionsList, pass in state from root component
       />
     </div>
   );
