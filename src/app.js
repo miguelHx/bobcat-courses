@@ -70,11 +70,15 @@ class AppRoot extends React.Component {
     this.setState((prevState) => ({ selectedSections: sections }));
   };
 
-  // removeOneCourseSection = (course) => {
-  //   this.setState((prevState) => {
-  //
-  //   });
-  // };
+  deleteCourseFromSelectedSections = (course) => {
+    let selSections = this.state.selectedSections;
+    delete selSections[course];
+    this.setState(() => ({ selectedSections: selSections }));
+  };
+
+  deleteAllSelectedSections = () => {
+    this.setState(() => ({ selectedSections: {} }));
+  };
 
   // add two more functions to clearSelectedCourse and clearSelectedDept
   clearSelectedDept = () => {
@@ -118,6 +122,8 @@ class AppRoot extends React.Component {
           addCourseSections={this.addCourseSections}
           clearSelectedDept={this.clearSelectedDept}
           clearSelectedCourse={this.clearSelectedCourse}
+          deleteCourseFromSelectedSections={this.deleteCourseFromSelectedSections}
+          deleteAllSelectedSections={this.deleteAllSelectedSections}
           generateSchedules={this.generateSchedules}
         />
         {

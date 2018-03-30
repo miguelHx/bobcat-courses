@@ -23,6 +23,7 @@ class CourseSelector extends React.Component {
   handleDeleteCourses = () => {
     this.setState(() => ({ courses: [] }));
     this.props.clearSelectedCourse();
+    this.props.deleteAllSelectedSections();
   };
 
   handleDeleteOneCourse = (course) => {
@@ -35,6 +36,9 @@ class CourseSelector extends React.Component {
     if (course === this.props.selectedCourse) {
       this.props.clearSelectedCourse();
     }
+    // also update selectedSections in root
+    this.props.deleteCourseFromSelectedSections(course);
+
   };
 
   handleAddCourse = (course) => {
