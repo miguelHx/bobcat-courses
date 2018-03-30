@@ -25,7 +25,7 @@ const renderTableData = (data, index) => {
   // so each element in data array must have each element inside each sections array
   return (
     <Table.Row key={index}>
-      <Table.Cell><Checkbox defaultChecked={true} /></Table.Cell>
+      <Table.Cell><Checkbox checked={data['isSelected']} /></Table.Cell>
       <Table.Cell>{`${data['Section Number']} ${data['Course Component']}`}</Table.Cell>
       <Table.Cell>{data['CRN']}</Table.Cell>
       <Table.Cell>{`${data['Start Time']}-${data['End Time']}`}</Table.Cell>

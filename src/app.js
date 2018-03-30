@@ -12,7 +12,7 @@ class AppRoot extends React.Component {
   state = {
     selectedDepartment: undefined,
     selectedCourse: undefined, // for course detail table
-    selectedSections: [], // for algorithm
+    selectedSections: [], // for algorithm, must be in same format at table row
     validSchedules: [], // for calendars
   };
 
