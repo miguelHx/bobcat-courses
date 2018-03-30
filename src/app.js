@@ -59,22 +59,22 @@ class AppRoot extends React.Component {
   };
 
   addCourseSections = (dept, course) => {
+    let sections = this.state.selectedSections;
     // going to update based on this components state.
     const courseSections = window.jsonData[dept][course]['sections'];
     // extract courses using function from lib
     const initialData = extractSections(courseSections);
     // updated object that we want to add to selectedSections
+    sections[course] = initialData;
     // update state by adding new key-value pair
-    this.setState((prevState) => {
-      let sectionsObj = prevState.selectedSections; // object
-      // update it
-      sectionsObj[course] = initialData;
-      // return obj with prev and new key-value pair.
-      return {
-        selectedSections: sectionsObj
-      }
-    });
+    this.setState((prevState) => ({ selectedSections: sections }));
   };
+
+  // removeOneCourseSection = (course) => {
+  //   this.setState((prevState) => {
+  //
+  //   });
+  // };
 
   // add two more functions to clearSelectedCourse and clearSelectedDept
   clearSelectedDept = () => {
