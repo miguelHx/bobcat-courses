@@ -51,7 +51,7 @@
               "Semester": "Fall 2018"
             }
           ],
-          
+
           "DISC": [
             {
               "CRN": "30291",
@@ -665,6 +665,131 @@
               "Max Enrl": "25",
               "Act Enrl": "0",
               "Seats Avail": "25",
+              "Semester": "Fall 2018"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Writing": {
+    "WRI 001": {
+      "info": {
+        "CRN" : "30070",
+        "Course Number": "WRI-001",
+        "Section Number": "01",
+        "Course Title": "Academic Writing",
+        "Units": "4.0",
+        "Course Component": "DISC",
+        "Days": "MW",
+        "Start Time": "5:30pm",
+        "End Time": "7:20pm",
+        "Location": "CLSSRM 209",
+        "Start Date": "AUG 22",
+        "End Date": "DEC 07",
+        "Instructor": "Staff",
+        "Max Enrl": "20",
+        "Act Enrl": "0",
+        "Seats Avail": "20",
+        "Semester": "Fall 2018"
+      },
+      "exam": {
+        "Course Component": "EXAM",
+        "Days": "null",
+        "Start Time": "null",
+        "End Time": "null",
+        "Location": "null",
+        "Date": "null"
+      },
+      "sections": {
+        "1": {
+          "DISC": [
+            {
+              "CRN" : "30070",
+              "Course Number": "WRI-001",
+              "Section Number": "01",
+              "Course Title": "Academic Writing",
+              "Units": "4.0",
+              "Course Component": "DISC",
+              "Days": "MW",
+              "Start Time": "5:30pm",
+              "End Time": "7:20pm",
+              "Location": "CLSSRM 209",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "20",
+              "Act Enrl": "0",
+              "Seats Avail": "20",
+              "Semester": "Fall 2018"
+            }
+          ]
+        },
+        "2": {
+          "DISC": [
+            {
+              "CRN" : "30071",
+              "Course Number": "WRI-001",
+              "Section Number": "02",
+              "Course Title": "Academic Writing",
+              "Units": "4.0",
+              "Course Component": "DISC",
+              "Days": "TR",
+              "Start Time": "7:30am",
+              "End Time": "9:20am",
+              "Location": "CLSSRM 209",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "20",
+              "Act Enrl": "0",
+              "Seats Avail": "20",
+              "Semester": "Fall 2018"
+            }
+          ]
+        },
+        "3": {
+          "DISC": [
+            {
+              "CRN" : "30072",
+              "Course Number": "WRI-001",
+              "Section Number": "03",
+              "Course Title": "Academic Writing",
+              "Units": "4.0",
+              "Course Component": "DISC",
+              "Days": "MW",
+              "Start Time": "3:30pm",
+              "End Time": "5:20pm",
+              "Location": "COB2 262",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "20",
+              "Act Enrl": "0",
+              "Seats Avail": "20",
+              "Semester": "Fall 2018"
+            }
+          ]
+        },
+        "4": {
+          "DISC": [
+            {
+              "CRN" : "30073",
+              "Course Number": "WRI-001",
+              "Section Number": "04",
+              "Course Title": "Academic Writing",
+              "Units": "4.0",
+              "Course Component": "DISC",
+              "Days": "TR",
+              "Start Time": "11:30am",
+              "End Time": "1:20pm",
+              "Location": "CLSSRM 209",
+              "Start Date": "AUG 22",
+              "End Date": "DEC 07",
+              "Instructor": "Staff",
+              "Max Enrl": "20",
+              "Act Enrl": "0",
+              "Seats Avail": "20",
               "Semester": "Fall 2018"
             }
           ]

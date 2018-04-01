@@ -69,6 +69,7 @@ class AppRoot extends React.Component {
     let sections = this.state.selectedSections;
     // going to update based on this components state.
     const courseSections = window.jsonData[dept][course]['sections'];
+    console.log("sections:", courseSections);
     // extract courses using function from lib
     const initialData = extractSections(courseSections);
     // updated object that we want to add to selectedSections
@@ -97,6 +98,8 @@ class AppRoot extends React.Component {
   };
 
   generateSchedules = () => {
+    // Should we build the graph here???
+    // so the graph would be built here, and then used for the algorithm to find valid schedules.
     console.log("IN ROOT COMPONENT");
     console.log("Want to first check size of courses array.");
     console.log("Take courses, use courses array to get information from JSON, run algorithm.");
