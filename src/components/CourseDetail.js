@@ -12,7 +12,7 @@ const CourseDetail = (props) => {
   const course = props.course;
   const courseInfo = window.jsonData[dept][course]['info'];
   // sections list will contains sections of selected course from root state
-  const sectionsList = extractSections(props.selectedSections[course]);
+  const sectionsList = extractSections(props.sections[course]);
   //console.log("output of extractSections: ", sectionsList);
   return (
     <div>

@@ -17,7 +17,7 @@ class AppRoot extends React.Component {
   state = {
     selectedDepartment: undefined,
     selectedCourse: undefined, // for course detail table
-    selectedSections: {}, // for algorithm, must be in same format at table row
+    sections: {}, // for algorithm, must be in same format at table row
     validSchedules: [], // for calendars
   };
 
@@ -60,7 +60,7 @@ class AppRoot extends React.Component {
     // format changed, so need to update to reflect that.
     // if MAIN component was unchecked, then we want to uncheck the rest of the sections in that particular section
     const course = this.state.selectedCourse;
-    let sections = this.state.selectedSections; // accessing object with key as sections mapping to array
+    let sections = this.state.sections; // accessing object with key as sections mapping to array
     const sectionKeys = Object.keys(sections[course]);
 
     for (let i = 0; i < sectionKeys.length; i++) {
@@ -76,28 +76,28 @@ class AppRoot extends React.Component {
         }
       }
     }
-    this.setState(() => ({ selectedSections: sections }));
+    this.setState(() => ({ sections: sections }));
 
   };
 
   addCourseSections = (dept, course) => {
     const courseData = window.jsonData[dept][course];
-    let sections = this.state.selectedSections;
+    let sections = this.state.sections;
     // want to extract original sections AND initialize info about MAIN and connected components, etc.
     const initialSectionData = initialSectionsExtract(courseData);
     // update state by adding new key-value pair
     sections[course] = initialSectionData;
-    this.setState(() => ({ selectedSections: sections }));
+    this.setState(() => ({ sections: sections }));
   };
 
-  deleteCourseFromSelectedSections = (course) => {
-    let selSections = this.state.selectedSections;
+  deleteCourseFromSections = (course) => {
+    let selSections = this.state.sections;
     delete selSections[course];
-    this.setState(() => ({ selectedSections: selSections }));
+    this.setState(() => ({ sections: selSections }));
   };
 
-  deleteAllSelectedSections = () => {
-    this.setState(() => ({ selectedSections: {} }));
+  deleteAllSections = () => {
+    this.setState(() => ({ sections: {} }));
   };
 
   // add two more functions to clearSelectedCourse and clearSelectedDept
@@ -128,7 +128,7 @@ class AppRoot extends React.Component {
     const selectedDepartment = this.state.selectedDepartment;
     const selectedCourse = this.state.selectedCourse;
     const validSchedules = this.state.validSchedules;
-    const selectedSections = this.state.selectedSections;
+    const sections = this.state.sections;
     console.log(this.state);
     return (
       <div>
@@ -144,8 +144,8 @@ class AppRoot extends React.Component {
           addCourseSections={this.addCourseSections}
           clearSelectedDept={this.clearSelectedDept}
           clearSelectedCourse={this.clearSelectedCourse}
-          deleteCourseFromSelectedSections={this.deleteCourseFromSelectedSections}
-          deleteAllSelectedSections={this.deleteAllSelectedSections}
+          deleteCourseFromSections={this.deleteCourseFromSections}
+          deleteAllSections={this.deleteAllSections}
           generateSchedules={this.generateSchedules}
         />
         {
@@ -153,7 +153,7 @@ class AppRoot extends React.Component {
           <CourseDetail
             department={selectedDepartment}
             course={selectedCourse}
-            selectedSections={selectedSections}
+            sections={sections}
             updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
           />
         }
