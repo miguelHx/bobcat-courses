@@ -9,6 +9,50 @@ import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
 
 
+const initialSectionsExtract = (courseData) => {
+  console.log("Course Data: ", courseData);
+  let output = {};
+  // build new structure of selectedSections
+  // MAIN COMPONENT MUST BE FIRST INDEX OF SECTION # ARRAY
+  const mainSection = courseData['info']['Main Section']; // LECT, or SEM, or...
+  const linkedSections = courseData['info']['Linked Sections']; // ['DISC', 'LAB', etc.]
+  const sectionKeys = Object.keys(courseData['sections']);
+
+  for (let i = 0; i < sectionKeys.length; i++) {
+    let sectionIndex = sectionKeys[i];
+    output[sectionIndex] = [];
+    // get main component first, put in array
+    let mainSectionObj = courseData['sections'][sectionIndex][mainSection][0];
+    mainSectionObj["isSelected"] = true; // by default, everything is selected
+    mainSectionObj["isRowDisabled"] = false;
+    mainSectionObj["Linked Sections"] = linkedSections;
+    mainSectionObj["isMainComponent"] = true;
+
+    output[sectionIndex].push(mainSectionObj);
+
+    // now, want to push each linked component, the size of
+    // linkedSections will be AT MOST 2, for when we link DISC and LAB
+    let currSectionType = linkedSections[0];
+    let sectionsList = courseData['sections'][sectionIndex][currSectionType];
+    for (let k = 0; k < sectionsList.length; k++) {
+
+      // TODO
+      // take into account linked DISC with LAB
+      // could just be an if statement that organizes the array differently.
+      let currSectionObj = sectionsList[k];
+      // set up default properties
+      currSectionObj["isSelected"] = true;
+      currSectionObj["isRowDisabled"] = false;
+      currSectionObj["isMainComponent"] = false;
+      output[sectionIndex].push(currSectionObj);
+    }
+  }
+  return output;
+}
+
+
+
+
 class AppRoot extends React.Component {
   state = {
     selectedDepartment: undefined,
@@ -53,29 +97,37 @@ class AppRoot extends React.Component {
   };
 
   updateSectionCheckboxToggle = (sectionNumber) => {
+    // format changed, so need to update to reflect that.
+    // if MAIN component was unchecked, then we want to uncheck the rest of the sections in that particular section
     const course = this.state.selectedCourse;
-    let sections = this.state.selectedSections; // accessing array of course
-    for (let i = 0; i < sections[course].length; i++) {
-      if (sections[course][i]['Section Number'] === sectionNumber) {
-        let checked = sections[course][i]['isSelected'];
-        // toggle checked
-        sections[course][i]['isSelected'] = !checked;
+    let sections = this.state.selectedSections; // accessing object with key as sections mapping to array
+    const sectionKeys = Object.keys(sections[course]);
+
+    for (let i = 0; i < sectionKeys.length; i++) {
+      let sectionIndex = sectionKeys[i];
+      let sectionsList = sections[course][sectionIndex];
+      console.log("sections list: ", sectionsList);
+      for (let j = 0; j < sectionsList.length; j++) {
+        let currSection = sectionsList[j];
+        let checked = currSection['isSelected'];
+        if (currSection['Section Number'] === sectionNumber) {
+          // toggle checked
+          sections[course][sectionIndex][j]['isSelected'] = !checked;
+        }
       }
     }
     this.setState(() => ({ selectedSections: sections }));
+
   };
 
   addCourseSections = (dept, course) => {
+    const courseData = window.jsonData[dept][course];
     let sections = this.state.selectedSections;
-    // going to update based on this components state.
-    const courseSections = window.jsonData[dept][course]['sections'];
-    console.log("sections:", courseSections);
-    // extract courses using function from lib
-    const initialData = extractSections(courseSections);
-    // updated object that we want to add to selectedSections
-    sections[course] = initialData;
+    // want to extract original sections AND initialize info about MAIN and connected components, etc.
+    const initialSectionData = initialSectionsExtract(courseData);
     // update state by adding new key-value pair
-    this.setState((prevState) => ({ selectedSections: sections }));
+    sections[course] = initialSectionData;
+    this.setState(() => ({ selectedSections: sections }));
   };
 
   deleteCourseFromSelectedSections = (course) => {
