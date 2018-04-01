@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SectionsTable from './SectionsTable';
-import extractSections from '../lib/ExtractSections';
+import { extractSections } from '../lib/ExtractSections';
 
 // no state in this component, so it's gonna be a stateless functional component.
 
