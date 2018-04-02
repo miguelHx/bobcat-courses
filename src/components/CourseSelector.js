@@ -13,9 +13,8 @@ class CourseSelector extends React.Component {
 
   }
 
-  handleDeptDropdown = (event, data) => {
+  handleDeptDropdown = (dept) => {
     // want to update selectedCourse state as well by calling handler from app root
-    const dept = data.value;
     this.props.updateSelectedDept(dept);
     this.props.clearSelectedCourse();
   };

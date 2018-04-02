@@ -37,6 +37,16 @@ export default class AddCourse extends React.Component {
     );
   };
 
+  handleDeptDropdown = (event, data) => {
+    const error = this.state.error;
+    const dept = data.value;
+    this.props.handleDeptDropdown(dept);
+    // also remove error message if there is one.
+    if (error) {
+      this.setState(() => ({ error: undefined }));
+    }
+  }
+
   handleCourseDropdown = (event, data) => {
     // whenever course dropdown changes, we want to also add course to list
     const course = data.value;
@@ -46,6 +56,8 @@ export default class AddCourse extends React.Component {
       this.setState(() => ({ error: error }));
       return;
     }
+    // remove previous error (if there is one)
+    this.setState(() => ({ error: undefined }));
     // update selected course in root component
     this.props.updateSelectedCourse(course);
   }
@@ -59,7 +71,7 @@ export default class AddCourse extends React.Component {
           search
           selection
           options={this.loadDepartmentOptions()}
-          onChange={this.props.handleDeptDropdown}
+          onChange={this.handleDeptDropdown}
         />
         <Dropdown
           placeholder='Course'
