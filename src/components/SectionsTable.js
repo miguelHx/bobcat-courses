@@ -26,7 +26,7 @@ class SectionsTable extends React.Component {
     // want number of rows to equal number of LECT sections + number of DISC sections + number of XXXX sections
     // so each element in data array must have each element inside each sections array
     return (
-      <Table.Row key={index}>
+      <Table.Row key={index} disabled={data['isRowDisabled']}>
         <Table.Cell>
           <Checkbox
             // this is genius

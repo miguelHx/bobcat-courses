@@ -70,10 +70,30 @@ class AppRoot extends React.Component {
       for (let j = 0; j < sectionsList.length; j++) {
         let currSection = sectionsList[j];
         let checked = currSection['isSelected'];
-        if (currSection['Section Number'] === sectionNumber) {
+
+        if (currSection['Section Number'] !== sectionNumber) {
+          // go on to next iteration
+          continue;
+        }
+        if (!currSection['isMainComponent']) {
           // toggle checked
           sections[course][sectionIndex][j]['isSelected'] = !checked;
         }
+        else {
+          // otherwise, this section is a main component, then flip boolean of linked sections
+          // uncheck MAIN component and deselect as well as disable the other rows
+          sections[course][sectionIndex][j]['isSelected'] = !checked;
+          // deselect all other components and disable the rows
+          for (let k = j+1; k < sectionsList.length; k++) {
+            let rowDisabled = sectionsList[k]['isRowDisabled'];
+            let selected = sectionsList[k]['isSelected'];
+            sections[course][sectionIndex][k]['isRowDisabled'] = !rowDisabled;
+            sections[course][sectionIndex][k]['isSelected'] = !selected;
+          }
+          // done, no need to check other ones
+          break;
+        }
+
       }
     }
     this.setState(() => ({ sections: sections }));
