@@ -88,7 +88,11 @@ class CourseSelector extends React.Component {
           updateSelectedDept={this.props.updateSelectedDept}
           selectedDepartment={this.props.selectedDepartment}
         />
-        <Button primary onClick={this.props.generateSchedules}>
+        <Button
+          primary
+          onClick={this.props.generateSchedules}
+          disabled={this.state.courses.length === 0}
+        >
           Generate Schedules
         </Button>
       </div>
