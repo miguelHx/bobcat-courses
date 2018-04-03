@@ -5,6 +5,11 @@
   padding: $m-size 0;
 }
 
+.header__text__wrapper {
+  margin-left: $s-size;
+}
+
+
 // BEM block element modifier
 .header__title {
   font-size: $l-size;

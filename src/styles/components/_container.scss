@@ -1,5 +1,6 @@
 .container {
-  max-width: 37.5rem; // 600 px
+  display: flex;
+  max-width: 31.25rem; // 500 px
   margin: 0 auto;
   padding: 0 $m-size;
 }
