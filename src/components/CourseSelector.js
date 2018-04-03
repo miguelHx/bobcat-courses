@@ -76,11 +76,6 @@ class CourseSelector extends React.Component {
             updateSelectedCourse={this.props.updateSelectedCourse}
             selectedDepartment={this.props.selectedDepartment}
           />
-          {
-            this.state.courses.length === 0 &&
-            <p className="course-selector__message">Please add a course to get started.</p>
-          }
-          { this.state.error && <p>{this.state.error}</p> }
           <Courses
             courses={this.state.courses}
             handleDeleteCourses={this.handleDeleteCourses}
@@ -89,8 +84,11 @@ class CourseSelector extends React.Component {
             updateSelectedDept={this.props.updateSelectedDept}
             selectedDepartment={this.props.selectedDepartment}
           />
+          {
+            this.state.courses.length === 0 &&
+            <p className="course-selector__message">Please add a course to get started.</p>
+          }
         </div>
-
         <Button
           primary
           onClick={this.props.generateSchedules}

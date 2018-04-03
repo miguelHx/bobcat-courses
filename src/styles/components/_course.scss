@@ -1,0 +1,13 @@
+.course {
+  border-bottom: 2px solid lighten($light-blue, 10%);
+  display: flex;
+  justify-content: space-between;
+  padding: $l-size $m-size;
+}
+
+.course__text {
+  color: white;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin: 0;
+}

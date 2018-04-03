@@ -84,8 +84,7 @@ export default class AddCourse extends React.Component {
           options={this.loadCourseOptions()}
           onChange={this.handleCourseDropdown}
         />
-        <br></br>
-        {this.state.error && <p>{this.state.error}</p>}
+        {this.state.error && <p className="add-course-error">{this.state.error}</p>}
       </div>
     );
   }

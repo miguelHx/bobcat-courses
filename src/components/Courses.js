@@ -27,8 +27,6 @@ const Courses = (props) => {
           );
         })
       }
-      <br></br>
-      <br></br>
     </div>
   );
 };
