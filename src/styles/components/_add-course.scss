@@ -1,5 +1,14 @@
+.add-course__container {
+  margin-top: $s-size;
+  padding: $m-size $m-size 0 $m-size;
+}
+
+.add-course__header__title {
+  color: white;
+}
+
 .add-course-error {
   color: white;
   font-style: italic;
-  padding: 0 $m-size;
+  padding: $m-size;
 }

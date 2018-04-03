@@ -1,0 +1,12 @@
+.courses__header {
+  background-color: $blue;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $m-size;
+}
+
+.course-selector__header__title {
+  margin: 0;
+}

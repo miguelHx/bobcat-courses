@@ -88,14 +88,17 @@ class CourseSelector extends React.Component {
             this.state.courses.length === 0 &&
             <p className="course-selector__message">Please add a course to get started.</p>
           }
+          <div className="course-selector__gen-button-wrapper">
+            <Button
+              primary
+              onClick={this.props.generateSchedules}
+              disabled={this.state.courses.length === 0}
+            >
+              Generate Schedules
+            </Button>
+          </div>
+
         </div>
-        <Button
-          primary
-          onClick={this.props.generateSchedules}
-          disabled={this.state.courses.length === 0}
-        >
-          Generate Schedules
-        </Button>
       </div>
     );
   }

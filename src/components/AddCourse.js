@@ -64,10 +64,8 @@ export default class AddCourse extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="course-selector__header">
-          <h3 className="course-selector__header__title">Add a Course</h3>
-        </div>
+      <div className="add-course__container">
+        <h3 className="add-course__header__title">Add a Course</h3>
         <Dropdown
           placeholder='Department'
           selectOnNavigation={false}

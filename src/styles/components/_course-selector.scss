@@ -6,6 +6,7 @@
 .course-selector__courses {
   background: $light-blue;
   margin: 0 auto $xl-size auto;
+  border-radius: 15px;
 }
 
 .course-selector__message {
@@ -16,15 +17,8 @@
   text-align: center;
 }
 
-.course-selector__header {
-  background-color: $blue;
-  color: white;
+.course-selector__gen-button-wrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   padding: $m-size;
-}
-
-.course-selector__header__title {
-  margin: 0;
 }
