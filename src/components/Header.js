@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/bobcat-logo.png';
+import logo from '../../assets/images/bobcat-logo.png';
 
 const Header = (props) => {
   return (
