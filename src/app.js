@@ -2,16 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CourseDetail from './components/CourseDetail';
 import CourseSelector from './components/CourseSelector';
+import Header from './components/Header';
 import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
 import { initialSectionsExtract } from './lib/ExtractSections';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
-
-
-
-
-
 
 class AppRoot extends React.Component {
   state = {
@@ -152,8 +148,7 @@ class AppRoot extends React.Component {
     console.log(this.state);
     return (
       <div>
-        {/* header component will replace h1 below */}
-        <h1>Bobcat Courses</h1>
+        <Header />
         <p>Selected Department (in root comp.): {this.state.selectedDepartment}</p>
         <p>Selected Course (in root comp.): {this.state.selectedCourse}</p>
         <CourseSelector
