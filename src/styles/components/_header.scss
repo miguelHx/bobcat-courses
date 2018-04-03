@@ -5,6 +5,13 @@
   padding: $m-size 0;
 }
 
+.header__container {
+  display: flex;
+  max-width: 31.25rem; // 500 px
+  margin: 0 auto;
+  padding: 0 $m-size;
+}
+
 .header__text__wrapper {
   margin-left: $s-size;
 }

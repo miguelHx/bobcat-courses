@@ -68,26 +68,29 @@ class CourseSelector extends React.Component {
 
   render() {
     return (
-      <div>
-        <AddCourse
-          handleAddCourse={this.handleAddCourse}
-          handleDeptDropdown={this.handleDeptDropdown}
-          updateSelectedCourse={this.props.updateSelectedCourse}
-          selectedDepartment={this.props.selectedDepartment}
-        />
-        {
-          this.state.courses.length === 0 &&
-          <p>Please add a course to get started.</p>
-        }
-        { this.state.error && <p>{this.state.error}</p> }
-        <Courses
-          courses={this.state.courses}
-          handleDeleteCourses={this.handleDeleteCourses}
-          handleDeleteOneCourse={this.handleDeleteOneCourse}
-          updateSelectedCourse={this.props.updateSelectedCourse}
-          updateSelectedDept={this.props.updateSelectedDept}
-          selectedDepartment={this.props.selectedDepartment}
-        />
+      <div className="course-selector__container">
+        <div className="course-selector__courses">
+          <AddCourse
+            handleAddCourse={this.handleAddCourse}
+            handleDeptDropdown={this.handleDeptDropdown}
+            updateSelectedCourse={this.props.updateSelectedCourse}
+            selectedDepartment={this.props.selectedDepartment}
+          />
+          {
+            this.state.courses.length === 0 &&
+            <p className="course-selector__message">Please add a course to get started.</p>
+          }
+          { this.state.error && <p>{this.state.error}</p> }
+          <Courses
+            courses={this.state.courses}
+            handleDeleteCourses={this.handleDeleteCourses}
+            handleDeleteOneCourse={this.handleDeleteOneCourse}
+            updateSelectedCourse={this.props.updateSelectedCourse}
+            updateSelectedDept={this.props.updateSelectedDept}
+            selectedDepartment={this.props.selectedDepartment}
+          />
+        </div>
+
         <Button
           primary
           onClick={this.props.generateSchedules}

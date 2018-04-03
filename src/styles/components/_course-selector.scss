@@ -1,0 +1,31 @@
+.course-selector__container {
+  max-width: 50rem; // 500 px
+  margin: 0 auto;
+}
+
+
+.course-selector__courses {
+  background: $light-blue;
+  margin: 0 auto $xl-size auto;
+}
+
+.course-selector__message {
+  border-bottom: 1px solid lighten($light-blue, 10%);
+  color: $off-white;
+  margin: 0;
+  padding: $l-size;
+  text-align: center;
+}
+
+.course-selector__header {
+  background-color: $blue;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $m-size;
+}
+
+.course-selector__header__title {
+  margin: 0;
+}
