@@ -66,22 +66,25 @@ export default class AddCourse extends React.Component {
     return (
       <div className="add-course__container">
         <h3 className="add-course__header__title">Add a Course</h3>
-        <Dropdown
-          placeholder='Department'
-          selectOnNavigation={false}
-          search
-          selection
-          options={this.loadDepartmentOptions()}
-          onChange={this.handleDeptDropdown}
-        />
-        <Dropdown
-          placeholder='Course'
-          selectOnNavigation={false}
-          search
-          selection
-          options={this.loadCourseOptions()}
-          onChange={this.handleCourseDropdown}
-        />
+        <div className="add-course__dropdown-wrapper">
+          <Dropdown
+            placeholder='Department/Subject'
+            selectOnNavigation={false}
+            search
+            selection
+            options={this.loadDepartmentOptions()}
+            onChange={this.handleDeptDropdown}
+            id="add-course__dept-dropdown"
+          />
+          <Dropdown
+            placeholder='Course Number/Title'
+            selectOnNavigation={false}
+            search
+            selection
+            options={this.loadCourseOptions()}
+            onChange={this.handleCourseDropdown}
+          />
+        </div>
         {this.state.error && <p className="add-course-error">{this.state.error}</p>}
       </div>
     );

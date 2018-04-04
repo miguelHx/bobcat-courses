@@ -12,3 +12,15 @@
   font-style: italic;
   padding: $m-size;
 }
+
+.add-course__dropdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  padding: 0 $l-size;
+  font-size: $s-size;
+}
+
+#add-course__dept-dropdown {
+  margin-bottom: $s-size;
+}
