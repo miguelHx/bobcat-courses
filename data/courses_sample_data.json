@@ -1,5 +1,5 @@
 {
-  "Anthropology": {
+  "Anthropology (ANTH)": {
     "ANTH 001": {
       "info" : {
         "Course Number": "ANTH-001",
@@ -365,7 +365,7 @@
       }
     }
   },
-  "Bio Engin Small Scale Tech": {
+  "Bio Engin Small Scale Tech (BEST)": {
     "BEST 204": {
       "info": {
         "Course Number": "BEST-204",
@@ -431,7 +431,7 @@
       }
     }
   },
-  "Computer Science & Engineering": {
+  "Computer Science & Engineering (CSE)": {
     "CSE 005": {
       "info": {
         "Course Number": "CSE-005",
@@ -859,7 +859,7 @@
       }
     }
   },
-  "Writing": {
+  "Writing (WRI)": {
     "WRI 001": {
       "info": {
         "Course Number": "WRI-001",
