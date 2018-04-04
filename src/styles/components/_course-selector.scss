@@ -1,7 +1,10 @@
 .course-selector__container {
   max-width: 25rem; // 400px
   min-width: 18.75rem; // 300px
-  margin: 0 auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: $xl-size;
+  margin-right: auto;
 }
 
 .course-selector__courses {
