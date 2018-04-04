@@ -15,8 +15,8 @@ const CourseDetail = (props) => {
   const sectionsList = extractSections(props.sections[course]);
   //console.log("output of extractSections: ", sectionsList);
   return (
-    <div>
-      <h1>{`${courseInfo['Course Number']} - ${courseInfo['Course Title']}`}</h1>
+    <div className="course-detail__container">
+      <h3>{`${courseInfo['Course Number']} - ${courseInfo['Course Title']}`}</h3>
       <h4>Choose which sections you want us to pick when creating your schedule :)</h4>
       <SectionsTable
         department={dept}

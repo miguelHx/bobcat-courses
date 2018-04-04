@@ -133,6 +133,8 @@ class AppRoot extends React.Component {
     console.log("Take courses, use courses array to get information from JSON, run algorithm.");
     console.log("Decide what data we want to use to run the algorithm.");
     console.log("Store result of algo in some sort of data structure, to be used by the Calendar component");
+    this.clearSelectedCourse();
+    this.setState(() => ({ validSchedules: 'test' }));
   };
 
 
@@ -151,35 +153,38 @@ class AppRoot extends React.Component {
         <Header />
         <p>Selected Department (in root comp.): {this.state.selectedDepartment}</p>
         <p>Selected Course (in root comp.): {this.state.selectedCourse}</p>
-        <CourseSelector
-          selectedDepartment={selectedDepartment}
-          selectedCourse={selectedCourse}
-          updateSelectedDept={this.updateSelectedDept}
-          updateSelectedCourse={this.updateSelectedCourse}
-          addCourseSections={this.addCourseSections}
-          clearSelectedDept={this.clearSelectedDept}
-          clearSelectedCourse={this.clearSelectedCourse}
-          deleteCourseFromSections={this.deleteCourseFromSections}
-          deleteAllSections={this.deleteAllSections}
-          generateSchedules={this.generateSchedules}
-        />
-        {
-          selectedCourse &&
-          <CourseDetail
-            department={selectedDepartment}
-            course={selectedCourse}
-            sections={sections}
-            updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
+        <div className="main-container">
+          <CourseSelector
+            selectedDepartment={selectedDepartment}
+            selectedCourse={selectedCourse}
+            updateSelectedDept={this.updateSelectedDept}
+            updateSelectedCourse={this.updateSelectedCourse}
+            addCourseSections={this.addCourseSections}
+            clearSelectedDept={this.clearSelectedDept}
+            clearSelectedCourse={this.clearSelectedCourse}
+            deleteCourseFromSections={this.deleteCourseFromSections}
+            deleteAllSections={this.deleteAllSections}
+            generateSchedules={this.generateSchedules}
           />
-        }
-        {
-          // don't render calendars unless both conditions inside () are true
-          // note: selectedCourse must get reset to undefined when running
-          // the algorithm
-          (validSchedules.length > 0 && selectedCourse === undefined)
-           && <Schedules />
-        }
-        {/* footer component will go here */}
+          {
+            selectedCourse &&
+            <CourseDetail
+              department={selectedDepartment}
+              course={selectedCourse}
+              sections={sections}
+              updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
+            />
+          }
+          {
+            // don't render calendars unless both conditions inside () are true
+            // note: selectedCourse must get reset to undefined when running
+            // the algorithm
+            (validSchedules.length > 0 && selectedCourse === undefined)
+             && <Schedules />
+          }
+          {/* footer component will go here */}
+        </div>
+
       </div>
     );
   }
