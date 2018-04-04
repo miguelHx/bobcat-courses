@@ -151,8 +151,8 @@ class AppRoot extends React.Component {
     return (
       <div>
         <Header />
-        <p>Selected Department (in root comp.): {this.state.selectedDepartment}</p>
-        <p>Selected Course (in root comp.): {this.state.selectedCourse}</p>
+        {/* <p>Selected Department (in root comp.): {this.state.selectedDepartment}</p>
+        <p>Selected Course (in root comp.): {this.state.selectedCourse}</p> */}
         <div className="main-container">
           <CourseSelector
             selectedDepartment={selectedDepartment}
