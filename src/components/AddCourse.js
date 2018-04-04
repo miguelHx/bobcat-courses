@@ -10,11 +10,11 @@ export default class AddCourse extends React.Component {
 
   loadDepartmentOptions = () => {
     // don't map until window.jsonData is loaded.
-    if (!window.jsonData) {
+    if (!window.deptList) {
       return [];
     }
     return (
-      Object.keys(window.jsonData).map((dept) => {
+      window.deptList.map((dept) => {
         return (
           { key: dept, value: dept, text: dept }
         );

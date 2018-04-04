@@ -5,6 +5,7 @@ import CourseSelector from './components/CourseSelector';
 import Header from './components/Header';
 import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
+import deptJSON from './../data/departments_FA18.json';
 import { initialSectionsExtract } from './lib/ExtractSections';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
@@ -25,6 +26,7 @@ class AppRoot extends React.Component {
     window.jsonData = courseJSON;
     const departments = Object.keys(window.jsonData);
     const courses = Object.keys(window.jsonData[departments[0]]);
+    window.deptList = deptJSON;
 
     const courseData = window.jsonData[departments[0]][courses[0]];
     console.log("Course data:");
