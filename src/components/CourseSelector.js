@@ -4,6 +4,8 @@ import AddCourse from './AddCourse';
 import Courses from './Courses';
 import { Button } from 'semantic-ui-react';
 
+const MAX_NUM_COURSES = 7;
+
 class CourseSelector extends React.Component {
   state = {
     courses: [], // array of course objects { name: '...', department: '...' }
@@ -43,9 +45,6 @@ class CourseSelector extends React.Component {
   handleAddCourse = (course) => {
     const courses = this.state.courses;
     const dept = this.props.selectedDepartment;
-    if (!course) {
-      return "Select a valid course to add.";
-    }
 
     // loop through array of objects, and check if course already exists
     for (let i = 0; i < courses.length; i++) {
@@ -54,6 +53,16 @@ class CourseSelector extends React.Component {
         return "This course already exists.";
       }
     }
+
+    if (!course) {
+      return "Select a valid course to add.";
+    }
+
+    if (courses.length >= MAX_NUM_COURSES) {
+      return "Max amount of courses reached.";
+    }
+
+
 
     const courseObj = {
       name: course,
