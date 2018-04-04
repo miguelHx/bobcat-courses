@@ -17,7 +17,7 @@ const CourseDetail = (props) => {
   return (
     <div className="course-detail__container">
       <h3>{`${courseInfo['Course Number']} - ${courseInfo['Course Title']}`}</h3>
-      <h4>Choose which sections you want us to pick when creating your schedule :)</h4>
+      <p>Choose which sections you want us to pick when creating your schedule :)</p>
       <SectionsTable
         department={dept}
         course={course}
