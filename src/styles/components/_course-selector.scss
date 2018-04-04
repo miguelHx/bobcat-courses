@@ -1,5 +1,6 @@
 .course-selector__container {
-  max-width: 25rem; // 400 px
+  max-width: 25rem; // 400px
+  min-width: 18.75rem; // 300px
   margin: 0 auto;
 }
 
@@ -9,11 +10,6 @@
   border: none;
   border-radius: 6px;
   padding: $s-size;
-  transition: 0.3s;
-}
-
-.course-selector__courses:hover {
-  box-shadow: 0px 5px 20px #999;
 }
 
 .course-selector__message {

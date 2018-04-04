@@ -17,7 +17,7 @@ class SectionsTable extends React.Component {
         <Table.HeaderCell>Location</Table.HeaderCell>
         <Table.HeaderCell>Instructor</Table.HeaderCell>
         <Table.HeaderCell>Units</Table.HeaderCell>
-        <Table.HeaderCell>Enrolled</Table.HeaderCell>
+        {/* <Table.HeaderCell>Enrolled</Table.HeaderCell> */}
       </Table.Row>
     );
   };
@@ -42,7 +42,7 @@ class SectionsTable extends React.Component {
         <Table.Cell>{data['Location']}</Table.Cell>
         <Table.Cell>{data['Instructor']}</Table.Cell>
         <Table.Cell>{data['Units']}</Table.Cell>
-        <Table.Cell>{`${data['Act Enrl']}/${data['Max Enrl']}`}</Table.Cell>
+        {/* <Table.Cell>{`${data['Act Enrl']}/${data['Max Enrl']}`}</Table.Cell> */}
       </Table.Row>
     );
   };
@@ -67,6 +67,7 @@ class SectionsTable extends React.Component {
           collapsing={true}
           selectable={true}
           color='blue'
+          compact='very'
         >
         </Table>
       </div>
