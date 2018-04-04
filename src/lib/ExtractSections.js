@@ -19,6 +19,10 @@ const initialSectionsExtract = (courseData) => {
 
     output[sectionIndex].push(mainSectionObj);
 
+    if (linkedSections.length === 0) {
+      continue;
+    }
+
     // now, want to push each linked component, the size of
     // linkedSections will be AT MOST 2, for when we link DISC and LAB
     let currSectionType = linkedSections[0];
