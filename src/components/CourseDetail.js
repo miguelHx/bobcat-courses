@@ -10,14 +10,16 @@ const sampleData = ['data1': 99, 'data2': 123, 'data3': 349832];
 const CourseDetail = (props) => {
   const dept = props.department;
   const course = props.course;
-  const courseInfo = window.jsonData[dept][course]['info'];
+  const key = Object.keys(props.sections[course])[0];
+  console.log(key);
+  const courseInfo = props.sections
   // sections list will contains sections of selected course from root state
-  const sectionsList = extractSections(props.sections[course]);
+  const sectionsList = [];
   //console.log("output of extractSections: ", sectionsList);
   return (
     <div className="course-detail__container">
       <div className="course-detail__header-text">
-        <h3>{`${courseInfo['Course Number']} - ${courseInfo['Course Title']}`}</h3>
+        {/* <h3>{`${courseInfo['Course Number']} - ${courseInfo['Course Title']}`}</h3> */}
         <p>Choose which sections you want us to pick when creating your schedule :)</p>
       </div>
       <SectionsTable
