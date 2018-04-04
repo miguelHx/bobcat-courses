@@ -19,11 +19,9 @@ class AppRoot extends React.Component {
 
   componentWillMount() {
 
-    console.log("in the root app component, want to load JSON data here.");
-    console.log("this function will execute before render() is called.");
+    console.log("in the root app component, want to load DEPARTMENT data here.");
 
     //initialize data
-    console.log("comp. mounted.  Want to get json data and store either locally (for development) or through an AJAX request (production).");
     window.jsonData = courseJSON;
     const departments = Object.keys(window.jsonData);
     const courses = Object.keys(window.jsonData[departments[0]]);

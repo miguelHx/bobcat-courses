@@ -24,12 +24,12 @@ export default class AddCourse extends React.Component {
 
   loadCourseOptions = () => {
     // don't map until window jsonData is loaded OR department is selected
-    if (!window.jsonData || !this.props.selectedDepartment) {
+    if (!this.props.selectedDepartment) {
       return [];
     }
     // update state to first option in department
     return (
-      Object.keys(window.jsonData[`${this.props.selectedDepartment}`]).map((course) => {
+      this.props.courseDropdownList.map((course) => {
         return (
           { key: course, value: course, text: course }
         );

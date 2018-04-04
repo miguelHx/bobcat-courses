@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 import AddCourse from './AddCourse';
 import Courses from './Courses';
 import { Button } from 'semantic-ui-react';
+import axios from 'axios';
 
 const MAX_NUM_COURSES = 7;
+const BASE_URL = `https://cse120-course-planner.herokuapp.com/api/courses-list/`;
+
 
 class CourseSelector extends React.Component {
   state = {
     courses: [], // array of course objects { name: '...', department: '...' }
+    courseDropdownList: []
   };
 
   componentDidMount() {
@@ -19,6 +23,29 @@ class CourseSelector extends React.Component {
     // want to update selectedCourse state as well by calling handler from app root
     this.props.updateSelectedDept(dept);
     this.props.clearSelectedCourse();
+
+    // just fetching list of courses here from backend rest api based on chosen department
+    const deptEncoded = encodeURIComponent(dept);
+    let params = `subject=${deptEncoded}&term=201830`;
+    axios.get(`${BASE_URL}?${params}`)
+      .then(res => {
+        //console.log(res);
+        const data = res.data['results'];
+        let list = [];
+        for (let i = 0; i < data.length; i++) {
+          let course = data[i];
+          if (course['lecture'] !== null) {
+            continue;
+          }
+          if (list.indexOf(course['simple_name']) === -1) {
+            // if not already in list, add to list
+            list.push(course['simple_name']);
+          }
+        }
+        this.setState(() => ({ courseDropdownList: list }));
+      });
+
+
   };
 
   handleDeleteCourses = () => {
@@ -84,6 +111,7 @@ class CourseSelector extends React.Component {
             handleDeptDropdown={this.handleDeptDropdown}
             updateSelectedCourse={this.props.updateSelectedCourse}
             selectedDepartment={this.props.selectedDepartment}
+            courseDropdownList={this.state.courseDropdownList}
           />
           <Courses
             courses={this.state.courses}
