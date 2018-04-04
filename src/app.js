@@ -175,12 +175,19 @@ class AppRoot extends React.Component {
               updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
             />
           }
-          {
-            // don't render calendars unless both conditions inside () are true
-            // note: selectedCourse must get reset to undefined when running
-            // the algorithm
-            (validSchedules.length > 0 && selectedCourse === undefined)
-             && <Schedules />
+          { selectedCourse === undefined &&
+            <div className="app-root__schedules-title-wrapper">
+              <h3>Schedules</h3>
+              {
+                // don't render calendars unless both conditions inside () are true
+                // note: selectedCourse must get reset to undefined when running
+                // the algorithm
+                 (validSchedules.length > 0 && selectedCourse === undefined) &&
+                <Schedules
+                  validSchedules={validSchedules}
+                />
+              }
+            </div>
           }
           {/* footer component will go here */}
         </div>
