@@ -4,13 +4,19 @@
 }
 
 .course-selector__courses {
-  background: $light-blue;
+  background-color: white;
   margin: 0 auto $xl-size auto;
-  border-radius: 15px;
+  border: none;
+  border-radius: 6px;
+  padding: $s-size;
+  transition: 0.3s;
+}
+
+.course-selector__courses:hover {
+  box-shadow: 0px 5px 20px #999;
 }
 
 .course-selector__message {
-  border-bottom: 1px solid lighten($light-blue, 10%);
   color: $off-white;
   margin: 0;
   padding: $l-size;

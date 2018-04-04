@@ -1,14 +1,13 @@
 .add-course__container {
-  margin-top: $s-size;
   padding: $m-size $m-size 0 $m-size;
 }
 
 .add-course__header__title {
-  color: white;
+  color: black;
 }
 
 .add-course-error {
-  color: white;
+  color: red;
   font-style: italic;
   padding: $m-size;
 }
