@@ -15,6 +15,19 @@ import './styles/styles.scss';
 // data is fetched AND selectedCourse is there.
 const BASE_URL = `https://cse120-course-planner.herokuapp.com/api/courses/course-match/`;
 
+
+// comparator used for sorting array of objects
+const compareSections = (me, other) => {
+  let mySectNum = me['course_id'].split('-')[2];
+  let otherSectNum = other['course_id'].split('-')[2];
+  if (mySectNum < otherSectNum)
+    return -1;
+  if (mySectNum > otherSectNum)
+    return 1;
+  return 0;
+}
+
+
 class AppRoot extends React.Component {
   state = {
     selectedDepartment: undefined,
@@ -79,7 +92,6 @@ class AppRoot extends React.Component {
 
   };
 
-
   indexOfLecture = (courseData) => {
     for(let k = 0; k < courseData.length; k++) {
       if(courseData[k].type === 'LECT') {
@@ -96,11 +108,12 @@ class AppRoot extends React.Component {
     //   "2": [LECT, LAB, etc.]
     // }
     console.log("want to parse this data: ", courseData);
+    // first, sort the course data
+    courseData.sort(compareSections);
+
     let output = {};
 
-
     let lectIndex = this.indexOfLecture(courseData);
-
     if (lectIndex === -1) {
       // no lectures, must be standalone course.
       for (let k = 0; k < courseData.length; k++) {
@@ -109,6 +122,7 @@ class AppRoot extends React.Component {
         output[courseData[k]['crn']] = [];
         output[courseData[k]['crn']].push(courseData[k]);
       }
+      // sort the list here
       return output;
     }
 
