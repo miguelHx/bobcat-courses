@@ -19,6 +19,17 @@ class CourseDetail extends React.Component {
     course: '',
   }
 
+  indexOfLecture = (courseData) => {
+    for(let k = 0; k < courseData.length; k++) {
+      if(courseData[k].type === 'LECT') {
+        return k;
+      }
+    }
+    return -1;
+  };
+
+
+
   postRequestDataExtractor = (courseData) => {
     // return an object of sections like so: (NOTE: MAIN COMPONENT MUST GO FIRST)
     // {
@@ -27,6 +38,20 @@ class CourseDetail extends React.Component {
     // }
     console.log("want to parse this data: ", courseData);
     let output = {};
+
+
+    let lectIndex = this.indexOfLecture(courseData);
+
+    if (lectIndex === -1) {
+      // no lectures, must be standalone course.
+      for (let k = 0; k < courseData.length; k++) {
+        output[courseData[k]['crn']] = [];
+        output[courseData[k]['crn']].push(courseData[k]);
+      }
+      return output;
+    }
+
+
     // first, initalize main components
     for (let i = 0; i < courseData.length; i++) {
       console.log("lecture crn: ", courseData[i]['lecture_crn']);

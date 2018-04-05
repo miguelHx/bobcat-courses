@@ -34,9 +34,6 @@ class CourseSelector extends React.Component {
         let list = [];
         for (let i = 0; i < data.length; i++) {
           let course = data[i];
-          if (course['lecture'] !== null) {
-            continue;
-          }
           if (list.indexOf(course['simple_name']) === -1) {
             // if not already in list, add to list
             list.push(course['simple_name']);
