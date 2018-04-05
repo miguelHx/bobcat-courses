@@ -50,11 +50,6 @@ class CourseDetail extends React.Component {
   fetchCourseData = (course) => {
     let sections = this.state.sectionsOneCourse;
 
-    const request = {
-      course_list: [course],
-      term: "201830" // fall semester
-    };
-
     let data = JSON.stringify({
         course_list: [course],
         term: "201830"

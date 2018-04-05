@@ -29,7 +29,7 @@ class CourseSelector extends React.Component {
     let params = `subject=${deptEncoded}&term=201830`;
     axios.get(`${BASE_URL}?${params}`)
       .then(res => {
-        //console.log(res);
+        console.log("dept results: ", res.data['results']);
         const data = res.data['results'];
         let list = [];
         for (let i = 0; i < data.length; i++) {
