@@ -7,11 +7,8 @@ import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
 import deptJSON from './../data/departments_FA18.json';
 import { initialSectionsExtract } from './lib/ExtractSections';
-import axios from 'axios';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
-
-const BASE_URL = `https://cse120-course-planner.herokuapp.com/api/courses/course-match/`;
 
 class AppRoot extends React.Component {
   state = {
@@ -99,34 +96,6 @@ class AppRoot extends React.Component {
 
   };
 
-  postRequestDataExtractor = (courseData) => {
-    // return an object of sections like so: (NOTE: MAIN COMPONENT MUST GO FIRST)
-    // {
-    //   "1": [LECT, LAB, etc.],
-    //   "2": [LECT, LAB, etc.]
-    // }
-    console.log("want to parse this data: ", courseData);
-    let output = {};
-    // first, initalize main components
-    for (let i = 0; i < courseData.length; i++) {
-      console.log("lecture crn: ", courseData[i]['lecture_crn']);
-      if (courseData[i]['lecture_crn'] === null) {
-        // initalize section array
-        output[courseData[i]['crn']] = [];
-        output[courseData[i]['crn']].push(courseData[i]);
-      }
-    }
-
-    // loop again, this time, add disc/lab to proper lecture crn
-    for (let j = 0; j < courseData.length; j++) {
-      if (courseData[j]['lecture_crn'] !== null) {
-        output[[courseData[j]['lecture_crn']]].push(courseData[j]);
-      }
-    }
-    console.log("output after initialization: ", output);
-    return output;
-  }
-
   addCourseSections = (dept, course) => {
     //const courseData = window.jsonData[dept][course];
     /*
@@ -141,35 +110,7 @@ class AppRoot extends React.Component {
       }
     }
     */
-    let sections = this.state.sections;
-
-    const request = {
-      course_list: [course],
-      term: "201830" // fall semester
-    };
-
-    const client = axios.create({
-      auth: {
-        username: "admin",  //This could be your email
-        password: "course-planner"
-      },
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    client.post(BASE_URL, request)
-      .then(res => {
-        const data = res.data[course];
-        console.log("(POST) inside add course sections: ", data);
-        let sectionsObj = this.postRequestDataExtractor(data);
-        sections[course] = sectionsObj;
-        console.log("SECTIONS: ", sections);
-        this.setState(() => ({ sections: sections }));
-      })
-      .catch(error => {
-        console.log("error: ", error);
-      });
+    this.setState(() => ({ selectedCourse: course }));
     //this.setState(() => ({ sections: sections }));
   };
 
@@ -215,7 +156,7 @@ class AppRoot extends React.Component {
     const validSchedules = this.state.validSchedules;
     const sections = this.state.sections;
     const sectionKeys = Object.keys(sections);
-    console.log("KEYS: ", sectionKeys);
+    //console.log("KEYS: ", sectionKeys);
     console.log("STATE: ", this.state);
     return (
       <div>
@@ -236,11 +177,10 @@ class AppRoot extends React.Component {
             generateSchedules={this.generateSchedules}
           />
           {
-            ((Object.keys(this.state.sections).length !== 0) && selectedCourse) &&
+            (selectedCourse) &&
             <CourseDetail
               department={selectedDepartment}
               course={selectedCourse}
-              sections={sections}
               updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
             />
           }

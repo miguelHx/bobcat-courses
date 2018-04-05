@@ -25,23 +25,24 @@ class SectionsTable extends React.Component {
   renderTableData = (data, index) => {
     // want number of rows to equal number of LECT sections + number of DISC sections + number of XXXX sections
     // so each element in data array must have each element inside each sections array
+    const courseSectionNumber = data['course_id'].split('-')[2]; // ANTH-001-01 -> 01
     return (
       <Table.Row key={index} disabled={data['isRowDisabled']}>
         <Table.Cell>
           <Checkbox
-            // this is genius
-            id={data['Section Number']}
-            checked={data['isSelected']}
+            id={courseSectionNumber}
+            // checked={data['isSelected']}
+            checked={true}
             onChange={this.handleCheckboxChange}
           />
         </Table.Cell>
-        <Table.Cell>{`${data['Section Number']} ${data['Course Component']}`}</Table.Cell>
-        <Table.Cell>{data['CRN']}</Table.Cell>
-        <Table.Cell>{`${data['Start Time']}-${data['End Time']}`}</Table.Cell>
-        <Table.Cell>{data['Days']}</Table.Cell>
-        <Table.Cell>{data['Location']}</Table.Cell>
-        <Table.Cell>{data['Instructor']}</Table.Cell>
-        <Table.Cell>{data['Units']}</Table.Cell>
+        <Table.Cell>{`${courseSectionNumber} ${data['type']}`}</Table.Cell>
+        <Table.Cell>{data['crn']}</Table.Cell>
+        <Table.Cell>{data['hours']}</Table.Cell>
+        <Table.Cell>{data['days']}</Table.Cell>
+        <Table.Cell>{data['room']}</Table.Cell>
+        <Table.Cell>{data['instructor']}</Table.Cell>
+        <Table.Cell>{data['units']}</Table.Cell>
         {/* <Table.Cell>{`${data['Act Enrl']}/${data['Max Enrl']}`}</Table.Cell> */}
       </Table.Row>
     );
