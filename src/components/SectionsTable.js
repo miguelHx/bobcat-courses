@@ -31,8 +31,7 @@ class SectionsTable extends React.Component {
         <Table.Cell>
           <Checkbox
             id={courseSectionNumber}
-            // checked={data['isSelected']}
-            checked={true}
+            checked={data['isSelected']}
             onChange={this.handleCheckboxChange}
           />
         </Table.Cell>
