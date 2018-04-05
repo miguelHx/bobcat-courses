@@ -11,7 +11,7 @@ const BASE_URL = `https://cse120-course-planner.herokuapp.com/api/courses/course
 class CourseDetail extends React.Component {
 
   componentWillMount() {
-    
+
   }
 
   state = {
@@ -99,7 +99,7 @@ class CourseDetail extends React.Component {
 
     if (!this.state.sectionsOneCourse || this.state.course !== this.props.course) {
       this.fetchCourseData(this.props.course);
-      return <div className="course-detail__container"></div>;
+      return <div className="course-detail__container">Loading...</div>;
     }
     const keys = Object.keys(this.state.sectionsOneCourse);
     const tempList = this.state.sectionsOneCourse[keys[0]];
@@ -109,7 +109,7 @@ class CourseDetail extends React.Component {
       <div className="course-detail__container">
         <div className="course-detail__header-text">
           <h3>{`${courseInfo['simple_name']} - ${courseInfo['course_name']}`}</h3>
-          <p>Choose which sections you want us to pick when creating your schedule :)</p>
+          <p>Choose which sections you want us to pick when creating your schedule.</p>
         </div>
         <SectionsTable
           course={this.props.course}

@@ -123,7 +123,7 @@ class CourseSelector extends React.Component {
           />
           {
             this.state.courses.length === 0 &&
-            <p className="course-selector__message">Please add a course to get started.</p>
+            <p className="course-selector__message">Add a course to get started :)</p>
           }
           <div className="course-selector__gen-button-wrapper">
             <Button

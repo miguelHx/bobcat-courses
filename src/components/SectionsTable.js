@@ -60,15 +60,14 @@ class SectionsTable extends React.Component {
     return (
       <div>
         <Table
-          striped
-          unstackable
           headerRow={this.renderHeaderRow()}
           renderBodyRow={this.renderTableData} // this will map over tableData
           tableData={this.props.sectionsList}
           collapsing={true}
           selectable={true}
-          color='blue'
           compact='very'
+          padded={true}
+          color='blue'
         >
         </Table>
       </div>
