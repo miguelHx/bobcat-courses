@@ -59,6 +59,7 @@ export default class AddCourse extends React.Component {
     // remove previous error (if there is one)
     this.setState(() => ({ error: undefined }));
     // update selected course in root component
+    // * addCourseSections will update selected course so might not even need the next line
     this.props.updateSelectedCourse(course);
   }
 

@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react';
 const Course = (props) => {
   return (
     <div className="course">
-      <p className="course__text">{props.count}. {props.courseText}</p>
+      <p className="course__text">{props.courseText}</p>
       <div>
         <Button
           size='mini'
@@ -25,7 +25,6 @@ const Course = (props) => {
           X
         </Button>
       </div>
-
     </div>
   );
 };

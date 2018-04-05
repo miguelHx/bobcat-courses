@@ -45,12 +45,6 @@ class CourseSelector extends React.Component {
 
   };
 
-  handleDeleteCourses = () => {
-    this.setState(() => ({ courses: [] }));
-    this.props.clearSelectedCourse();
-    this.props.deleteAllSections();
-  };
-
   handleDeleteOneCourse = (course) => {
     this.setState((prevState) => ({
       courses: prevState.courses.filter((currCourseObj) => {
@@ -96,7 +90,7 @@ class CourseSelector extends React.Component {
     this.setState((prevState) => ({
       courses: prevState.courses.concat(courseObj)
     }));
-    this.props.addCourseSections(dept, course);
+    this.props.addCourseSections(course);
   };
 
   render() {
