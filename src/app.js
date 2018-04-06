@@ -92,7 +92,7 @@ class AppRoot extends React.Component {
           let rowDisabled = sectionsList[k]['isRowDisabled'];
           let selected = sectionsList[k]['isSelected'];
           sections[course][currSectionKey][k]['isRowDisabled'] = !rowDisabled;
-          sections[course][currSectionKey][k]['isSelected'] = !selected;
+          sections[course][currSectionKey][k]['isSelected'] = false;
         }
       }
     }
