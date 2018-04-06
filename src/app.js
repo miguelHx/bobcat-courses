@@ -64,7 +64,7 @@ class AppRoot extends React.Component {
       let currSectionKey = sectionKeys[i];
       let sectionsList = sections[course][currSectionKey];
 
-      // case when we have one standalone section
+      // case when we have one standalone section, i.e. WRI-1
       if (sectionsList.length === 1) {
 
         let currSectNum = sectionsList[0]['course_id'].split('-')[2];
@@ -82,17 +82,62 @@ class AppRoot extends React.Component {
           // go to next iteration of this for loop
           continue;
         }
+        // general case.
         if (j !== 0) {
           // just toggle check, we have a regular section
           sections[course][currSectionKey][j]['isSelected'] = !checked;
+          // also toggle linked section, for ex. DISC and LAB
+          if (sections[course][currSectionKey][j]['attached_crn']) {
+            let attachedCRN = sections[course][currSectionKey][j]['attached_crn'];
+            if (!checked) {
+              // extra check, want to enable other section if it is disabled.
+              for (let x = 0; x < sectionsList.length; x++) {
+                if (sectionsList[x]['crn'] === attachedCRN) {
+                  if (sectionsList[x]['isRowDisabled']) {
+                    sections[course][currSectionKey][x]['isRowDisabled'] = false;
+                    sections[course][currSectionKey][x]['isSelected'] = true;
+                    break;
+                  }
+                  else {
+                    sections[course][currSectionKey][x]['isSelected'] = true;
+                  }
+                }
+              }
+
+              // if current one is NOT checked, then when we check it,
+              // we want to ALSO check the other one, since they are linked
+
+              // in other words, leave it alone.
+              continue;
+            }
+            // other case, if checked to unchecked AND other one is disabled, want enable it
+            // uncheck  that one also
+            // first search for it
+            let attachedSection = {};
+            for (let idx = 0; idx < sectionsList.length; idx++) {
+              if (sectionsList[idx]['crn'] == attachedCRN) {
+                let rowStatus = sectionsList[idx]['isRowDisabled'];
+                sections[course][currSectionKey][idx]['isRowDisabled'] = !rowStatus;
+                sections[course][currSectionKey][idx]['isSelected'] = false;
+              }
+            }
+          }
           continue;
         }
+
+        // case where main section type is checked, i.e. LECT
         sections[course][currSectionKey][j]['isSelected'] = !checked;
         for (let k = j + 1; k < sectionsList.length; k++) {
           let rowDisabled = sectionsList[k]['isRowDisabled'];
-          let selected = sectionsList[k]['isSelected'];
-          sections[course][currSectionKey][k]['isRowDisabled'] = !rowDisabled;
-          sections[course][currSectionKey][k]['isSelected'] = false;
+          if (checked) {
+            // from checked to unchecked, disable and de-select all rows
+            sections[course][currSectionKey][k]['isRowDisabled'] = true;
+            sections[course][currSectionKey][k]['isSelected'] = false;
+          }
+          else {
+            // from unchecked to checked, enable all rows, leave selected status alone
+            sections[course][currSectionKey][k]['isRowDisabled'] = false;
+          }
         }
       }
     }
