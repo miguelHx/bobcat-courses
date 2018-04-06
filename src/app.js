@@ -49,6 +49,54 @@ class AppRoot extends React.Component {
   };
 
   updateSectionCheckboxToggle = (sectionNumber) => {
+
+    // loop through sections of selectedCourse
+    let sections = this.state.sections;
+    const course = this.state.selectedCourse;
+    const sectionKeys = Object.keys(sections[course]);
+
+
+    console.log(sectionKeys);
+    console.log(sections[course]);
+
+    for (let i = 0; i < sectionKeys.length; i++) {
+      let currSectionKey = sectionKeys[i];
+      let sectionsList = sections[course][currSectionKey];
+
+      // case when we have one standalone section
+      if (sectionsList.length === 1) {
+
+        let currSectNum = sectionsList[0]['course_id'].split('-')[2];
+        if (currSectNum === sectionNumber) {
+          let checked = sectionsList[0]['isSelected'];
+          sections[course][currSectionKey][0]['isSelected'] = !checked;
+          break;
+        }
+      }
+
+      for (let j = 0; j < sectionsList.length; j++) {
+        let currSectionNumber = sectionsList[j]['course_id'].split('-')[2];
+        let checked = sectionsList[j]['isSelected'];
+        if (currSectionNumber !== sectionNumber) {
+          // go to next iteration of this for loop
+          continue;
+        }
+        if (j !== 0) {
+          // just toggle check, we have a regular section
+          sections[course][currSectionKey][j]['isSelected'] = !checked;
+          continue;
+        }
+        sections[course][currSectionKey][j]['isSelected'] = !checked;
+        for (let k = j + 1; k < sectionsList.length; k++) {
+          let rowDisabled = sectionsList[k]['isRowDisabled'];
+          let selected = sectionsList[k]['isSelected'];
+          sections[course][currSectionKey][k]['isRowDisabled'] = !rowDisabled;
+          sections[course][currSectionKey][k]['isSelected'] = !selected;
+        }
+      }
+    }
+    this.setState(() => ({ sections: sections }));
+
     // format changed, so need to update to reflect that.
     // if MAIN component was unchecked, then we want to uncheck the rest of the sections in that particular section
     // const course = this.state.selectedCourse;
