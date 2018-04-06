@@ -13,7 +13,8 @@ import './styles/styles.scss';
 // TODO - fetch data from this component in addCourseSections.  After data is fetched, update the selectedCourse so that the course detail can render.
 // * in the course Detail first check if selected course is inside sections array.  Should be there tho since course detail won't render unless
 // data is fetched AND selectedCourse is there.
-const BASE_URL = `https://cse120-course-planner.herokuapp.com/api/courses/course-match/`;
+const COURSE_SEARCH_URL = 'https://cse120-course-planner.herokuapp.com/api/courses/course-match/';
+const SCHEDULE_SEARCH_URL = 'https://cse120-course-planner.herokuapp.com/api/courses/schedule-search/';
 
 
 // comparator used for sorting array of objects
@@ -206,7 +207,7 @@ class AppRoot extends React.Component {
         term: "201830"
     });
 
-    axios.post(BASE_URL, data, {
+    axios.post(COURSE_SEARCH_URL, data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -266,15 +267,41 @@ class AppRoot extends React.Component {
     this.setState(() => ({ selectedCourse: undefined }));
   };
 
-  generateSchedules = () => {
-    // Should we build the graph here???
-    // so the graph would be built here, and then used for the algorithm to find valid schedules.
+  generateSchedules = (courses) => {
+
+    let coursesList = [];
+    for (let i = 0; i < courses.length; i++) {
+      coursesList.push(courses[i].name);
+    }
+
+
     console.log("IN ROOT COMPONENT");
-    console.log("Want to first check size of courses array.");
     console.log("Take courses, use courses array to get information from JSON, run algorithm.");
     console.log("Decide what data we want to use to run the algorithm.");
     console.log("Store result of algo in some sort of data structure, to be used by the Calendar component");
     this.clearSelectedCourse();
+
+    let sections = this.state.sections;
+    console.log("course list: ", coursesList);
+
+    let data = JSON.stringify({
+        course_list: coursesList,
+        term: "201830"
+    });
+
+    axios.post(SCHEDULE_SEARCH_URL, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(res => {
+      const data = res.data;
+      console.log(data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+
     this.setState(() => ({ validSchedules: 'test' }));
   };
 

@@ -119,7 +119,7 @@ class CourseSelector extends React.Component {
           <div className="course-selector__gen-button-wrapper">
             <Button
               primary
-              onClick={this.props.generateSchedules}
+              onClick={() => { this.props.generateSchedules(this.state.courses) }}
               disabled={this.state.courses.length === 0}
             >
               Generate Schedules
