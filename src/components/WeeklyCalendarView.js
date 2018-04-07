@@ -50,7 +50,7 @@ export default class WeeklyCalendarView extends React.Component {
           currTime = convert24to12HourFormat(time);
         }
         return (
-          <div key={currTime} className="time">{currTime}</div>
+          <div key={id++} className="time">{currTime}</div>
         );
       })
     );
