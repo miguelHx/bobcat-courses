@@ -62,9 +62,14 @@
 .weekly-cal-view__monday-col, .weekly-cal-view__tuesday-col,
 .weekly-cal-view__wednesday-col, .weekly-cal-view__thursday-col,
 .weekly-cal-view__friday-col {
-  height: 600px;
+  height: 100%;
   width: 18%;
   margin-right: 6px;
+  margin-bottom: $xl-size;
+  border-bottom-color: rgb(229, 229, 229);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
 }
 
 .weekly-hour-slot {
