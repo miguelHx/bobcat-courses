@@ -4,6 +4,7 @@ import axios from 'axios';
 import CourseDetail from './components/CourseDetail';
 import CourseSelector from './components/CourseSelector';
 import Header from './components/Header';
+import { Message } from 'semantic-ui-react';
 import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
 import deptJSON from './../data/departments_FA18.json';
@@ -392,7 +393,10 @@ class AppRoot extends React.Component {
           {
             this.state.error &&
             <div className="app-root__error-msg-wrapper">
-              <p>No valid schedules found. Please choose different courses and try again.</p>
+              <Message negative>
+                <h3>Time conflicts found, no valid schedules.</h3>
+                <p>Please choose different courses and try again.</p>
+              </Message>
             </div>
           }
 
