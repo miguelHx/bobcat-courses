@@ -396,7 +396,7 @@ class AppRoot extends React.Component {
                 // don't render calendars unless both conditions inside () are true
                 // note: selectedCourse must get reset to undefined when running
                 // the algorithm
-                 (validSchedules.length > 0 && selectedCourse === undefined) &&
+
                 <Schedules
                   validSchedules={validSchedules}
                 />
