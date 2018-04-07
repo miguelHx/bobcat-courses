@@ -49,6 +49,9 @@
 
 .weekly-hour-slot {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   top: 10px;
   height: 50px;
   width: 100%;
@@ -56,6 +59,12 @@
   border-top-style: solid;
   border-top-width: 1px;
   font-weight: 300;
+}
+
+.weekly-hour__30min-dotted-line {
+  border-top-color: rgb(229, 229, 229);
+  border-top-style: dotted;
+  border-top-width: 1px;
 }
 
 .time {

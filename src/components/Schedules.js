@@ -32,64 +32,164 @@ class Schedules extends React.Component {
           </div>
 
           <div className="weekly-cal-view__monday-col">
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
           </div>
           <div className="weekly-cal-view__tuesday-col">
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
           </div>
           <div className="weekly-cal-view__wednesday-col">
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
           </div>
           <div className="weekly-cal-view__thursday-col">
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
           </div>
           <div className="weekly-cal-view__friday-col">
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
-            <div className="weekly-hour-slot"></div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
+            <div className="weekly-hour-slot">
+              <div className="weekly-hour__30min-dotted-line"></div>
+            </div>
           </div>
         </div>
 
