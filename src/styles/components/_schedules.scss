@@ -6,6 +6,26 @@
   margin-right: auto;
 }
 
+.schedules__buttons-container {
+  display: flex;
+}
+
+.arrow-buttons__wrapper {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.valid-schedule__counter {
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.arrow-button {
+  display: inline-block;
+}
+
+
+
 .calendar__top-header-divider {
   border: 1px solid red;
 }
