@@ -35,6 +35,7 @@ class AppRoot extends React.Component {
     selectedCourse: undefined, // for course detail table
     sections: {}, // for algorithm, must be in same format as table row
     validSchedules: [], // for calendars
+    error: undefined, // for when we have conflicting schedules.
   };
 
   componentWillMount() {
@@ -42,11 +43,11 @@ class AppRoot extends React.Component {
   }
 
   updateSelectedDept = (dept) => {
-    this.setState(() => ({ selectedDepartment: dept }));
+    this.setState(() => ({ selectedDepartment: dept, error: undefined }));
   };
 
   updateSelectedCourse = (course) => {
-    this.setState(() => ({ selectedCourse: course }));
+    this.setState(() => ({ selectedCourse: course, error: undefined }));
   };
 
   updateSectionCheckboxToggle = (sectionNumber) => {
@@ -319,11 +320,6 @@ class AppRoot extends React.Component {
       coursesList.push(courses[i].name);
     }
 
-
-    console.log("IN ROOT COMPONENT");
-    console.log("Take courses, use courses array to get information from JSON, run algorithm.");
-    console.log("Decide what data we want to use to run the algorithm.");
-    console.log("Store result of algo in some sort of data structure, to be used by the Calendar component");
     this.clearSelectedCourse();
 
     let sections = this.state.sections;
@@ -340,14 +336,17 @@ class AppRoot extends React.Component {
         }
     })
     .then(res => {
+      let error = undefined;
       const data = res.data;
-      console.log(data);
+      console.log("valid schedules: ", data);
+      if (data.length === 0) {
+        error = 'No Valid Schedules found due to time conflicts. Please choose different courses and try again.';
+      }
+      this.setState(() => ({ validSchedules: data, error: error }));
     })
     .catch(error => {
       console.log(error);
     });
-
-    this.setState(() => ({ validSchedules: 'test' }));
   };
 
 
@@ -389,7 +388,15 @@ class AppRoot extends React.Component {
               sections={this.state.sections}
             />
           }
-          { selectedCourse === undefined &&
+
+          {
+            this.state.error &&
+            <div className="app-root__error-msg-wrapper">
+              <p>No valid schedules found. Please choose different courses and try again.</p>
+            </div>
+          }
+
+          { (selectedCourse === undefined && validSchedules.length > 0) &&
             <div className="app-root__schedules-title-wrapper">
               <h3>Schedules</h3>
               {
