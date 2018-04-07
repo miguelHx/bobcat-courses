@@ -1,9 +1,70 @@
 .schedules__container {
-  max-width: 700px;
-  min-width: 18.75rem;
+  width: 100%;
   margin-top: 0;
   margin-bottom: 0;
-  margin-left: 0;
+  margin-left: auto;
   margin-right: auto;
-  padding: 1.75rem;
+}
+
+.calendar__top-header-divider {
+  border: 1px solid red;
+}
+
+.calendar-header__row {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.time-header {
+  width: 8%;
+}
+.calendar-header__row-title {
+  color: #acaeaf;
+  font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
+  font-size: $m-size;
+  font-weight: 300;
+  line-height: 18px;
+  margin-right: 6px;
+  padding-left: 10px;
+  width: 18%;
+  text-align: left;
+  border-bottom: 1px solid;
+}
+
+.weekly-cal-view__container {
+  display: flex;
+}
+
+.weekly-cal-view__time-col {
+  width: 8%;
+}
+
+.weekly-cal-view__monday-col, .weekly-cal-view__tuesday-col,
+.weekly-cal-view__wednesday-col, .weekly-cal-view__thursday-col,
+.weekly-cal-view__friday-col {
+  height: 600px;
+  width: 18%;
+  margin-right: 6px;
+}
+
+.weekly-hour-slot {
+  position: relative;
+  top: 10px;
+  height: 50px;
+  width: 100%;
+  border-top-color: rgb(229, 229, 229);
+  border-top-style: solid;
+  border-top-width: 1px;
+  font-weight: 300;
+}
+
+.time {
+  color: #667;
+  font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  height: 50px;
+  opacity: 1;
+  padding-right: 5px;
+  text-align: right;
 }
