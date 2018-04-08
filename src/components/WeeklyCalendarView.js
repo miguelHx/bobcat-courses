@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 let id = 0;
 
@@ -27,6 +28,27 @@ const convert24to12HourFormat = (time24) => {
   }
 };
 
+// time12 := 3:30-4:20pm for example.
+const convertTimeStringTo24 = (time12) => {
+  let parts = time12.split('-');// [3:30, 4:20pm]
+  let startingHour = parseInt(parts[0].split(':')[0], 10);
+  let startingMinutes = parts[0].split(':')[1];
+  let endingHour = parseInt(parts[1].split(':')[0], 10);
+  let endingMinutes = parts[1].split(':')[1].substring(0, 2);
+  let AMorPM = parts[1].slice(-2); // am or pm
+  if (AMorPM == 'pm') {
+    if (endingHour > startingHour) {
+      startingHour += 12;
+      startingHour = startingHour.toString(10);
+      endingHour += 12;
+      endingHour = endingHour.toString(10);
+    }
+  }
+  // put time period back together in 24 hour format.
+  let time = `${startingHour}:${startingMinutes}-${endingHour}:${endingMinutes}`;
+  return time;
+}
+
 export default class WeeklyCalendarView extends React.Component {
 
   componentDidMount() {
@@ -51,9 +73,33 @@ export default class WeeklyCalendarView extends React.Component {
   }
 
   placeSectionsIntoCalendar = (startingHour, allSections) => {
-    console.log("starting hour: ", startingHour);
+    let startHr = (startingHour * 100).toString(10); // will be used for moment js
+    const hr = startHr.substring(0, 2);
+    const min = startHr.slice(-2);
+    startHr = moment(`${hr}:${min}`, 'HH:mm');
+
+    console.log("starting hour: ", startHr);
     console.log("all sections: ", allSections);
-    
+
+    for (let i = 0; i < allSections.length; i++) {
+      let currSection = allSections[i];
+      // the following code does a calculation to find the offset of the section square
+      // as well as the height based on how the calendar is structured.
+      let timeRanges = convertTimeStringTo24(currSection['hours']).split('-');
+      let start = moment(timeRanges[0], 'HH:mm');
+      let offset = start.diff(startHr, 'hours', true);
+      console.log("OFFSET: ", offset);
+
+
+      let end = moment(timeRanges[1], 'HH:mm');
+      let difference = end.diff(start, 'hours', true);
+      let height = difference * 50; // 50px * height for event
+      console.log("height diff: ", difference);
+
+      console.log("time ranges: ", timeRanges); // if 1530 - 1620, expect 0.83333
+
+    }
+
   };
 
   renderWeekColumnRows = (numRowsToRender) => {

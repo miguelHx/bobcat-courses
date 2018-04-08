@@ -20,6 +20,7 @@
     "css-loader": "0.28.4",
     "file-loader": "^1.1.11",
     "live-server": "^1.2.0",
+    "moment": "^2.22.0",
     "node-sass": "4.5.3",
     "react": "16.0.0",
     "react-dom": "16.0.0",
