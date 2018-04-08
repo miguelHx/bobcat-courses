@@ -62,6 +62,7 @@
 .weekly-cal-view__monday-col, .weekly-cal-view__tuesday-col,
 .weekly-cal-view__wednesday-col, .weekly-cal-view__thursday-col,
 .weekly-cal-view__friday-col {
+  position: relative;
   height: 100%;
   width: 18%;
   margin-right: 6px;
@@ -70,6 +71,46 @@
   border-bottom-style: solid;
   border-bottom-width: 1px;
   padding-bottom: 10px;
+}
+
+.event {
+  display: block;
+  top: 100px;
+  background-color: #fff2bf;
+  height: 100px;
+  width: 100%;
+  opacity: 0.6;
+  position: absolute;
+  z-index: 1;
+}
+
+.text {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 14px;
+  padding: 4px 6px 4px 6px;
+  word-break: break-word;
+}
+
+.title {
+  color: #a68500;
+  font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  position: relative;
+  top: 5px;
+  word-break: break-word;
+}
+
+.location {
+  color: #a68500;
+  font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 14px;
+  margin-top: 5px;
+  word-break: break-word;
 }
 
 .weekly-hour-slot {
