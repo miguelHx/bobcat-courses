@@ -17,7 +17,7 @@ class SectionsTable extends React.Component {
         <Table.HeaderCell>Location</Table.HeaderCell>
         <Table.HeaderCell>Instructor</Table.HeaderCell>
         <Table.HeaderCell>Units</Table.HeaderCell>
-        {/* <Table.HeaderCell>Enrolled</Table.HeaderCell> */}
+        <Table.HeaderCell>Enrolled</Table.HeaderCell>
       </Table.Row>
     );
   };
@@ -42,7 +42,7 @@ class SectionsTable extends React.Component {
         <Table.Cell>{data['room']}</Table.Cell>
         <Table.Cell>{data['instructor']}</Table.Cell>
         <Table.Cell>{data['units']}</Table.Cell>
-        {/* <Table.Cell>{`${data['Act Enrl']}/${data['Max Enrl']}`}</Table.Cell> */}
+        <Table.Cell>{`${data['enrolled']}/${data['capacity']}`}</Table.Cell>
       </Table.Row>
     );
   };
