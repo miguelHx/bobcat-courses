@@ -51,7 +51,18 @@ const convertTimeStringTo24 = (time12) => {
 
 export default class WeeklyCalendarView extends React.Component {
 
+  state = {
+    currIndex: 0,
+    mondaySections: [],
+    tuesdaySections: [],
+    wednesdaySections: [],
+    thursdaySections: [],
+    fridaySections: [],
+  };
+
   componentDidMount() {
+
+    // initial rendering of sections onto page
     const currSchedule = this.props.currSchedule;
     const sectionsList = extractSectionsFromSchedule(currSchedule);
 
@@ -59,17 +70,6 @@ export default class WeeklyCalendarView extends React.Component {
     const start = (Math.floor(earliest/100)*100)/100 - 1;
 
     this.placeSectionsIntoCalendar(start, sectionsList);
-  }
-
-  componentDidUpdate() {
-    const currSchedule = this.props.currSchedule;
-    const sectionsList = extractSectionsFromSchedule(currSchedule);
-
-    const earliest = currSchedule['info']['earliest'];
-    const start = (Math.floor(earliest/100)*100)/100 - 1;
-
-    this.placeSectionsIntoCalendar(start, sectionsList);
-
   }
 
   placeSectionsIntoCalendar = (startingHour, allSections) => {
@@ -80,6 +80,12 @@ export default class WeeklyCalendarView extends React.Component {
 
     console.log("starting hour: ", startHr);
     console.log("all sections: ", allSections);
+    // storing sections in a list for each day.  Will set the state as this, and render onto the DOM when there are values in there.
+    let monSections = [];
+    let tueSections = [];
+    let wedSections = [];
+    let thuSections = [];
+    let friSections = [];
 
     for (let i = 0; i < allSections.length; i++) {
       let currSection = allSections[i];
@@ -87,7 +93,7 @@ export default class WeeklyCalendarView extends React.Component {
       // as well as the height based on how the calendar is structured.
       let timeRanges = convertTimeStringTo24(currSection['hours']).split('-');
       let start = moment(timeRanges[0], 'HH:mm');
-      let offset = start.diff(startHr, 'hours', true);
+      let offset = ((start.diff(startHr, 'hours', true)) * 50) + 10; // 10 original top offset in px and 50 for height of each hr-row
       console.log("OFFSET: ", offset);
 
 
@@ -98,7 +104,76 @@ export default class WeeklyCalendarView extends React.Component {
 
       console.log("time ranges: ", timeRanges); // if 1530 - 1620, expect 0.83333
 
+      // now that we have the offset and height, we can place into the calendar by inserting as a child of mon, tues, wedn, etc. column
+      let days = currSection['days'];
+
+      for (let j = 0; j < days.length; j++) {
+        let currChar = days.charAt(j);
+
+        // create new element with computed offset and height of section div.
+        let newElementEventStyle = {
+          display: 'block',
+          top: `${offset}px`,
+          backgroundColor: '#fff2bf',
+          borderLeft: '4px solid black',
+          height: `${height}px`,
+          width: '100%',
+          opacity: '0.6',
+          position: 'absolute',
+          zIndex: '1',
+        };
+
+        let newElementTextStyle = {
+          fontSize: '13px',
+          fontWeight: '500',
+          lineHeight: '14px',
+          padding: '4px 6px 4px 6px',
+          wordBreak: 'break-word'
+        }
+
+
+        let newElement = (
+          <div key={id++} style={newElementEventStyle}>
+            <div className="text">
+              <div className="title">
+                {currSection['course_id']}
+              </div>
+              <div className="location">
+                {currSection['location']}
+              </div>
+            </div>
+          </div>
+        );
+        switch (currChar) {
+          case 'M':
+            monSections.push(newElement);
+            break;
+          case 'T':
+            tueSections.push(newElement);
+            break;
+          case 'W':
+            wedSections.push(newElement);
+            break;
+          case 'R':
+            thuSections.push(newElement);
+            break;
+          case 'F':
+            friSections.push(newElement);
+            break;
+          default:
+            break;
+        }
+      }
+
     }
+
+    this.setState(() => ({
+      mondaySections: monSections,
+      tuesdaySections: tueSections,
+      wednesdaySections: wedSections,
+      thursdaySections: thuSections,
+      fridaySections: friSections,
+    }));
 
   };
 
@@ -143,8 +218,43 @@ export default class WeeklyCalendarView extends React.Component {
     );
   };
 
+  renderSections = (day) => {
+    // return array of divs based on day
+    let sections = [];
+
+    switch (day) {
+      case 'mon':
+        sections = this.state.mondaySections;
+        break;
+      case 'tue':
+        sections = this.state.tuesdaySections;
+        break;
+      case 'wed':
+        sections = this.state.wednesdaySections;
+        break;
+      case 'thu':
+        sections = this.state.thursdaySections;
+        break;
+      case 'fri':
+        sections = this.state.fridaySections;
+        break;
+    }
+
+    // if empty, return invisible div.
+    if (sections.length === 0) {
+      return <div style={{ display: 'none' }}></div>;
+    }
+    // otherwise, return each section element
+    return (
+      sections.map((element) => {
+        return element;
+      })
+    );
+  };
+
   render() {
     console.log("[WEEKLY VIEW] current valid schedule: ", this.props.currSchedule);
+    console.log("[weekly view] STATE: ", this.state);
     const earliest = this.props.currSchedule['info']['earliest'];
     const latest = this.props.currSchedule['info']['latest'];
     const start = (Math.floor(earliest/100)*100)/100 - 1;
@@ -154,8 +264,8 @@ export default class WeeklyCalendarView extends React.Component {
         <div className="weekly-cal-view__time-col">
           { this.renderTimes(start, end) }
         </div>
-        <div className="weekly-cal-view__monday-col" ref="monday">
-          <div className="event">
+        <div className="weekly-cal-view__monday-col" id="monday">
+          {/* <div className="event">
             <div className="text">
               <div className="title">
                 CSE 111 LAB 02L
@@ -164,20 +274,26 @@ export default class WeeklyCalendarView extends React.Component {
                 SCIENG 100
               </div>
             </div>
-          </div>
+          </div> */}
           { this.renderWeekColumnRows(end-start) }
+          { this.renderSections('mon') }
+
         </div>
-        <div className="weekly-cal-view__tuesday-col" ref="tuesday">
+        <div className="weekly-cal-view__tuesday-col" id="tuesday">
           { this.renderWeekColumnRows(end-start) }
+          { this.renderSections('tue') }
         </div>
-        <div className="weekly-cal-view__wednesday-col" ref="wednesday">
+        <div className="weekly-cal-view__wednesday-col" id="wednesday">
           { this.renderWeekColumnRows(end-start) }
+          { this.renderSections('wed') }
         </div>
-        <div className="weekly-cal-view__thursday-col" ref="thursday">
+        <div className="weekly-cal-view__thursday-col" id="thursday">
           { this.renderWeekColumnRows(end-start) }
+          { this.renderSections('thu') }
         </div>
-        <div className="weekly-cal-view__friday-col" ref="friday">
+        <div className="weekly-cal-view__friday-col" id="friday">
           { this.renderWeekColumnRows(end-start) }
+          { this.renderSections('fri') }
         </div>
       </div>
     );
