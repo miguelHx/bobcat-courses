@@ -1,30 +1,19 @@
 import React from 'react';
 import moment from 'moment';
+import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
 
 let id = 0;
 
-const extractSectionsFromSchedule = (currSchedule) => {
-  const coursesList = Object.keys(currSchedule['schedule']); // ['ANTH-1', 'MATH-32', etc.]
-  let sectionsList = [];
-  for (let i = 0; i < coursesList.length; i++) {
-    let currCourse = coursesList[i];
-    let currSections = currSchedule['schedule'][currCourse];
-    let currSectionKeys = Object.keys(currSections); // ['DISC', 'LAB', ...]
-    for (let j = 0; j < currSectionKeys.length; j++) {
-      sectionsList.push(currSections[currSectionKeys[j]]);
-    }
-  }
-  return sectionsList;
-};
+
 
 // maybe add testing for this funcion to handle all types of errors
 const convert24to12HourFormat = (time24) => {
   // expecting numbers such as 7, 8, 9, 10, 11, 12, 13, 14 etc.
   if (time24 <= 12) {
-    return time24;
+    return `${time24}:00am`;
   }
   else {
-    return time24 - 12;
+    return `${time24 - 12}:00pm`;
   }
 };
 
@@ -74,7 +63,14 @@ export default class WeeklyCalendarView extends React.Component {
 
   placeSectionsIntoCalendar = (startingHour, allSections) => {
     let startHr = (startingHour * 100).toString(10); // will be used for moment js
-    const hr = startHr.substring(0, 2);
+
+    let hr;
+    if (startingHour < 10) {
+       hr = startHr.substring(0, 1);
+    }
+    else {
+      hr = `0${startHr.substring(0, 1)}`;
+    }
     const min = startHr.slice(-2);
     startHr = moment(`${hr}:${min}`, 'HH:mm');
 
@@ -94,6 +90,10 @@ export default class WeeklyCalendarView extends React.Component {
       let timeRanges = convertTimeStringTo24(currSection['hours']).split('-');
       let start = moment(timeRanges[0], 'HH:mm');
       let offset = ((start.diff(startHr, 'hours', true)) * 50) + 10; // 10 original top offset in px and 50 for height of each hr-row
+      console.log("LOOK HERE:");
+      console.log("time ranges: ", timeRanges);
+      console.log("start: ", start);
+      console.log("startHr: ", startHr);
       console.log("OFFSET: ", offset);
 
 
@@ -201,6 +201,7 @@ export default class WeeklyCalendarView extends React.Component {
     for (let i = start; i <= end; i++) {
       times.push(i);
     }
+
 
     return (
       times.map((time) => {
