@@ -14,6 +14,47 @@ const extractSectionsFromSchedule = (currSchedule) => {
   return sectionsList;
 };
 
+// maybe add testing for this funcion to handle all types of errors
+const convert24to12HourFormat = (time24) => {
+  // expecting numbers such as 7, 8, 9, 10, 11, 12, 13, 14 etc.
+  if (time24 <= 12) {
+    return `${time24}:00am`;
+  }
+  else {
+    return `${time24 - 12}:00pm`;
+  }
+};
+
+// time12 := 3:30-4:20pm for example.
+const convertTimeStringTo24 = (time12) => {
+  let parts = time12.split('-');// [3:30, 4:20pm]
+  let startingHour = parseInt(parts[0].split(':')[0], 10);
+  let startingMinutes = parts[0].split(':')[1];
+  let endingHour = parseInt(parts[1].split(':')[0], 10);
+  let endingMinutes = parts[1].split(':')[1].substring(0, 2);
+  let AMorPM = parts[1].slice(-2); // am or pm
+
+  console.log("Ending hour: ", endingHour);
+  console.log("Starting hour: ", startingHour);
+  if (AMorPM == 'pm') {
+    if (endingHour >= startingHour) {
+      startingHour += 12;
+      startingHour = startingHour.toString(10);
+      endingHour += 12;
+      endingHour = endingHour.toString(10);
+    }
+    else {
+      // for ex: 11-2pm
+      startingHour = startingHour.toString(10);
+      endingHour += 12;
+      endingHour = endingHour.toString(10);
+    }
+  }
+  // put time period back together in 24 hour format.
+  let time = `${startingHour}:${startingMinutes}-${endingHour}:${endingMinutes}`;
+  return time;
+}
 
 
-export { extractSectionsFromSchedule };
+
+export { extractSectionsFromSchedule, convert24to12HourFormat, convertTimeStringTo24 };
