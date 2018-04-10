@@ -9,6 +9,16 @@ import WeeklyCalendarView from './WeeklyCalendarView';
 
 let id = 1000;
 
+let colors = [
+  { bg: '#f3bfff', border: '#cc73e1', text: '#7b4488' }, // purple
+  { bg: '#fff2bf', border: '#ffcc00', text: '#a68500' }, // yellow
+  { bg: '#bfecff', border: '#34aadc', text: '#1f6583' }, // blue
+  { bg: '#ffbfcb', border: '#ff2d55', text: '#a61d37' }, // red
+  { bg: '#ffe5bf', border: '#ff9500', text: '#a66100' }, // orange
+  { bg: '#d1ffbf', border: '#65db39', text: '#3c8222' }, // green
+  { bg: '#e0d3c1', border: '#a2845e', text: '#4d3c26' }, // brown
+];
+
 class Schedules extends React.Component {
   state = {
     currIndex: 0,
