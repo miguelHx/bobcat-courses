@@ -4,10 +4,13 @@
   margin-bottom: 0;
   margin-left: auto;
   margin-right: auto;
+  padding-right: $l-size;
 }
 
 .schedules__buttons-container {
   display: flex;
+  padding: 0;
+  margin: 0;
 }
 
 .arrow-buttons__wrapper {

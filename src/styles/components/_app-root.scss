@@ -19,16 +19,16 @@
 }
 
 .app-root__schedules-title-wrapper {
-  width: 60%;
+  width: 70%;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 0;
   margin-right: auto;
-  padding-top: 1.75rem;
+  padding-top: 1rem;
 }
 
-.app-root__schedules-title-wrapper h3 {
-  width: 100%;
+#schedules-title__text {
   text-align: center;
   margin-bottom: 0;
+  margin-right: $l-size;
 }
