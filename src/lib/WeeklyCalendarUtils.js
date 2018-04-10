@@ -37,6 +37,13 @@ const convertTimeStringTo24 = (time12) => {
   console.log("Ending hour: ", endingHour);
   console.log("Starting hour: ", startingHour);
   if (AMorPM == 'pm') {
+    if (endingHour === 12) {
+      // handle case of 12:00 - 12:50pm
+      // or 11:00 - 12:15pm
+      // leave as is.
+      startingHour = startingHour.toString(10);
+      endingHour = endingHour.toString(10);
+    }
     if (endingHour >= startingHour) {
       startingHour += 12;
       startingHour = startingHour.toString(10);

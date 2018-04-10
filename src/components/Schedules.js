@@ -81,6 +81,7 @@ class Schedules extends React.Component {
           colorsIdx = 0;
         }
         colorObj = colors[colorsIdx++];
+        prevCourse = currCourse;
       }
       // get new color index when we encounter a change in course.
 
