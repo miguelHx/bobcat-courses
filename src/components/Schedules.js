@@ -39,7 +39,7 @@ class Schedules extends React.Component {
     const sectionsList = extractSectionsFromSchedule(currSchedule);
 
     const earliest = currSchedule['info']['earliest'];
-    const start = (Math.floor(earliest/100)*100)/100 - 1;
+    const start = (Math.floor(earliest/100)*100)/100;
     this.placeSectionsIntoCalendar(start, sectionsList, 0);
   }
 
@@ -74,6 +74,10 @@ class Schedules extends React.Component {
 
     for (let i = 0; i < allSections.length; i++) {
       let currSection = allSections[i];
+      if (currSection === null) {
+        // in the case of LECT for BIO-1L
+        continue; // skip that section
+      }
       let currCourse = currSection['simple_name'];
       if (prevCourse !== currCourse) {
         // get new color
@@ -197,7 +201,7 @@ class Schedules extends React.Component {
     const sectionsList = extractSectionsFromSchedule(currSchedule);
 
     const earliest = currSchedule['info']['earliest'];
-    const start = (Math.floor(earliest/100)*100)/100 - 1;
+    const start = (Math.floor(earliest/100)*100)/100;
 
     this.placeSectionsIntoCalendar(start, sectionsList, currIdx);
 
@@ -223,7 +227,7 @@ class Schedules extends React.Component {
     const sectionsList = extractSectionsFromSchedule(currSchedule);
 
     const earliest = currSchedule['info']['earliest'];
-    const start = (Math.floor(earliest/100)*100)/100 - 1;
+    const start = (Math.floor(earliest/100)*100)/100;
 
 
 
@@ -246,7 +250,7 @@ class Schedules extends React.Component {
 
     const earliest = currSchedule['info']['earliest'];
     const latest = currSchedule['info']['latest'];
-    const start = (Math.floor(earliest/100)*100)/100 - 1;
+    const start = (Math.floor(earliest/100)*100)/100;
     const end = (Math.ceil(latest/100)*100)/100 + 1;
 
     return (
