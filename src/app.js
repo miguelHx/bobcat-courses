@@ -137,8 +137,9 @@ class AppRoot extends React.Component {
             sections[course][currSectionKey][k]['isSelected'] = false;
           }
           else {
-            // from unchecked to checked, enable all rows, leave selected status alone
+            // from unchecked to checked, enable all rows, also check all connected sections
             sections[course][currSectionKey][k]['isRowDisabled'] = false;
+            sections[course][currSectionKey][k]['isSelected'] = true;
           }
         }
       }
