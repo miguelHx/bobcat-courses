@@ -381,6 +381,14 @@ class AppRoot extends React.Component {
             generateSchedules={this.generateSchedules}
           />
           {
+            (selectedDepartment === undefined && selectedCourse === undefined) &&
+            <div className="app-root__error-msg-wrapper">
+              <Message info>
+                <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
+              </Message>
+            </div>
+          }
+          {
             (selectedCourse) &&
             <CourseDetail
               department={selectedDepartment}
@@ -402,12 +410,11 @@ class AppRoot extends React.Component {
 
           { (selectedCourse === undefined && validSchedules.length > 0) &&
             <div className="app-root__schedules-title-wrapper">
-              <h3>Schedules</h3>
+              <h3 id="schedules-title__text">Schedules</h3>
               {
                 // don't render calendars unless both conditions inside () are true
                 // note: selectedCourse must get reset to undefined when running
                 // the algorithm
-
                 <Schedules
                   validSchedules={validSchedules}
                 />
