@@ -19,6 +19,8 @@ let colors = [
   { bg: '#e0d3c1', border: '#a2845e', text: '#4d3c26' }, // brown
 ];
 
+let colorsIdx = 0;
+
 class Schedules extends React.Component {
   state = {
     currIndex: 0,
@@ -66,8 +68,23 @@ class Schedules extends React.Component {
     let thuSections = [];
     let friSections = [];
 
+    let prevCourse = allSections[0]['simple_name'];
+    colorsIdx = 0;
+    let colorObj = colors[colorsIdx++];
+
     for (let i = 0; i < allSections.length; i++) {
       let currSection = allSections[i];
+      let currCourse = currSection['simple_name'];
+      if (prevCourse !== currCourse) {
+        // get new color
+        if (colorsIdx === colors.length) {
+          colorsIdx = 0;
+        }
+        colorObj = colors[colorsIdx++];
+      }
+      // get new color index when we encounter a change in course.
+
+
       // the following code does a calculation to find the offset of the section square
       // as well as the height based on how the calendar is structured.
       let timeRanges = convertTimeStringTo24(currSection['hours']).split('-');
@@ -94,11 +111,12 @@ class Schedules extends React.Component {
         let currChar = days.charAt(j);
 
         // create new element with computed offset and height of section div.
+
         let newElementEventStyle = {
           display: 'block',
           top: `${offset}px`,
-          backgroundColor: '#fff2bf',
-          borderLeft: '4px solid black',
+          backgroundColor: colorObj.bg,
+          borderLeft: `4px solid ${colorObj.border}`,
           height: `${height}px`,
           width: '100%',
           opacity: '0.6',
@@ -107,6 +125,7 @@ class Schedules extends React.Component {
         };
 
         let newElementTextStyle = {
+          color: colorObj.text,
           fontSize: '13px',
           fontWeight: '500',
           lineHeight: '14px',
@@ -117,12 +136,12 @@ class Schedules extends React.Component {
 
         let newElement = (
           <div key={id++} style={newElementEventStyle}>
-            <div className="text">
+            <div style={newElementTextStyle}>
               <div className="title">
                 {currSection['course_id']}
               </div>
               <div className="location">
-                {currSection['location']}
+                {currSection['room']}
               </div>
             </div>
           </div>
