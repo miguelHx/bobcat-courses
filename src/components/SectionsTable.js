@@ -57,7 +57,7 @@ class SectionsTable extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="sections-table">
         <Table
           headerRow={this.renderHeaderRow()}
           renderBodyRow={this.renderTableData} // this will map over tableData

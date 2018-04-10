@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
+import { DEPT_SHORTHAND } from './../lib/ShorthandDeptLookup';
 
 const stateOptions = [{key: 'Al', value: 'AL', text: 'Alabama'}, {key: 'BA', value: 'BA', text: 'Bammington'}]
 
@@ -15,8 +16,9 @@ export default class AddCourse extends React.Component {
     }
     return (
       window.deptList.map((dept) => {
+        let text = `${dept} (${DEPT_SHORTHAND[dept]})`;
         return (
-          { key: dept, value: dept, text: dept }
+          { key: dept, value: dept, text: text }
         );
       })
     );
