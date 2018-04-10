@@ -44,11 +44,11 @@ class AppRoot extends React.Component {
   }
 
   updateSelectedDept = (dept) => {
-    this.setState(() => ({ selectedDepartment: dept, error: undefined }));
+    this.setState(() => ({ selectedDepartment: dept, error: undefined, validSchedules: [] }));
   };
 
   updateSelectedCourse = (course) => {
-    this.setState(() => ({ selectedCourse: course, error: undefined }));
+    this.setState(() => ({ selectedCourse: course, error: undefined, validSchedules: [] }));
   };
 
   updateSectionCheckboxToggle = (sectionNumber) => {
