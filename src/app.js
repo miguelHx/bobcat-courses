@@ -8,6 +8,7 @@ import { Message } from 'semantic-ui-react';
 import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
 import deptJSON from './../data/departments_FA18.json';
+import { extractSectionsFromSchedule } from './lib/WeeklyCalendarUtils';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
 
@@ -252,7 +253,7 @@ class AppRoot extends React.Component {
 
     let data = JSON.stringify({
         course_list: [course],
-        term: "201830"
+        term: "201830",
     });
 
     axios.post(COURSE_SEARCH_URL, data, {
@@ -315,6 +316,18 @@ class AppRoot extends React.Component {
     this.setState(() => ({ selectedCourse: undefined }));
   };
 
+
+  filterSectionsFromSchedules = (schedules, sections) => {
+
+
+    // TODO
+    // * extract sections as well as schedules into one array
+
+    return schedules;
+
+  };
+
+
   generateSchedules = (courses) => {
 
     let coursesList = [];
@@ -329,7 +342,8 @@ class AppRoot extends React.Component {
 
     let data = JSON.stringify({
         course_list: coursesList,
-        term: "201830"
+        term: "201830",
+        search_full: true
     });
 
     axios.post(SCHEDULE_SEARCH_URL, data, {
@@ -339,11 +353,16 @@ class AppRoot extends React.Component {
     })
     .then(res => {
       let error = undefined;
-      const data = res.data;
+      let data = res.data;
       console.log("valid schedules: ", data);
+
+
+      data = this.filterSectionsFromSchedules(data, sections);
+
       if (data.length === 0) {
         error = 'No Valid Schedules found due to time conflicts. Please choose different courses and try again.';
       }
+
       this.setState(() => ({ validSchedules: data, error: error }));
     })
     .catch(error => {
