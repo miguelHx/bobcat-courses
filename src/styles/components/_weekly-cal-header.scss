@@ -1,0 +1,22 @@
+.calendar-header__row {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.time-header {
+  width: 8%;
+}
+
+.calendar-header__row-title {
+  color: #acaeaf;
+  font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
+  font-size: $m-size;
+  font-weight: 300;
+  line-height: 18px;
+  margin-right: 6px;
+  padding-left: 10px;
+  width: 18%;
+  text-align: left;
+  border-bottom: 1px solid;
+}
