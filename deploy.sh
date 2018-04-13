@@ -3,7 +3,7 @@ git checkout -b gh-pages
 yarn run build:prod
 shopt -s extglob  # enables extglob
 rm -rf !(deploy|public)
-cp public $PWD
+cp -r public/* $PWD
 git commit -am 'update deploy build'
 git push origin gh-pages
 git checkout master
