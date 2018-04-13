@@ -9,6 +9,7 @@ import Schedules from './components/Schedules';
 import courseJSON from './../data/courses_sample_data.json';
 import deptJSON from './../data/departments_FA18.json';
 import { extractSectionsFromSchedule } from './lib/WeeklyCalendarUtils';
+import { extractSections } from './lib/ExtractSections';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
 
@@ -317,13 +318,47 @@ class AppRoot extends React.Component {
   };
 
 
-  filterSectionsFromSchedules = (schedules, sections) => {
+  filterSectionsFromSchedules = (schedules, sections, doFilterBool) => {
 
+    if (!doFilterBool) {
+      return schedules;
+    }
 
-    // TODO
-    // * extract sections as well as schedules into one array
+    let stack = []; // using stack to keep track of schedule adding
+    for (let i = 0; i < schedules.length; i++) {
+      let currScheduleSections = extractSectionsFromSchedule(schedules[i]);
+      stack.push(schedules[i]); // push onto stack, remove when a section is NOT selected.
+      // compare the currScheduleSections with sections list to check if for selection.
+      let popped = false;
+      for (let j = 0; j < currScheduleSections.length; j++) {
+        if (popped) {
+          break; // schedule thrown away, section filtered out.
+        }
+        let currSchedSect = currScheduleSections[j];
+        let currSchedSectID = currSchedSect['course_id'];
+        let courseName = currSchedSect['simple_name']; // use this for extracting proper sections array
+        let sectionsList = extractSections(sections[courseName]);
+        for (let k = 0; k < sectionsList.length; k++) {
+          // if we have a section number match AND selected === false, then pop from stack.
+          let currSect = sectionsList[k];
+          let currSectID = currSect['course_id'];
+          let selected = currSect['isSelected'];
+          if (currSectID === currSchedSectID && !selected) {
+            // pop from stack, set flag.
+            stack.pop();
+            popped = true;
+            break; // stop searching.
+          }
+        }
+      }
+    }
+    // let scheduleSectionsOne = extractSectionsFromSchedule(schedules[0]);
+    // let sectionsList = extractSections(sections['CSE-111']);
+    //
+    // console.log("schedule sections one: ", scheduleSectionsOne);
+    // console.log("sections list: ", sectionsList);
 
-    return schedules;
+    return stack;
 
   };
 
@@ -361,11 +396,14 @@ class AppRoot extends React.Component {
       let data = res.data;
       console.log("valid schedules: ", data);
 
-
-      data = this.filterSectionsFromSchedules(data, sections);
-
       if (data.length === 0) {
         error = 'No Valid Schedules found due to time conflicts. Please choose different courses and try again.';
+      }
+      else {
+        data = this.filterSectionsFromSchedules(data, sections, true);
+        if (data.length === 0) {
+          error = 'No valid schedules found. Please select more sections and try again.';
+        }
       }
 
       this.setState(() => ({ validSchedules: data, error: error }));
@@ -427,8 +465,7 @@ class AppRoot extends React.Component {
             this.state.error &&
             <div className="app-root__error-msg-wrapper">
               <Message negative>
-                <h3>Time conflicts found, no valid schedules.</h3>
-                <p>Please choose different courses and try again.</p>
+                <p>{this.state.error}</p>
               </Message>
             </div>
           }
