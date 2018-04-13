@@ -8,7 +8,9 @@ const extractSectionsFromSchedule = (currSchedule) => {
     let currSections = currSchedule['schedule'][currCourse];
     let currSectionKeys = Object.keys(currSections); // ['DISC', 'LAB', ...]
     for (let j = 0; j < currSectionKeys.length; j++) {
-      sectionsList.push(currSections[currSectionKeys[j]]);
+      if (currSections[currSectionKeys[j]] !== null) {
+        sectionsList.push(currSections[currSectionKeys[j]]);
+      }
     }
   }
   return sectionsList;
