@@ -98,7 +98,6 @@ class AppRoot extends React.Component {
               for (let x = 0; x < sectionsList.length; x++) {
                 if (sectionsList[x]['crn'] === attachedCRN) {
                   if (sectionsList[x]['isRowDisabled']) {
-                    sections[course][currSectionKey][x]['isRowDisabled'] = false;
                     sections[course][currSectionKey][x]['isSelected'] = true;
                     break;
                   }
@@ -121,7 +120,6 @@ class AppRoot extends React.Component {
             for (let idx = 0; idx < sectionsList.length; idx++) {
               if (sectionsList[idx]['crn'] == attachedCRN) {
                 let rowStatus = sectionsList[idx]['isRowDisabled'];
-                sections[course][currSectionKey][idx]['isRowDisabled'] = !rowStatus;
                 sections[course][currSectionKey][idx]['isSelected'] = false;
               }
             }
