@@ -330,6 +330,11 @@ class AppRoot extends React.Component {
 
   generateSchedules = (courses) => {
 
+    // clear previous valid sections
+    if (this.state.validSchedules.length > 0) {
+      this.setState(() => ({ validSchedules: [] }));
+    }
+
     let coursesList = [];
     for (let i = 0; i < courses.length; i++) {
       coursesList.push(courses[i].name);
