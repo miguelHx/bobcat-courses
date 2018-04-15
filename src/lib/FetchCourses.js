@@ -2,7 +2,6 @@
 const BASE_URL = `https://cse120-course-planner.herokuapp.com/api/courses-list/`;
 
 const fetchCourses = (dept) => {
-  console.log("inside fetch courses", dept);
   let output = [];
   // get request for department
   const param = `subject=Core`;
@@ -15,7 +14,6 @@ const fetchCourses = (dept) => {
     if (http.readyState === 4 && http.status === 200) {
       let json = JSON.parse(http.responseText);
       window.coursesJSON = json;
-      console.log(json);
     }
   };
   http.send(null);
