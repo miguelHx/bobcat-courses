@@ -5,6 +5,15 @@
   ],
   "plugins": [
     "transform-class-properties",
-    ["lodash", {"id": ["lodash", "semantic-ui-react"]}]
+    [
+      "transform-semantic-ui-react-imports", {
+        "convertMemberImports": true,
+        "importType": "es",
+        "addCssImports": false,
+        "importMinifiedCssFiles": true,
+        "addLessImports": false,
+        "addDuplicateStyleImports": false
+      }
+    ]
   ]
 }

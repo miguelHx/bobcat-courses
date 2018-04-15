@@ -10,8 +10,8 @@ import courseJSON from './../data/courses_sample_data.json';
 import deptJSON from './../data/departments_FA18.json';
 import { extractSectionsFromSchedule } from './lib/WeeklyCalendarUtils';
 import { extractSections } from './lib/ExtractSections';
-import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
+import './semantic-css-imports';
 
 // TODO - fetch data from this component in addCourseSections.  After data is fetched, update the selectedCourse so that the course detail can render.
 // * in the course Detail first check if selected course is inside sections array.  Should be there tho since course detail won't render unless

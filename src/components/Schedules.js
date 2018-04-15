@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
 import { convertTimeStringTo24 } from './../lib/WeeklyCalendarUtils';
 import WeeklyCalendarHeader from './WeeklyCalendarHeader';
@@ -259,22 +259,20 @@ class Schedules extends React.Component {
           <div className="arrow-buttons__wrapper">
             <Button
               className="arrow-button"
-              icon
               color='blue'
-              size='mini'
+              size='small'
               onClick={() => { this.handleLeftArrowButton() }}
             >
-              <Icon name='left arrow' />
+              Prev
             </Button>
             <h5 className="valid-schedule__counter">{currIdx+1}/{numValidSchedules}</h5>
             <Button
               className="arrow-button"
-              icon
               color='blue'
-              size='mini'
+              size='small'
               onClick={() => { this.handleRightArrowButton() }}
             >
-              <Icon name='right arrow' />
+              Next
             </Button>
           </div>
         </div>
