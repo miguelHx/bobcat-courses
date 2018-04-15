@@ -62,8 +62,6 @@ export default class WeeklyCalendarView extends React.Component {
   };
 
   render() {
-    // console.log("[WEEKLY VIEW] current valid schedule: ", this.props.currSchedule);
-    // console.log("[weekly view] STATE: ", this.state);
     const startTime = this.props.startTime;
     const endTime = this.props.endTime;
 

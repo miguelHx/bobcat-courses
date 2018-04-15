@@ -54,15 +54,10 @@ class AppRoot extends React.Component {
   };
 
   updateSectionCheckboxToggle = (sectionNumber) => {
-
     // loop through sections of selectedCourse
     let sections = this.state.sections;
     const course = this.state.selectedCourse;
     const sectionKeys = Object.keys(sections[course]);
-
-
-    console.log(sectionKeys);
-    console.log(sections[course]);
 
     for (let i = 0; i < sectionKeys.length; i++) {
       let currSectionKey = sectionKeys[i];
@@ -145,48 +140,6 @@ class AppRoot extends React.Component {
       }
     }
     this.setState(() => ({ sections: sections }));
-
-    // format changed, so need to update to reflect that.
-    // if MAIN component was unchecked, then we want to uncheck the rest of the sections in that particular section
-    // const course = this.state.selectedCourse;
-    // let sections = this.state.sections; // accessing object with key as sections mapping to array
-    // const sectionKeys = Object.keys(sections[course]);
-    //
-    // for (let i = 0; i < sectionKeys.length; i++) {
-    //   let sectionIndex = sectionKeys[i];
-    //   let sectionsList = sections[course][sectionIndex];
-    //   console.log("sections list: ", sectionsList);
-    //   for (let j = 0; j < sectionsList.length; j++) {
-    //     let currSection = sectionsList[j];
-    //     let checked = currSection['isSelected'];
-    //
-    //     if (currSection['Section Number'] !== sectionNumber) {
-    //       // go on to next iteration
-    //       continue;
-    //     }
-    //     if (!currSection['isMainComponent']) {
-    //       // toggle checked
-    //       sections[course][sectionIndex][j]['isSelected'] = !checked;
-    //     }
-    //     else {
-    //       // otherwise, this section is a main component, then flip boolean of linked sections
-    //       // uncheck MAIN component and deselect as well as disable the other rows
-    //       sections[course][sectionIndex][j]['isSelected'] = !checked;
-    //       // deselect all other components and disable the rows
-    //       for (let k = j+1; k < sectionsList.length; k++) {
-    //         let rowDisabled = sectionsList[k]['isRowDisabled'];
-    //         let selected = sectionsList[k]['isSelected'];
-    //         sections[course][sectionIndex][k]['isRowDisabled'] = !rowDisabled;
-    //         sections[course][sectionIndex][k]['isSelected'] = !selected;
-    //       }
-    //       // done, no need to check other ones
-    //       break;
-    //     }
-    //
-    //   }
-    // }
-    // this.setState(() => ({ sections: sections }));
-
   };
 
   indexOfLecture = (courseData) => {
@@ -204,7 +157,6 @@ class AppRoot extends React.Component {
     //   "1": [LECT, LAB, etc.],
     //   "2": [LECT, LAB, etc.]
     // }
-    console.log("want to parse this data: ", courseData);
     // first, sort the course data
     courseData.sort(compareSections);
 
@@ -225,7 +177,6 @@ class AppRoot extends React.Component {
 
     // first, initalize main components
     for (let i = 0; i < courseData.length; i++) {
-      console.log("lecture crn: ", courseData[i]['lecture_crn']);
       if (courseData[i]['lecture_crn'] === null) {
         // initalize section array
         courseData[i]["isSelected"] = true; // by default, everything is selected
@@ -243,7 +194,6 @@ class AppRoot extends React.Component {
         output[[courseData[j]['lecture_crn']]].push(courseData[j]);
       }
     }
-    console.log("[ROOT] output after initialization : ", output);
     return output;
   }
 
@@ -262,10 +212,8 @@ class AppRoot extends React.Component {
     })
     .then(res => {
       const data = res.data[course];
-      console.log("(POST) inside add course sections: ", data);
       let sectionsObj = this.postRequestDataExtractor(data);
       sections[course] = sectionsObj;
-      console.log("SECTIONS (IN ROOT): ", sections);
       this.setState(() => ({ sections: sections }));
     })
     .catch(error => {
@@ -350,11 +298,6 @@ class AppRoot extends React.Component {
         }
       }
     }
-    // let scheduleSectionsOne = extractSectionsFromSchedule(schedules[0]);
-    // let sectionsList = extractSections(sections['CSE-111']);
-    //
-    // console.log("schedule sections one: ", scheduleSectionsOne);
-    // console.log("sections list: ", sectionsList);
 
     return stack;
 
@@ -376,8 +319,6 @@ class AppRoot extends React.Component {
     this.clearSelectedCourse();
 
     let sections = this.state.sections;
-    console.log("course list: ", coursesList);
-
     let data = JSON.stringify({
         course_list: coursesList,
         term: "201830",
@@ -392,7 +333,6 @@ class AppRoot extends React.Component {
     .then(res => {
       let error = undefined;
       let data = res.data;
-      console.log("valid schedules: ", data);
 
       if (data.length === 0) {
         error = 'No Valid Schedules found due to time conflicts. Please choose different courses and try again.';
@@ -421,8 +361,6 @@ class AppRoot extends React.Component {
     const selectedCourse = this.state.selectedCourse;
     const validSchedules = this.state.validSchedules;
     const sectionKeys = Object.keys(this.state.sections);
-    //console.log("KEYS: ", sectionKeys);
-    console.log("STATE: ", this.state);
     return (
       <div>
         <Header />

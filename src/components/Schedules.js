@@ -33,7 +33,6 @@ class Schedules extends React.Component {
 
   componentDidMount() {
     // initial rendering of sections onto page
-    console.log("COMPONENT DID MOUNT");
     const currIdx = this.state.currIndex;
     const currSchedule = this.props.validSchedules[currIdx];
     const sectionsList = extractSectionsFromSchedule(currSchedule);
@@ -45,7 +44,6 @@ class Schedules extends React.Component {
 
 
   placeSectionsIntoCalendar = (startingHour, allSections, indexUpdate) => {
-    console.log("INSIDE PLACE SECTIONS INTO CALENDAR");
 
     let startHr = (startingHour * 100).toString(10); // will be used for moment js
 
@@ -59,8 +57,6 @@ class Schedules extends React.Component {
     const min = startHr.slice(-2);
     startHr = moment(`${hr}:${min}`, 'HH:mm');
 
-    console.log("starting hour: ", startHr);
-    console.log("all sections: ", allSections);
     // storing sections in a list for each day.  Will set the state as this, and render onto the DOM when there are values in there.
     let monSections = [];
     let tueSections = [];
@@ -95,19 +91,10 @@ class Schedules extends React.Component {
       let timeRanges = convertTimeStringTo24(currSection['hours']).split('-');
       let sectionStart = moment(timeRanges[0], 'HH:mm');
       let offset = ((sectionStart.diff(startHr, 'hours', true)) * 50) + 10; // 10 original top offset in px and 50 for height of each hr-row
-      console.log("LOOK HERE:");
-      console.log("time ranges: ", timeRanges);
-      console.log("start: ", sectionStart);
-      console.log("startHr: ", startHr);
-      console.log("OFFSET: ", offset);
-
 
       let sectionEnd = moment(timeRanges[1], 'HH:mm');
       let difference = sectionEnd.diff(sectionStart, 'hours', true);
       let height = difference * 50; // 50px * height for event
-      console.log("height diff: ", difference);
-
-      console.log("time ranges: ", timeRanges); // if 1530 - 1620, expect 0.83333
 
       // now that we have the offset and height, we can place into the calendar by inserting as a child of mon, tues, wedn, etc. column
       let days = currSection['days'];
@@ -239,7 +226,6 @@ class Schedules extends React.Component {
   };
 
   render() {
-    console.log("RENDERING IN SCHEDULES.JS");
     if (!this.props.validSchedules) {
       return <div className="schedules__container">Loading...</div>;
     }
