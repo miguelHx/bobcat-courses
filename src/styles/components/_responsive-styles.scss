@@ -1,0 +1,37 @@
+/* devices <= 1024px */
+@media (max-width: 64rem) {
+  .header {
+    margin: 0;
+  }
+  .main-container {
+    flex-direction: column;
+    margin: 0;
+  }
+  .course-selector__container {
+    margin: 0 auto;
+  }
+  .course-selector__courses {
+    margin: 0;
+  }
+  .course-detail__container {
+    padding: 0 1rem 1rem 1rem;
+  }
+  .sections-table {
+    display: flex;
+    overflow-x: scroll;
+    overflow-x: auto;
+  }
+  .app-root__error-msg-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+/* devices <= 640px */
+@media (max-width: 40rem) {
+  table {
+    /* this will allow for overflow scrolling */
+    display: block;
+    width: 100% !important;
+  }
+
+}
