@@ -1,6 +1,5 @@
 .course-selector__container {
-  max-width: 20rem; // 400px
-  min-width: 18.75rem; // 300px
+  width: 300px;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: $l-size;
@@ -17,6 +16,7 @@
 
 .course-selector__message {
   color: blue;
+  font-size: 1.1rem;
   margin: 0;
   padding: $s-size;
   text-align: center;

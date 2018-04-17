@@ -13,6 +13,12 @@
   .course-selector__courses {
     margin: 0;
   }
+  .add-course__header__title {
+    font-size: 24px;
+  }
+  .add-course__dropdown-wrapper {
+    font-size: 1rem;
+  }
   .course-detail__container {
     padding: 0 1rem 1rem 1rem;
   }
@@ -23,7 +29,17 @@
   }
   .app-root__error-msg-wrapper {
     padding: 0 1rem;
+    width: 100%;
+    font-size: 1.1rem;
   }
+  .app-root__schedules-title-wrapper {
+    width: 100%;
+    margin-left: auto;
+  }
+  .schedules__container {
+    padding: 0 1rem;
+  }
+
 }
 
 /* devices <= 640px */
@@ -32,6 +48,15 @@
     /* this will allow for overflow scrolling */
     display: block;
     width: 100% !important;
+  }
+  .course-selector__container {
+    margin: 0 auto;
+  }
+  .add-course__header__title {
+    font-size: 24px;
+  }
+  .add-course__dropdown-wrapper {
+    font-size: 1.2rem;
   }
 
 }

@@ -120,6 +120,7 @@ class CourseSelector extends React.Component {
               primary
               onClick={() => { this.props.generateSchedules(this.state.courses) }}
               disabled={this.state.courses.length === 0}
+              size='large'
             >
               Generate Schedules
             </Button>
