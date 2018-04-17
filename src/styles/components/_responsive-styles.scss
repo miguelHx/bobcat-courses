@@ -21,6 +21,13 @@
   }
   .course-detail__container {
     padding: 0 1rem 1rem 1rem;
+    width: 100% !important;
+  }
+  .course-detail__header-text h3 {
+    font-size: 24px;
+  }
+  .course-detail__header-text p {
+    font-size: 1.1rem;
   }
   .sections-table {
     display: flex;
@@ -56,6 +63,9 @@
     font-size: 24px;
   }
   .add-course__dropdown-wrapper {
+    font-size: 1.2rem;
+  }
+  .course__text {
     font-size: 1.2rem;
   }
 
