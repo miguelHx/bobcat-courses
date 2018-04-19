@@ -1,9 +1,10 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/bobcat-logo.png';
 
 const Header = (props) => {
   return (
-    <div className="header">
+    <header className="header">
       <div className="header__container">
         <img src={logo} />
         <div className="header__text__wrapper">
@@ -11,8 +12,9 @@ const Header = (props) => {
           <h2 className="header__subtitle">{props.subtitle}</h2>
         </div>
       </div>
-
-    </div>
+      <NavLink to="/" activeClassName="is-active" exact={true}>Plan Schedule</NavLink>
+      <NavLink to="/saved-schedules" activeClassName="is-active">Saved Schedules</NavLink>
+    </header>
   );
 };
 
