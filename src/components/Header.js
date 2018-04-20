@@ -14,6 +14,8 @@ const Header = (props) => {
       </div>
       <NavLink to="/" activeClassName="is-active" exact={true}>Plan Schedule</NavLink>
       <NavLink to="/saved-schedules" activeClassName="is-active">Saved Schedules</NavLink>
+      <NavLink to="/login" activeClassName="is-active">Login</NavLink>
+      <NavLink to="/sign-up" activeClassName="is-active">Sign Up</NavLink>
     </header>
   );
 };
