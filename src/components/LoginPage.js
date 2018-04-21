@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Form } from 'semantic-ui-react';
+import AuthService from './AuthService';
 
+const Auth = new AuthService();
 class LoginPage extends React.Component {
   state = {
     username: '',
