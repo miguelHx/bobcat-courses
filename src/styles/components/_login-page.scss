@@ -1,0 +1,15 @@
+.login-page__main-container {
+  display: flex;
+  // flex-direction: row;
+  // justify-content: space-around;
+  margin-bottom: 25rem;
+  background-color: white;
+  margin: 0 $l-size;
+  border-radius: 6px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
