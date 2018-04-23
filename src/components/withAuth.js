@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AuthService from './AuthService';
-import { Link } from 'react-router-dom';
 
 export default function withAuth(AuthComponent) {
   const Auth = new AuthService();
@@ -8,37 +7,58 @@ export default function withAuth(AuthComponent) {
     constructor() {
       super();
       this.state = {
-        username: null
+        username: null,
+        isLoggedIn: false,
       }
+      this.updateLoginStatus = this.updateLoginStatus.bind(this);
+      this.updateLogoutStatus = this.updateLogoutStatus.bind(this);
+    }
+
+    updateLogoutStatus() {
+      // TODO - redirect to index page from here
+      this.setState({
+        username: null,
+        isLoggedIn: false
+      });
+    }
+
+    updateLoginStatus() {
+      try {
+        const username = Auth.getUsername();
+        this.setState({
+          username: username,
+          isLoggedIn: true,
+        });
+      }
+      catch(err) {
+        Auth.logout();
+        this.props.history.replace('/');
+      }
+
     }
 
     componentWillMount() {
       if (!Auth.loggedIn()) {
-        this.props.history.replace('/');
+        this.setState({ isLoggedIn: false });
       }
       else {
-        try {
-          const username = Auth.getUsername();
-          this.setState({ username: username });
-        }
-        catch (err) {
-          Auth.logout();
-          this.props.history.replace('/login');
-        }
+        this.updateLoginStatus();
       }
     }
 
     render() {
-      const { username } = this.state;
-      if (username) {
-        return (
-          <AuthComponent history={this.props.history} username={username} />
-        );
-      }
-      else {
-        return <div>Please login to view schedules. <Link to="/login">(Login)</Link></div>
-      }
+      return (
+        <AuthComponent
+          history={this.props.history}
+          updateLogoutStatus={this.updateLogoutStatus}
+          isLoggedIn={this.state.isLoggedIn}
+        />
+      );
     }
 
   }
+
+
+
+
 }

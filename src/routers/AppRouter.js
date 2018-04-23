@@ -3,6 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Header from '../components/Header';
 import LoginPage from '../components/LoginPage';
 import SignUpPage from '../components/SignUpPage';
+import SettingsPage from '../components/SettingsPage';
 import PlanSchedulePage from '../components/PlanSchedulePage';
 import SavedSchedulesPage from '../components/SavedSchedulesPage';
 import NotFoundPage from '../components/NotFoundPage';
@@ -19,6 +20,8 @@ const AppRouter = () => {
           <Route path="/saved-schedules" component={SavedSchedulesPage} exact={true} />
           <Route path="/login" component={LoginPage} exact={true} />
           <Route path="/sign-up" component={SignUpPage} exact={true} />
+          {/* Settings page requires login. */}
+          <Route path="/settings" component={SettingsPage} exact={true} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
