@@ -16,6 +16,7 @@ export default function withAuth(AuthComponent) {
 
     updateLogoutStatus() {
       // TODO - redirect to index page from here
+      Auth.logout();
       this.setState({
         username: null,
         isLoggedIn: false
@@ -49,9 +50,11 @@ export default function withAuth(AuthComponent) {
     render() {
       return (
         <AuthComponent
+          username={this.state.username}
           history={this.props.history}
-          updateLogoutStatus={this.updateLogoutStatus}
           isLoggedIn={this.state.isLoggedIn}
+          updateLoginStatus={this.updateLoginStatus}
+          updateLogoutStatus={this.updateLogoutStatus}
         />
       );
     }

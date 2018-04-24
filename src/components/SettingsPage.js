@@ -1,6 +1,5 @@
 import React from 'react';
 import AuthService from './AuthService';
-import withAuth from './withAuth';
 import { Redirect } from "react-router-dom";
 
 class SettingsPage extends React.Component {
@@ -25,4 +24,4 @@ class SettingsPage extends React.Component {
 
 };
 
-export default withAuth(SettingsPage);
+export default SettingsPage;

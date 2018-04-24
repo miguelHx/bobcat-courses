@@ -20,6 +20,11 @@ class LoginPage extends React.Component {
 
   Auth = new AuthService();
 
+  handleLoginSuccess = () => {
+    // call function from props
+    this.props.updateLoginStatus();
+  };
+
   handleUserInput = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value, error: undefined });
@@ -27,21 +32,25 @@ class LoginPage extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    // get function pointer from props
+    const { updateLoginStatus } = this.props;
     // check that both username AND password are not empty
     const { username, password } = this.state;
     // alert("a username was submitted: " + username + "\na password was submitted: " + password);
 
     this.Auth.login(username, password)
-      .then(res => {
-        this.props.history.replace('/'); // if successful, we will redirect to home page
+      .then((res) => {
+        // if successful, we will redirect to home page and update login status
+        this.props.updateLoginStatus();
+        this.props.history.replace('/');
       })
-      .catch(err => {
+      .catch((err) => {
         // otherwise, catch error and display to user
         // console.log(err);
         // alert(err);
         this.setState({ error: 'Invalid Username and/or Password' });
       })
-  }
+  };
 
   render() {
     const { username, password, error } = this.state;

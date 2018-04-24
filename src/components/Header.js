@@ -1,20 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/bobcat-logo.png';
-import AuthService from './AuthService';
-import withAuth from './withAuth';
-
-const Auth = new AuthService();
-
-const handleLogout = (updateLogoutStatus) => {
-    // token cleared from localStorage
-    Auth.logout();
-    updateLogoutStatus();
-};
 
 const Header = (props) => {
-    const isLoggedIn = Auth.loggedIn();
-    const username = Auth.getUsername();
+    const { isLoggedIn, username } = props;
     const { updateLogoutStatus, history } = props;
     return (
       <header className="header">
@@ -38,13 +27,12 @@ const Header = (props) => {
                           <NavLink to="/settings" activeClassName="is-active">Settings</NavLink>
                           <h2>Welcome {username}!</h2>
                           <button onClick={() => {
-                            handleLogout(updateLogoutStatus);
+                            updateLogoutStatus();
                           }}>
                             Log Out
                           </button>
                         </div>
         }
-
       </header>
     );
 
@@ -55,4 +43,4 @@ Header.defaultProps = {
   subtitle: 'Plan your schedule for the upcoming semester'
 };
 
-export default withAuth(Header);
+export default Header;

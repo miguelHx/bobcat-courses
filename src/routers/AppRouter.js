@@ -7,21 +7,88 @@ import SettingsPage from '../components/SettingsPage';
 import PlanSchedulePage from '../components/PlanSchedulePage';
 import SavedSchedulesPage from '../components/SavedSchedulesPage';
 import NotFoundPage from '../components/NotFoundPage';
+import withAuth from './../components/withAuth';
 
 // pages: 1. PlanSchedulePage 2. SavedSchedulesPage 3. Login Page 4. Register Page
+// will have authentication state in this component.  This means that when we log in, we want to update login state.
+// when we logout, we want to update logout state in this 'root' component
 
-const AppRouter = () => {
+
+
+const AppRouter = (props) => {
+  const { isLoggedIn, updateLoginStatus, updateLogoutStatus } = props;
   return (
     <HashRouter >
       <div>
-        <Header />
+        <Header
+          history={props.history}
+          username={props.username}
+          isLoggedIn={props.isLoggedIn}
+          updateLogoutStatus={updateLogoutStatus}
+        />
         <Switch>
-          <Route path="/" component={PlanSchedulePage} exact={true} />
-          <Route path="/saved-schedules" component={SavedSchedulesPage} exact={true} />
-          <Route path="/login" component={LoginPage} exact={true} />
-          <Route path="/sign-up" component={SignUpPage} exact={true} />
+          <Route
+            path="/"
+            exact={true}
+            component={(props) => {
+              return (
+                <PlanSchedulePage
+                  isLoggedIn={isLoggedIn} // will use to toggle save schedules button
+                  {...props} // props from react router.
+                />
+              );
+            }}
+          />
+          <Route
+            path="/saved-schedules"
+            exact={true}
+            component={(props) => {
+              return (
+                <SavedSchedulesPage
+                  isLoggedIn={isLoggedIn} // will use to toggle save schedules button
+                  {...props} // props from react router.
+                />
+              );
+            }}
+          />
+          <Route
+            path="/login"
+            exact={true}
+            component={(props) => {
+              return (
+                <LoginPage
+                  isLoggedIn={isLoggedIn} // custom props
+                  updateLoginStatus={updateLoginStatus}
+                  {...props} // props from react router.
+                />
+              );
+            }}
+          />
+          <Route
+            path="/sign-up"
+            exact={true}
+            component={(props) => {
+              return (
+                <SignUpPage
+                  isLoggedIn={isLoggedIn} // will use to toggle save schedules button
+                  {...props} // props from react router.
+                />
+              );
+            }}
+          />
           {/* Settings page requires login. */}
-          <Route path="/settings" component={SettingsPage} exact={true} />
+          <Route
+            path="/settings"
+            exact={true}
+            component={(props) => {
+              return (
+                <SettingsPage
+                  isLoggedIn={isLoggedIn} // will use to toggle save schedules button
+                  {...props} // props from react router.
+                />
+              );
+            }}
+          />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
@@ -29,4 +96,4 @@ const AppRouter = () => {
   );
 };
 
-export default AppRouter;
+export default withAuth(AppRouter);
