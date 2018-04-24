@@ -1,16 +1,20 @@
 // entry -> output
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
 
 module.exports = (env) => {
   const isProduction = (env === 'production');
   const CSSExtract = new ExtractTextPlugin('styles.css');
 
   return {
-    entry: './src/app.js',
+    entry: {
+      app: './src/app.js',
+    },
     output: {
       path: path.resolve(__dirname, 'public'),
-      filename: 'bundle.js'
+      filename: 'bundle.js',
     },
     module: {
       rules: [
@@ -45,7 +49,9 @@ module.exports = (env) => {
       ]
     },
     plugins: [
-      CSSExtract
+      CSSExtract,
+      new BundleAnalyzerPlugin(),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ],
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {
