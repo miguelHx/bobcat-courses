@@ -16,3 +16,7 @@ import 'semantic-ui-css/components/menu.min.css';
 // SectionsTable.js
 import 'semantic-ui-css/components/table.min.css';
 import 'semantic-ui-css/components/checkbox.min.css';
+
+
+// Login Form
+import 'semantic-ui-css/components/form.min.css';
