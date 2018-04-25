@@ -14,7 +14,7 @@ class SavedSchedulesPage extends React.Component {
 
   state = {
     currSchedule: {},
-    currScheduleIndex: 0,
+    currScheduleIndex: undefined, // for getting correct index of updated schedule after delete.
     savedSchedules: [],
     error: undefined
   };
@@ -34,11 +34,11 @@ class SavedSchedulesPage extends React.Component {
           return;
         }
         this.setState(() => ({ savedSchedules: data }));
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => {
         this.setState(() => ({ error: error }));
-        console.log(error);
+        // console.log(error);
       });
     }
   }
@@ -64,9 +64,9 @@ class SavedSchedulesPage extends React.Component {
         }
     })
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       const responseStatus = res.data;
-      const currIdx = this.state.currScheduleIndex;
+      let currIdx = this.state.currScheduleIndex;
       const newLength = this.state.savedSchedules.length - 1;
       // on success, delete schedule from local state
       if ('success' in responseStatus) {
@@ -78,7 +78,8 @@ class SavedSchedulesPage extends React.Component {
           }));
         }
         else {
-          // fetch new schedules list after the deletion
+          // this means that there exists some saved schedules stored on the backend.
+          // fetch new schedules list after the deletion via api call just like in componentDidMount but with extra checks for index update.
           axios.get(`${BASE_URL}/users/schedule-dump/`, {
             headers: {
               Authorization: `Bearer ${Auth.getToken()}`
@@ -86,16 +87,23 @@ class SavedSchedulesPage extends React.Component {
           })
           .then(response => {
             const data = response.data;
-            if (data.length === 0) {
-              this.setState(() => ({ error: 'No saved schedules. Please save a schedule and then come back.' }));
-              return;
+
+            // if index points to edge of array, then decrement by one to avoid going out of bounds.
+            if (currIdx === data.length) {
+              currIdx = data.length-1;
             }
-            this.setState(() => ({ savedSchedules: data, currScheduleIndex: 0 }));
-            console.log(response.data);
+
+            this.setState(() => ({
+              currSchedule: data[currIdx],
+              currScheduleIndex: currIdx,
+              savedSchedules: data,
+              error: undefined
+            }));
+            // console.log(response.data);
           })
           .catch(error => {
             this.setState(() => ({ error: error }));
-            console.log(error);
+            // console.log(error);
           });
         }
 
@@ -106,7 +114,7 @@ class SavedSchedulesPage extends React.Component {
       }
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
       this.setState(() => ({ error: error }));
     });
 
@@ -121,8 +129,8 @@ class SavedSchedulesPage extends React.Component {
 
 
   render() {
-    console.log(this.state);
-    const { error } = this.state;
+    // console.log(this.state);
+    const { error, currScheduleIndex } = this.state;
     // if not logged in, tell user that they must log in to see this page
     // provide them a link to login.
     if (!this.props.isLoggedIn) {
@@ -143,7 +151,7 @@ class SavedSchedulesPage extends React.Component {
             <Schedules
               validSchedules={this.state.savedSchedules}
               updateCurrSchedule={this.updateCurrSchedule}
-              currIndex={this.state.currScheduleIndex}
+              currIndex={currScheduleIndex}
             />
           </div>
         }

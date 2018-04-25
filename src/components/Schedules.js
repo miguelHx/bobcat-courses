@@ -24,11 +24,6 @@ let colorsIdx = 0;
 class Schedules extends React.Component {
   state = {
     currIndex: 0,
-    mondaySections: [],
-    tuesdaySections: [],
-    wednesdaySections: [],
-    thursdaySections: [],
-    fridaySections: [],
   };
 
   componentDidMount() {
@@ -47,7 +42,7 @@ class Schedules extends React.Component {
   }
 
 
-  placeSectionsIntoCalendar = (startingHour, allSections, indexUpdate) => {
+  placeSectionsIntoCalendar = (startingHour, allSections) => {
 
     let startHr = (startingHour * 100).toString(10); // will be used for moment js
 
@@ -164,14 +159,13 @@ class Schedules extends React.Component {
       }
     }
 
-    this.setState(() => ({
+    return {
       mondaySections: monSections,
       tuesdaySections: tueSections,
       wednesdaySections: wedSections,
       thursdaySections: thuSections,
       fridaySections: friSections,
-      currIndex: indexUpdate,
-    }));
+    };
 
   };
 
@@ -194,7 +188,7 @@ class Schedules extends React.Component {
     const earliest = currSchedule['info']['earliest'];
     const start = (Math.floor(earliest/100)*100)/100;
 
-    this.placeSectionsIntoCalendar(start, sectionsList, currIdx);
+    this.setState(() => ({ currIndex: currIdx }));
 
     if (this.props.updateCurrSchedule) {
       this.props.updateCurrSchedule(currSchedule, currIdx);
@@ -223,14 +217,11 @@ class Schedules extends React.Component {
     const start = (Math.floor(earliest/100)*100)/100;
 
 
-
-    this.placeSectionsIntoCalendar(start, sectionsList, currIdx);
+    this.setState(() => ({ currIndex: currIdx }));
 
     if (this.props.updateCurrSchedule) {
       this.props.updateCurrSchedule(currSchedule, currIdx);
     }
-
-
 
   };
 
@@ -238,7 +229,14 @@ class Schedules extends React.Component {
     if (!this.props.validSchedules) {
       return <div className="schedules__container">Loading...</div>;
     }
-    const currIdx = this.state.currIndex;
+    let currIdx;
+    if (this.props.currIndex >= 0) {
+      currIdx = this.props.currIndex;
+    }
+    else {
+      currIdx = this.state.currIndex;
+    }
+
     const currSchedule = this.props.validSchedules[currIdx];
     const numValidSchedules = this.props.validSchedules.length;
 
@@ -246,6 +244,8 @@ class Schedules extends React.Component {
     const latest = currSchedule['info']['latest'];
     const start = (Math.floor(earliest/100)*100)/100;
     const end = (Math.ceil(latest/100)*100)/100 + 1;
+
+    const weekSections = this.placeSectionsIntoCalendar(start, extractSectionsFromSchedule(currSchedule));
 
     return (
       <div className="schedules__container">
@@ -273,13 +273,12 @@ class Schedules extends React.Component {
         <div className="calendar__top-header-divider"></div>
         <WeeklyCalendarHeader />
         <WeeklyCalendarView
-          monSections={this.state.mondaySections}
-          tueSections={this.state.tuesdaySections}
-          wedSections={this.state.wednesdaySections}
-          thuSections={this.state.thursdaySections}
-          friSections={this.state.fridaySections}
+          monSections={weekSections['mondaySections']}
+          tueSections={weekSections['tuesdaySections']}
+          wedSections={weekSections['wednesdaySections']}
+          thuSections={weekSections['thursdaySections']}
+          friSections={weekSections['fridaySections']}
           currSchedule={currSchedule}
-          parentIdx={currIdx}
           startTime={start}
           endTime={end}
         />
