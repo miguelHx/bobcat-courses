@@ -40,6 +40,10 @@ class Schedules extends React.Component {
     const earliest = currSchedule['info']['earliest'];
     const start = (Math.floor(earliest/100)*100)/100;
     this.placeSectionsIntoCalendar(start, sectionsList, 0);
+    // need to update parent class for deleting current schedule when clicking delete button.
+    if (this.props.updateCurrSchedule) {
+      this.props.updateCurrSchedule(currSchedule, currIdx);
+    }
   }
 
 
@@ -192,7 +196,9 @@ class Schedules extends React.Component {
 
     this.placeSectionsIntoCalendar(start, sectionsList, currIdx);
 
-
+    if (this.props.updateCurrSchedule) {
+      this.props.updateCurrSchedule(currSchedule, currIdx);
+    }
 
 
 
@@ -220,6 +226,9 @@ class Schedules extends React.Component {
 
     this.placeSectionsIntoCalendar(start, sectionsList, currIdx);
 
+    if (this.props.updateCurrSchedule) {
+      this.props.updateCurrSchedule(currSchedule, currIdx);
+    }
 
 
 
@@ -229,7 +238,6 @@ class Schedules extends React.Component {
     if (!this.props.validSchedules) {
       return <div className="schedules__container">Loading...</div>;
     }
-
     const currIdx = this.state.currIndex;
     const currSchedule = this.props.validSchedules[currIdx];
     const numValidSchedules = this.props.validSchedules.length;
