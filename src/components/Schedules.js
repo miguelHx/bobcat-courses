@@ -171,7 +171,13 @@ class Schedules extends React.Component {
 
   handleLeftArrowButton = () => {
 
-    let currIdx = this.state.currIndex;
+    let currIdx;
+    if (this.props.currIndex >= 0) {
+      currIdx = this.props.currIndex;
+    }
+    else {
+      currIdx = this.state.currIndex;
+    }
 
     const numValidSchedules = this.props.validSchedules.length;
     if (currIdx == 0) {
@@ -200,7 +206,13 @@ class Schedules extends React.Component {
 
   handleRightArrowButton = () => {
 
-    let currIdx = this.state.currIndex;
+    let currIdx;
+    if (this.props.currIndex >= 0) {
+      currIdx = this.props.currIndex;
+    }
+    else {
+      currIdx = this.state.currIndex;
+    }
 
     const numValidSchedules = this.props.validSchedules.length;
     if (currIdx == numValidSchedules-1) {

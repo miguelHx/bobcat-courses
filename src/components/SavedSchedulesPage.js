@@ -15,7 +15,7 @@ class SavedSchedulesPage extends React.Component {
 
   state = {
     currSchedule: {},
-    currScheduleIndex: undefined, // for getting correct index of updated schedule after delete.
+    currScheduleIndex: 0, // for getting correct index of updated schedule after delete.
     savedSchedules: [],
     error: undefined
   };
@@ -88,6 +88,16 @@ class SavedSchedulesPage extends React.Component {
         }
         else {
           // this means that there exists some saved schedules stored on the backend.
+
+          // if index points to edge of array, then decrement by one to avoid going out of bounds.
+          if (currIdx === newLength) {
+            currIdx = newLength-1;
+            this.setState(() => ({
+              currScheduleIndex: currIdx
+            }));
+          }
+
+
           // fetch new schedules list after the deletion via api call just like in componentDidMount but with extra checks for index update.
           axios.get(`${BASE_URL}/users/schedule-dump/`, {
             headers: {
@@ -97,14 +107,8 @@ class SavedSchedulesPage extends React.Component {
           .then(response => {
             const data = response.data;
 
-            // if index points to edge of array, then decrement by one to avoid going out of bounds.
-            if (currIdx === data.length) {
-              currIdx = data.length-1;
-            }
-
             this.setState(() => ({
               currSchedule: data[currIdx],
-              currScheduleIndex: currIdx,
               savedSchedules: data,
               error: undefined
             }));
@@ -146,7 +150,7 @@ class SavedSchedulesPage extends React.Component {
 
 
   render() {
-    // console.log(this.state);
+    // console.log("[saved schedules state]: ", this.state);
     const { error, currScheduleIndex } = this.state;
     // if not logged in, tell user that they must log in to see this page
     // provide them a link to login.
