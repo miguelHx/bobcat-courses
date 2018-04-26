@@ -4,7 +4,7 @@ import axios from 'axios';
 import CourseDetail from '../components/CourseDetail';
 import CourseSelector from '../components/CourseSelector';
 import Header from '../components/Header';
-import { Message } from 'semantic-ui-react';
+import { Message, Button, Popup } from 'semantic-ui-react';
 import Schedules from '../components/Schedules';
 import courseJSON from '../../data/courses_sample_data.json';
 import deptJSON from '../../data/departments_FA18.json';
@@ -359,6 +359,7 @@ class PlanSchedulePage extends React.Component {
     const selectedCourse = this.state.selectedCourse;
     const validSchedules = this.state.validSchedules;
     const sectionKeys = Object.keys(this.state.sections);
+    const { isLoggedIn } = this.props;
     return (
       <div>
         {/* <p>Selected Department (in root comp.): {this.state.selectedDepartment}</p>
@@ -406,6 +407,22 @@ class PlanSchedulePage extends React.Component {
           { (selectedCourse === undefined && validSchedules.length > 0) &&
             <div className="app-root__schedules-title-wrapper">
               <h3 id="schedules-title__text">Schedules</h3>
+
+              {/* if not logged in, render the button with popup, otherwise, render regular save schedule button */}
+              { !isLoggedIn &&
+                <Popup
+                  trigger={
+                            <div className="app-root__popup-btn-wrapper">
+                              <Button color='yellow' size='small' disabled={!isLoggedIn} >Save Schedule</Button>
+                            </div>
+                          }
+                  content='You must be logged in to save schedules.'
+                />
+              }
+              { isLoggedIn &&
+                <Button color='yellow' disabled={!isLoggedIn} >Save Schedule</Button>
+              }
+
               {
                 // don't render calendars unless both conditions inside () are true
                 // note: selectedCourse must get reset to undefined when running
