@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from './AuthService';
+import Alert from 'react-s-alert';
 
 class LoginPage extends React.Component {
 
@@ -42,6 +43,10 @@ class LoginPage extends React.Component {
       .then((res) => {
         // if successful, we will redirect to home page and update login status
         this.props.updateLoginStatus();
+        Alert.success("Log In Successful", {
+          position: 'top-right',
+          offset: 50,
+        });
         this.props.history.replace('/');
       })
       .catch((err) => {
@@ -84,10 +89,9 @@ class LoginPage extends React.Component {
               required
             />
           </Form.Field>
-
           <Button type="submit" color="blue" size="small">Log In</Button>
         </Form>
-
+        <Alert stack={{limit: 2}} timeout={2000} />
       </div>
     );
   }

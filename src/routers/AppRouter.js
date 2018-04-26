@@ -71,6 +71,7 @@ const AppRouter = (props) => {
               return (
                 <SignUpPage
                   isLoggedIn={isLoggedIn} // will use to toggle save schedules button
+                  updateLoginStatus={updateLoginStatus}
                   {...props} // props from react router.
                 />
               );
