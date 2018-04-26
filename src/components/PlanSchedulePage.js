@@ -4,19 +4,23 @@ import axios from 'axios';
 import CourseDetail from '../components/CourseDetail';
 import CourseSelector from '../components/CourseSelector';
 import Header from '../components/Header';
-import { Message } from 'semantic-ui-react';
+import { Message, Button } from 'semantic-ui-react';
+import SaveScheduleButton from './SaveScheduleButton';
 import Schedules from '../components/Schedules';
 import courseJSON from '../../data/courses_sample_data.json';
 import deptJSON from '../../data/departments_FA18.json';
 import { extractSectionsFromSchedule } from '../lib/WeeklyCalendarUtils';
 import { extractSections } from '../lib/ExtractSections';
+import AuthService from './AuthService';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+
+const Auth = new AuthService();
 
 // TODO - fetch data from this component in addCourseSections.  After data is fetched, update the selectedCourse so that the course detail can render.
 // * in the course Detail first check if selected course is inside sections array.  Should be there tho since course detail won't render unless
 // data is fetched AND selectedCourse is there.
-const COURSE_SEARCH_URL = 'https://cse120-course-planner.herokuapp.com/api/courses/course-match/';
-const SCHEDULE_SEARCH_URL = 'https://cse120-course-planner.herokuapp.com/api/courses/schedule-search/';
-
+const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
 
 // comparator used for sorting array of objects
 const compareSections = (me, other) => {
@@ -35,6 +39,8 @@ class PlanSchedulePage extends React.Component {
     selectedDepartment: undefined,
     selectedCourse: undefined, // for course detail table
     sections: {}, // for algorithm, must be in same format as table row
+    currSchedule: {},
+    currScheduleIndex: 0,
     validSchedules: [], // for calendars
     error: undefined, // for when we have conflicting schedules.
   };
@@ -203,7 +209,7 @@ class PlanSchedulePage extends React.Component {
         term: "201830",
     });
 
-    axios.post(COURSE_SEARCH_URL, data, {
+    axios.post(`${BASE_URL}/courses/course-match/`, data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -323,7 +329,7 @@ class PlanSchedulePage extends React.Component {
         search_full: true
     });
 
-    axios.post(SCHEDULE_SEARCH_URL, data, {
+    axios.post(`${BASE_URL}/courses/schedule-search/`, data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -349,6 +355,59 @@ class PlanSchedulePage extends React.Component {
     });
   };
 
+  saveSchedule = () => {
+    let crns = [];
+    const schedule = this.state.currSchedule;
+    const sectionsList = extractSectionsFromSchedule(schedule);
+
+    for (let i = 0; i < sectionsList.length; i++) {
+      crns.push(sectionsList[i]['crn']);
+    }
+
+    let data = JSON.stringify({
+        crns: crns,
+        term: "201830",
+    });
+
+    axios.post(`${BASE_URL}/users/save-schedule/`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${Auth.getToken()}`
+        }
+    })
+    .then(res => {
+      const responseStatus = res.data;
+      if ('success' in responseStatus) {
+        // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
+        Alert.success(responseStatus['success'], {
+          position: 'top-right',
+          offset: 50,
+        });
+      }
+      else if ('error' in responseStatus) {
+        // error, schedule probably deleted, update state error Message
+        Alert.error(responseStatus['error'], {
+          position: 'top-right',
+          offset: 50,
+        });
+      }
+    })
+    .catch(error => {
+      // console.log(error);
+      Alert.error(error, {
+        position: 'top-right',
+        offset: 50,
+      });
+    });
+  };
+
+  updateCurrSchedule = (schedule, index) => {
+    this.setState(() => ({
+      currSchedule: schedule,
+      currScheduleIndex: index,
+    }));
+  };
+
 
   render() {
     // only render course detail if a course is selected
@@ -359,6 +418,7 @@ class PlanSchedulePage extends React.Component {
     const selectedCourse = this.state.selectedCourse;
     const validSchedules = this.state.validSchedules;
     const sectionKeys = Object.keys(this.state.sections);
+    const { isLoggedIn } = this.props;
     return (
       <div>
         {/* <p>Selected Department (in root comp.): {this.state.selectedDepartment}</p>
@@ -406,18 +466,26 @@ class PlanSchedulePage extends React.Component {
           { (selectedCourse === undefined && validSchedules.length > 0) &&
             <div className="app-root__schedules-title-wrapper">
               <h3 id="schedules-title__text">Schedules</h3>
+
+              <SaveScheduleButton
+                isLoggedIn={isLoggedIn}
+                saveSchedule={this.saveSchedule}
+              />
+
               {
                 // don't render calendars unless both conditions inside () are true
                 // note: selectedCourse must get reset to undefined when running
                 // the algorithm
                 <Schedules
                   validSchedules={validSchedules}
+                  updateCurrSchedule={this.updateCurrSchedule}
                 />
               }
             </div>
           }
           {/* footer component will go here */}
         </div>
+        <Alert stack={{limit: 2}} timeout={2000} />
       </div>
     );
   }
