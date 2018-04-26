@@ -55,6 +55,11 @@
     /* this will allow for overflow scrolling */
     display: block;
     width: 100% !important;
+    border: none !important;
+  }
+  .sections-table {
+    border: 1px solid rgba(34, 36, 38, 0.15) !important;
+    border-radius: .28571429rem;
   }
   .course-selector__container {
     margin: 0 auto;
