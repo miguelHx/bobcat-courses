@@ -12,6 +12,8 @@ import deptJSON from '../../data/departments_FA18.json';
 import { extractSectionsFromSchedule } from '../lib/WeeklyCalendarUtils';
 import { extractSections } from '../lib/ExtractSections';
 import AuthService from './AuthService';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
 
 const Auth = new AuthService();
 
@@ -377,16 +379,25 @@ class PlanSchedulePage extends React.Component {
       const responseStatus = res.data;
       if ('success' in responseStatus) {
         // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
-        alert(responseStatus['success']);
+        Alert.success(responseStatus['success'], {
+          position: 'top-right',
+          offset: 50,
+        });
       }
       else if ('error' in responseStatus) {
         // error, schedule probably deleted, update state error Message
-        alert(responseStatus['error']);
+        Alert.error(responseStatus['error'], {
+          position: 'top-right',
+          offset: 50,
+        });
       }
     })
     .catch(error => {
       // console.log(error);
-      alert(error);
+      Alert.error(error, {
+        position: 'top-right',
+        offset: 50,
+      });
     });
   };
 
@@ -474,6 +485,7 @@ class PlanSchedulePage extends React.Component {
           }
           {/* footer component will go here */}
         </div>
+        <Alert stack={{limit: 2}} timeout={2000} />
       </div>
     );
   }

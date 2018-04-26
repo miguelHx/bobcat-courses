@@ -5,6 +5,7 @@ import { Button, Message } from 'semantic-ui-react';
 import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
 import Schedules from './Schedules';
 import AuthService from './AuthService';
+import Alert from 'react-s-alert';
 
 const Auth = new AuthService();
 
@@ -70,7 +71,15 @@ class SavedSchedulesPage extends React.Component {
       const newLength = this.state.savedSchedules.length - 1;
       // on success, delete schedule from local state
       if ('success' in responseStatus) {
-        // schedule deleted, so update state accordingly
+        // schedule deleted, so notify user via Alert
+
+        Alert.info(responseStatus['success'], {
+          position: 'top-right',
+          offset: 50,
+        });
+
+
+        // then update state accordingly
         if (newLength === 0) {
           this.setState(() => ({
             savedSchedules: [],
@@ -99,10 +108,12 @@ class SavedSchedulesPage extends React.Component {
               savedSchedules: data,
               error: undefined
             }));
-            // console.log(response.data);
           })
           .catch(error => {
-            this.setState(() => ({ error: error }));
+            Alert.error(error, {
+              position: 'top-right',
+              offset: 50,
+            });
             // console.log(error);
           });
         }
@@ -110,12 +121,18 @@ class SavedSchedulesPage extends React.Component {
       }
       else if ('error' in responseStatus) {
         // error, schedule probably deleted, update state error Message
-        this.setState(() => ({ error: responseStatus['error'] }));
+        Alert.error(responseStatus['error'], {
+          position: 'top-right',
+          offset: 50,
+        });
       }
     })
     .catch(error => {
       // console.log(error);
-      this.setState(() => ({ error: error }));
+      Alert.error(error, {
+        position: 'top-right',
+        offset: 50,
+      });
     });
 
   };
@@ -155,7 +172,7 @@ class SavedSchedulesPage extends React.Component {
             />
           </div>
         }
-
+        <Alert stack={{limit: 2}} timeout={2000} />
       </div>
 
     );
