@@ -89,7 +89,11 @@ class Schedules extends React.Component {
 
       // the following code does a calculation to find the offset of the section square
       // as well as the height based on how the calendar is structured.
-      let timeRanges = convertTimeStringTo24(currSection['hours']).split('-');
+      let timeRanges = convertTimeStringTo24(currSection['hours']);
+      if (timeRanges === 'TBD') {
+        continue;
+      }
+      timeRanges = timeRanges.split('-');
       let sectionStart = moment(timeRanges[0], 'HH:mm');
       let offset = ((sectionStart.diff(startHr, 'hours', true)) * HOUR_SLOT_HEIGHT) + 10; // 10 original top offset in px and 50 for height of each hr-row
 

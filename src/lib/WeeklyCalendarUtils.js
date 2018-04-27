@@ -28,7 +28,12 @@ const convert24to12HourFormat = (time24) => {
 };
 
 // time12 := 3:30-4:20pm for example.
+// however, a TBD might show up, need to account for that.
 const convertTimeStringTo24 = (time12) => {
+  if (time12.indexOf('TBD') >= 0) {
+    // return nothing
+    return 'TBD';
+  }
   let parts = time12.split('-');// [3:30, 4:20pm]
   let startingHour = parseInt(parts[0].split(':')[0], 10);
   let startingMinutes = parts[0].split(':')[1];

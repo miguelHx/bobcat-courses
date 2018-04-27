@@ -50,7 +50,7 @@ module.exports = (env) => {
     },
     plugins: [
       CSSExtract,
-      new BundleAnalyzerPlugin(),
+      // new BundleAnalyzerPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ],
     devtool: isProduction ? 'source-map' : 'inline-source-map',
