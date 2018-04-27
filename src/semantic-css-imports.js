@@ -20,6 +20,7 @@ import 'semantic-ui-css/components/checkbox.min.css';
 
 // Login Form
 import 'semantic-ui-css/components/form.min.css';
+import 'semantic-ui-css/components/segment.min.css';
 
 // Popup
 import 'semantic-ui-css/components/popup.min.css';

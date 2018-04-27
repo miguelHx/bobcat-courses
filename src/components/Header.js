@@ -4,7 +4,7 @@ import logo from '../../assets/images/bobcat-logo.png';
 
 const Header = (props) => {
     return (
-      <header className="header">
+      <header className="header-main">
         <div className="header__container">
           <img src={logo} />
           <div className="header__text__wrapper">

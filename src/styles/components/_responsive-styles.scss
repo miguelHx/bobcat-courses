@@ -3,11 +3,12 @@
   .header {
     margin: 0;
   }
-  .main-container {
+  .main-container, .saved-schedules__main-container,
+  .login-signup-page__main-container {
     flex-direction: column;
-    margin-bottom: $xl-size;
-    margin-left: $m-size;
-    margin-right: $m-size;
+    margin-bottom: 10rem;
+    margin-left: $m-size !important;
+    margin-right: $m-size !important;
   }
   .course-selector__container {
     margin: 0 auto;
@@ -50,6 +51,10 @@
     padding: 0 1rem;
   }
 
+  .login-signup-page__main-container {
+    padding: $xl-size 50px;
+  }
+
 }
 
 /* devices <= 640px */
@@ -75,6 +80,9 @@
   }
   .course__text {
     font-size: 1.2rem;
+  }
+  .login-signup-page__main-container {
+    padding: $xl-size 25px;
   }
 
 }

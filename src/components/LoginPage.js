@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
         this.props.updateLoginStatus();
         Alert.success("Log In Successful", {
           position: 'top-right',
-          offset: 50,
+          offset: 0,
         });
         this.props.history.replace('/');
       })
@@ -61,13 +61,18 @@ class LoginPage extends React.Component {
     const { username, password, error } = this.state;
     return (
       <div className="login-signup-page__main-container">
+        <Message
+          header='Great to see you back!'
+          content='Fill out the form below to log in.'
+          className='signup-page__welcome-msg'
+        />
         <Form onSubmit={this.handleSubmit}>
           {
             error &&  <Message size='small' negative>
                         {error}
                       </Message>
           }
-          <Form.Field>
+          <Form.Field required>
             <label>Username</label>
             <input
               placeholder="Username"
@@ -78,7 +83,7 @@ class LoginPage extends React.Component {
               required
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
             <label>Password</label>
             <input
               placeholder="Password"

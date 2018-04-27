@@ -80,7 +80,7 @@ class SignUpPage extends React.Component {
         // if successful, want alert user, then attempt a log in.
         Alert.success("Sign Up Successful", {
           position: 'top-right',
-          offset: 50,
+          offset: 0,
         });
 
         this.Auth.login(username, password)
@@ -89,7 +89,7 @@ class SignUpPage extends React.Component {
             this.props.updateLoginStatus();
             Alert.success("Log In Successful", {
               position: 'top-right',
-              offset: 50,
+              offset: 0,
             });
             this.props.history.replace('/');
           })
@@ -118,60 +118,69 @@ class SignUpPage extends React.Component {
     const { username, email, firstName, lastName, password, confirmPassword, error } = this.state;
     return (
       <div className="login-signup-page__main-container">
+        <Message
+          header='Welcome to Bobcat Courses!'
+          content='Fill out the form below to sign-up for a new account'
+          className='signup-page__welcome-msg'
+        />
         <Form onSubmit={this.handleSubmit}>
           {
             error &&  <Message size='small' negative>
                         {error}
                       </Message>
           }
-          <Form.Field>
-            <label>Username</label>
-            <input
-              placeholder="Username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={this.handleUserInput}
-              required
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Email</label>
-            <input
-              placeholder="Email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={this.handleUserInput}
-              required
-            />
-          </Form.Field>
+          <Form.Group widths='equal'>
+            <Form.Field required>
+              <label>Username</label>
+              <input
+                placeholder="Username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={this.handleUserInput}
+                required
+              />
+            </Form.Field>
+            <Form.Field required>
+              <label>Email</label>
+              <input
+                placeholder="Email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={this.handleUserInput}
+                required
+              />
+            </Form.Field>
+          </Form.Group>
 
-          <Form.Field>
-            <label>First Name</label>
-            <input
-              placeholder="First Name"
-              name="firstName"
-              type="text"
-              value={firstName}
-              onChange={this.handleUserInput}
-              required
-            />
-          </Form.Field>
+          <Form.Group widths='equal'>
+            <Form.Field required>
+              <label>First Name</label>
+              <input
+                placeholder="First Name"
+                name="firstName"
+                type="text"
+                value={firstName}
+                onChange={this.handleUserInput}
+                required
+              />
+            </Form.Field>
 
-          <Form.Field>
-            <label>Last Name</label>
-            <input
-              placeholder="Last Name"
-              name="lastName"
-              type="text"
-              value={lastName}
-              onChange={this.handleUserInput}
-              required
-            />
-          </Form.Field>
+            <Form.Field required>
+              <label>Last Name</label>
+              <input
+                placeholder="Last Name"
+                name="lastName"
+                type="text"
+                value={lastName}
+                onChange={this.handleUserInput}
+                required
+              />
+            </Form.Field>
+          </Form.Group>
 
-          <Form.Field>
+          <Form.Field required>
             <label>Password</label>
             <input
               placeholder="Password"
@@ -183,7 +192,7 @@ class SignUpPage extends React.Component {
             />
           </Form.Field>
 
-          <Form.Field>
+          <Form.Field required>
             <label>Confirm Password</label>
             <input
               placeholder="Confirm Password"
