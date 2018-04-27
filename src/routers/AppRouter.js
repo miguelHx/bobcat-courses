@@ -2,11 +2,12 @@ import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import Header from '../components/Header';
 import LoginPage from '../components/LoginPage';
+import NavBarMenu from '../components/NavBarMenu';
+import NotFoundPage from '../components/NotFoundPage';
 import SignUpPage from '../components/SignUpPage';
 import SettingsPage from '../components/SettingsPage';
 import PlanSchedulePage from '../components/PlanSchedulePage';
 import SavedSchedulesPage from '../components/SavedSchedulesPage';
-import NotFoundPage from '../components/NotFoundPage';
 import withAuth from './../components/withAuth';
 
 // pages: 1. PlanSchedulePage 2. SavedSchedulesPage 3. Login Page 4. Register Page
@@ -20,7 +21,8 @@ const AppRouter = (props) => {
   return (
     <HashRouter >
       <div>
-        <Header
+        <Header />
+        <NavBarMenu
           history={props.history}
           username={props.username}
           isLoggedIn={props.isLoggedIn}
