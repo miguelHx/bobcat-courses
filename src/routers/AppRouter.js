@@ -67,7 +67,7 @@ const AppRouter = (props) => {
             }}
           />
           <Route
-            path="/sign-up"
+            path="/signup"
             exact={true}
             component={(props) => {
               return (

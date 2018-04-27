@@ -31,3 +31,15 @@ button:disabled {
 .s-alert-box {
   border-radius: 3px;
 }
+
+.login-signup-page__main-container {
+  display: flex;
+  // flex-direction: row;
+  // justify-content: space-around;
+  margin-bottom: 25rem;
+  background-color: white;
+  margin: 0 $l-size;
+  border-radius: 6px;
+  min-height: 400px;
+  height: auto;
+}

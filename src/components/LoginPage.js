@@ -60,7 +60,7 @@ class LoginPage extends React.Component {
   render() {
     const { username, password, error } = this.state;
     return (
-      <div className="login-page__main-container">
+      <div className="login-signup-page__main-container">
         <Form onSubmit={this.handleSubmit}>
           {
             error &&  <Message size='small' negative>
