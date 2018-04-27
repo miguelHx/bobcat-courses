@@ -1,9 +1,19 @@
 .saved-schedules__main-container {
-  // display: flex;
-  // flex-direction: row;
-  // justify-content: space-around;
   margin-bottom: 25rem;
   background-color: white;
   margin: 0 $l-size;
   border-radius: 6px;
+  min-height: 400px;
+  height: auto;
+}
+.saved-schedules__warning-msg-wrapper {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 $m-size;
+  top: 160px;
+}
+.saved-schedules__schedules-display {
+
 }

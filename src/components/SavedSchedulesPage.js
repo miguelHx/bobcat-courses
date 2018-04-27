@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Button, Message } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
 import Schedules from './Schedules';
 import AuthService from './AuthService';
@@ -10,6 +11,15 @@ import Alert from 'react-s-alert';
 const Auth = new AuthService();
 
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
+
+const Nav = (props) => {
+  return (
+    <NavLink
+      exact
+      {...props}
+    />
+  );
+};
 
 class SavedSchedulesPage extends React.Component {
 
@@ -31,10 +41,10 @@ class SavedSchedulesPage extends React.Component {
       .then(response => {
         const data = response.data;
         if (data.length === 0) {
-          this.setState(() => ({ error: 'No saved schedules. Please save a schedule and then come back.' }));
+          this.setState(() => ({ error: 'No saved schedules.' }));
           return;
         }
-        this.setState(() => ({ savedSchedules: data }));
+        this.setState(() => ({ savedSchedules: data, error: undefined }));
         // console.log(response.data);
       })
       .catch(error => {
@@ -83,7 +93,7 @@ class SavedSchedulesPage extends React.Component {
         if (newLength === 0) {
           this.setState(() => ({
             savedSchedules: [],
-            error: 'No saved schedules. Please save a schedule and then come back.'
+            error: 'No saved schedules.'
           }));
         }
         else {
@@ -150,32 +160,49 @@ class SavedSchedulesPage extends React.Component {
 
 
   render() {
+    const { isLoggedIn } = this.props;
     // console.log("[saved schedules state]: ", this.state);
     const { error, currScheduleIndex } = this.state;
     // if not logged in, tell user that they must log in to see this page
     // provide them a link to login.
-    if (!this.props.isLoggedIn) {
-      return <div>Please Log in to view this page.</div>;
-    }
     // if user is logged in AND has saved some schedules, then render schedules onto screen along with options.
     return (
       // add a better layout
       <div className="saved-schedules__main-container">
-        { error && <Message negative>Error message: {error}</Message> }
-
-        {/* want to add some buttons, for now, just delete schedule button  */}
-
-        {
-          this.state.savedSchedules.length > 0 &&
+        { isLoggedIn &&
           <div>
-            <Button onClick={this.deleteSchedule} negative>Delete Schedule</Button>
-            <Schedules
-              validSchedules={this.state.savedSchedules}
-              updateCurrSchedule={this.updateCurrSchedule}
-              currIndex={currScheduleIndex}
-            />
+            { error &&  <div className="saved-schedules__warning-msg-wrapper">
+                          <Message warning>
+                            {error} Plan your schedule <Nav to="/">here </Nav>
+                            and then click the 'Save Schedule' button.
+                          </Message>
+                        </div>
+            }
+
+            {/* want to add some buttons, for now, just delete schedule button  */}
+
+            {
+              this.state.savedSchedules.length > 0 &&
+              <div className="saved-schedules__schedules-display">
+                <Button onClick={this.deleteSchedule} negative>Delete Schedule</Button>
+                <Schedules
+                  validSchedules={this.state.savedSchedules}
+                  updateCurrSchedule={this.updateCurrSchedule}
+                  currIndex={currScheduleIndex}
+                />
+              </div>
+            }
           </div>
         }
+
+        { !isLoggedIn &&
+          <div className="saved-schedules__warning-msg-wrapper">
+            <Message warning>
+              Must be logged in to view saved schedules.&nbsp;<Nav to="/login">Login here</Nav>.
+            </Message>
+          </div>
+        }
+
         <Alert stack={{limit: 2}} timeout={2000} />
       </div>
 

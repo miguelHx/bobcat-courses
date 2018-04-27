@@ -6,6 +6,8 @@
   background-color: white;
   margin: 0 $l-size;
   border-radius: 6px;
+  min-height: 400px;
+  height: auto;
 }
 .app-root__error-msg-wrapper {
   width: 70%;

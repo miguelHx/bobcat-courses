@@ -1,84 +1,72 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Menu, Button } from 'semantic-ui-react';
 
-class MenuExampleBasic extends Component {
-  state = {};
+const Nav = (props) => {
+  return (
+    <NavLink
+      exact
+      {...props}
+    />
+  );
+};
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+const NavBarMenu = (props) => {
+  const { isLoggedIn, username } = props;
+  const { updateLogoutStatus, history } = props;
+  return (
+    <Menu className="navbar-menu" stackable color='blue'>
+      <Menu.Item
+        as={Nav} to="/"
+        name='plan-schedule'
+      >
+        Plan Schedule
+      </Menu.Item>
 
-  render() {
-    const { isLoggedIn, username } = this.props;
-    const { updateLogoutStatus, history } = this.props;
-    const { activeItem } = this.state;
+      <Menu.Item
+        as={Nav} to="/saved-schedules"
+        name='saved-schedules'
+      >
+        Saved Schedules
+      </Menu.Item>
 
-    return (
-      <Menu className="navbar-menu" stackable>
-        <Menu.Item
-          as={Link} to="/"
-          name='plan-schedule'
-          active={activeItem === 'plan-schedule'}
-          onClick={this.handleItemClick}
-        >
-          Plan Schedule
-        </Menu.Item>
-
-        <Menu.Item
-          as={Link} to="/saved-schedules"
-          name='saved-schedules'
-          active={activeItem === 'saved-schedules'}
-          onClick={this.handleItemClick}
-        >
-          Saved Schedules
-        </Menu.Item>
-
-        { !isLoggedIn &&  <Menu.Menu position='right'>
-                            <Menu.Item
-                              as={Link}
-                              to="/sign-up"
-                              name='sign up'
-                              active={activeItem === 'sign up'}
-                              onClick={this.handleItemClick}
-                            />
-                            <Menu.Item
-                              as={Link}
-                              to="/login"
-                              name='log in'
-                              active={activeItem === 'log in'}
-                              onClick={this.handleItemClick}
-                            />
-                          </Menu.Menu>
-        }
-
-        { isLoggedIn && <Menu.Menu position='right'>
+      { !isLoggedIn &&  <Menu.Menu position='right'>
                           <Menu.Item
-                            as={Link}
-                            to="/settings"
-                            name='settings'
-                            active={activeItem === 'settings'}
-                            onClick={this.handleItemClick}
+                            as={Nav}
+                            to="/signup"
+                            name='sign up'
                           />
-
-                          <Menu.Item>
-                            <Button
-                              onClick={() => {
-                                updateLogoutStatus();
-                              }}
-                              color='red'
-                              size='mini'
-                              compact
-                            >
-                              Log Out
-                            </Button>
-                          </Menu.Item>
+                          <Menu.Item
+                            as={Nav}
+                            to="/login"
+                            name='log in'
+                          />
                         </Menu.Menu>
-        }
+      }
 
+      { isLoggedIn && <Menu.Menu position='right'>
+                        <Menu.Item
+                          as={Nav}
+                          to="/settings"
+                          name='settings'
+                        />
 
+                        <Menu.Item>
+                          <Button
+                            onClick={() => {
+                              updateLogoutStatus();
+                            }}
+                            color='red'
+                            size='mini'
+                            compact
+                          >
+                            Log Out
+                          </Button>
+                        </Menu.Item>
+                      </Menu.Menu>
+      }
+    </Menu>
+  );
+};
 
-      </Menu>
-    );
-  }
-}
-
-export default MenuExampleBasic;
+export default NavBarMenu;

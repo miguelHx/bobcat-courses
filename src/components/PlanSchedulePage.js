@@ -420,71 +420,63 @@ class PlanSchedulePage extends React.Component {
     const sectionKeys = Object.keys(this.state.sections);
     const { isLoggedIn } = this.props;
     return (
-      <div>
-        {/* <p>Selected Department (in root comp.): {this.state.selectedDepartment}</p>
-        <p>Selected Course (in root comp.): {this.state.selectedCourse}</p> */}
-        <div className="main-container">
-          <CourseSelector
-            selectedDepartment={selectedDepartment}
-            selectedCourse={selectedCourse}
-            updateSelectedDept={this.updateSelectedDept}
-            updateSelectedCourse={this.updateSelectedCourse}
-            addCourseSections={this.addCourseSections}
-            clearSelectedDept={this.clearSelectedDept}
-            clearSelectedCourse={this.clearSelectedCourse}
-            deleteCourseFromSections={this.deleteCourseFromSections}
-            deleteAllSections={this.deleteAllSections}
-            generateSchedules={this.generateSchedules}
+      <div className="main-container">
+        <CourseSelector
+          selectedDepartment={selectedDepartment}
+          selectedCourse={selectedCourse}
+          updateSelectedDept={this.updateSelectedDept}
+          updateSelectedCourse={this.updateSelectedCourse}
+          addCourseSections={this.addCourseSections}
+          clearSelectedDept={this.clearSelectedDept}
+          clearSelectedCourse={this.clearSelectedCourse}
+          deleteCourseFromSections={this.deleteCourseFromSections}
+          deleteAllSections={this.deleteAllSections}
+          generateSchedules={this.generateSchedules}
+        />
+        {
+          (selectedDepartment === undefined && selectedCourse === undefined) &&
+          <div className="app-root__error-msg-wrapper">
+            <Message info>
+              <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
+            </Message>
+          </div>
+        }
+        {
+          (selectedCourse) &&
+          <CourseDetail
+            department={selectedDepartment}
+            course={selectedCourse}
+            updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
+            sections={this.state.sections}
           />
-          {
-            (selectedDepartment === undefined && selectedCourse === undefined) &&
-            <div className="app-root__error-msg-wrapper">
-              <Message info>
-                <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
-              </Message>
-            </div>
-          }
-          {
-            (selectedCourse) &&
-            <CourseDetail
-              department={selectedDepartment}
-              course={selectedCourse}
-              updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
-              sections={this.state.sections}
+        }
+        {
+          this.state.error &&
+          <div className="app-root__error-msg-wrapper">
+            <Message negative>
+              <p>{this.state.error}</p>
+            </Message>
+          </div>
+        }
+        { (selectedCourse === undefined && validSchedules.length > 0) &&
+          <div className="app-root__schedules-title-wrapper">
+            <h3 id="schedules-title__text">Schedules</h3>
+            <SaveScheduleButton
+              isLoggedIn={isLoggedIn}
+              saveSchedule={this.saveSchedule}
             />
-          }
-
-          {
-            this.state.error &&
-            <div className="app-root__error-msg-wrapper">
-              <Message negative>
-                <p>{this.state.error}</p>
-              </Message>
-            </div>
-          }
-
-          { (selectedCourse === undefined && validSchedules.length > 0) &&
-            <div className="app-root__schedules-title-wrapper">
-              <h3 id="schedules-title__text">Schedules</h3>
-
-              <SaveScheduleButton
-                isLoggedIn={isLoggedIn}
-                saveSchedule={this.saveSchedule}
+            {
+              // don't render calendars unless both conditions inside () are true
+              // note: selectedCourse must get reset to undefined when running
+              // the algorithm
+              <Schedules
+                validSchedules={validSchedules}
+                updateCurrSchedule={this.updateCurrSchedule}
               />
-
-              {
-                // don't render calendars unless both conditions inside () are true
-                // note: selectedCourse must get reset to undefined when running
-                // the algorithm
-                <Schedules
-                  validSchedules={validSchedules}
-                  updateCurrSchedule={this.updateCurrSchedule}
-                />
-              }
-            </div>
-          }
-          {/* footer component will go here */}
-        </div>
+            }
+          </div>
+        }
+        {/* footer component will go here */}
         <Alert stack={{limit: 2}} timeout={2000} />
       </div>
     );
