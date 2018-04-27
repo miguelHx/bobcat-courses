@@ -85,7 +85,7 @@ class SavedSchedulesPage extends React.Component {
 
         Alert.info(responseStatus['success'], {
           position: 'top-right',
-          offset: 50,
+          offset: 0,
         });
 
 
@@ -126,7 +126,7 @@ class SavedSchedulesPage extends React.Component {
           .catch(error => {
             Alert.error(error, {
               position: 'top-right',
-              offset: 50,
+              offset: 0,
             });
             // console.log(error);
           });
@@ -137,7 +137,7 @@ class SavedSchedulesPage extends React.Component {
         // error, schedule probably deleted, update state error Message
         Alert.error(responseStatus['error'], {
           position: 'top-right',
-          offset: 50,
+          offset: 0,
         });
       }
     })
@@ -145,7 +145,7 @@ class SavedSchedulesPage extends React.Component {
       // console.log(error);
       Alert.error(error, {
         position: 'top-right',
-        offset: 50,
+        offset: 0,
       });
     });
 

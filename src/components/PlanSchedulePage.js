@@ -381,14 +381,14 @@ class PlanSchedulePage extends React.Component {
         // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
         Alert.success(responseStatus['success'], {
           position: 'top-right',
-          offset: 50,
+          offset: 0,
         });
       }
       else if ('error' in responseStatus) {
         // error, schedule probably deleted, update state error Message
         Alert.error(responseStatus['error'], {
           position: 'top-right',
-          offset: 50,
+          offset: 0,
         });
       }
     })
@@ -396,7 +396,7 @@ class PlanSchedulePage extends React.Component {
       // console.log(error);
       Alert.error(error, {
         position: 'top-right',
-        offset: 50,
+        offset: 0,
       });
     });
   };
