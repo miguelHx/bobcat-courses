@@ -10,9 +10,9 @@ import WeeklyCalendarView from './WeeklyCalendarView';
 let id = 1000;
 
 let colors = [
-  { bg: '#f3bfff', border: '#cc73e1', text: '#7b4488' }, // purple
-  { bg: '#fff2bf', border: '#ffcc00', text: '#a68500' }, // yellow
   { bg: '#bfecff', border: '#34aadc', text: '#1f6583' }, // blue
+  { bg: '#fff2bf', border: '#ffcc00', text: '#a68500' }, // yellow
+  { bg: '#f3bfff', border: '#cc73e1', text: '#7b4488' }, // purple
   { bg: '#ffbfcb', border: '#ff2d55', text: '#a61d37' }, // red
   { bg: '#ffe5bf', border: '#ff9500', text: '#a66100' }, // orange
   { bg: '#d1ffbf', border: '#65db39', text: '#3c8222' }, // green
@@ -103,31 +103,20 @@ class Schedules extends React.Component {
 
         // create new element with computed offset and height of section div.
 
-        let newElementEventStyle = {
-          display: 'block',
+        let newEventStyle = {
           top: `${offset}px`,
           backgroundColor: colorObj.bg,
           borderLeft: `4px solid ${colorObj.border}`,
           height: `${height}px`,
-          width: '100%',
-          opacity: '0.6',
-          position: 'absolute',
-          zIndex: '1',
         };
 
-        let newElementTextStyle = {
+        let newEventTextStyle = {
           color: colorObj.text,
-          fontSize: '13px',
-          fontWeight: '500',
-          lineHeight: '14px',
-          padding: '4px 6px 4px 6px',
-          wordBreak: 'break-word'
         }
 
-
-        let newElement = (
-          <div key={id++} style={newElementEventStyle}>
-            <div style={newElementTextStyle}>
+        let newEventDOMelement = (
+          <div key={id++} style={newEventStyle} className="cal-event">
+            <div style={newEventTextStyle} className="cal-event__text">
               <div className="title">
                 {currSection['course_id']}
               </div>
@@ -139,19 +128,19 @@ class Schedules extends React.Component {
         );
         switch (currChar) {
           case 'M':
-            monSections.push(newElement);
+            monSections.push(newEventDOMelement);
             break;
           case 'T':
-            tueSections.push(newElement);
+            tueSections.push(newEventDOMelement);
             break;
           case 'W':
-            wedSections.push(newElement);
+            wedSections.push(newEventDOMelement);
             break;
           case 'R':
-            thuSections.push(newElement);
+            thuSections.push(newEventDOMelement);
             break;
           case 'F':
-            friSections.push(newElement);
+            friSections.push(newEventDOMelement);
             break;
           default:
             break;

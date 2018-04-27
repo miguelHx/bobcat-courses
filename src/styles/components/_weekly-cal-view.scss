@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   top: 10px;
-  height: 50px;
+  height: $regular-hr-slot-height; // this will change according to width of screen
   width: 100%;
   border-top-color: rgb(229, 229, 229);
   border-top-style: solid;
@@ -24,7 +24,7 @@
   font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
   font-size: 12px;
   font-weight: 300;
-  height: 50px;
+  height: $regular-hr-slot-height; // this will also change according to width of screen
   opacity: 1;
   padding-right: 5px;
   text-align: right;

@@ -20,10 +20,10 @@ const extractSectionsFromSchedule = (currSchedule) => {
 const convert24to12HourFormat = (time24) => {
   // expecting numbers such as 7, 8, 9, 10, 11, 12, 13, 14 etc.
   if (time24 <= 12) {
-    return `${time24}:00am`;
+    return `${time24}am`;
   }
   else {
-    return `${time24 - 12}:00pm`;
+    return `${time24 - 12}pm`;
   }
 };
 
