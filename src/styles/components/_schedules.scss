@@ -61,11 +61,13 @@
   word-break: break-word;
 }
 
-.location {
+.detail {
   font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
   font-size: 13px;
   font-weight: 300;
   line-height: 14px;
+  position: relative;
+  top: 2px;
   margin-top: 2px;
   word-break: break-word;
 }

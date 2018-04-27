@@ -6,7 +6,7 @@
   .main-container, .saved-schedules__main-container,
   .login-signup-page__main-container {
     flex-direction: column;
-    margin-bottom: 10rem;
+    margin-bottom: 25rem;
     margin-left: $m-size !important;
     margin-right: $m-size !important;
   }
@@ -71,6 +71,9 @@
   }
   .course-selector__container {
     margin: 0 auto;
+  }
+  .schedules__container {
+    padding: 0 $s-size !important;
   }
   .add-course__header__title {
     font-size: 24px;

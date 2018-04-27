@@ -9,6 +9,8 @@ import WeeklyCalendarView from './WeeklyCalendarView';
 
 let id = 1000;
 
+const HOUR_SLOT_HEIGHT = 75;
+
 let colors = [
   { bg: '#bfecff', border: '#34aadc', text: '#1f6583' }, // blue
   { bg: '#fff2bf', border: '#ffcc00', text: '#a68500' }, // yellow
@@ -89,11 +91,11 @@ class Schedules extends React.Component {
       // as well as the height based on how the calendar is structured.
       let timeRanges = convertTimeStringTo24(currSection['hours']).split('-');
       let sectionStart = moment(timeRanges[0], 'HH:mm');
-      let offset = ((sectionStart.diff(startHr, 'hours', true)) * 50) + 10; // 10 original top offset in px and 50 for height of each hr-row
+      let offset = ((sectionStart.diff(startHr, 'hours', true)) * HOUR_SLOT_HEIGHT) + 10; // 10 original top offset in px and 50 for height of each hr-row
 
       let sectionEnd = moment(timeRanges[1], 'HH:mm');
       let difference = sectionEnd.diff(sectionStart, 'hours', true);
-      let height = difference * 50; // 50px * height for event
+      let height = difference * HOUR_SLOT_HEIGHT; // 50px * height for event
 
       // now that we have the offset and height, we can place into the calendar by inserting as a child of mon, tues, wedn, etc. column
       let days = currSection['days'];
@@ -113,15 +115,17 @@ class Schedules extends React.Component {
         let newEventTextStyle = {
           color: colorObj.text,
         }
-
+        const split = currSection['course_id'].split('-');
+        const sectionID = currSection['course_id'];
+        const sectionType = currSection['type'];
         let newEventDOMelement = (
           <div key={id++} style={newEventStyle} className="cal-event">
             <div style={newEventTextStyle} className="cal-event__text">
               <div className="title">
-                {currSection['course_id']}
+                {sectionID}
               </div>
-              <div className="location">
-                {currSection['room']}
+              <div className="detail">
+                {sectionType}
               </div>
             </div>
           </div>
