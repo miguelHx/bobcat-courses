@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Button, Message } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
+import GoogleCalButton from './GoogleCalButton';
 import Schedules from './Schedules';
 import AuthService from './AuthService';
 import Alert from 'react-s-alert';
@@ -185,6 +186,7 @@ class SavedSchedulesPage extends React.Component {
               this.state.savedSchedules.length > 0 &&
               <div className="saved-schedules__schedules-display">
                 <Button onClick={this.deleteSchedule} negative>Delete Schedule</Button>
+                <GoogleCalButton currSchedule={this.state.currSchedule}/>
                 <Schedules
                   validSchedules={this.state.savedSchedules}
                   updateCurrSchedule={this.updateCurrSchedule}
