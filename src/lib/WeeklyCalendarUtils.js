@@ -49,7 +49,7 @@ const convertTimeStringTo24 = (time12) => {
       startingHour = startingHour.toString(10);
       endingHour = endingHour.toString(10);
     }
-    if (endingHour >= startingHour) {
+    else if (endingHour >= startingHour) {
       startingHour += 12;
       startingHour = startingHour.toString(10);
       endingHour += 12;
