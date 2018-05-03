@@ -2,8 +2,6 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { DEPT_SHORTHAND } from './../lib/ShorthandDeptLookup';
 
-const stateOptions = [{key: 'Al', value: 'AL', text: 'Alabama'}, {key: 'BA', value: 'BA', text: 'Bammington'}]
-
 export default class AddCourse extends React.Component {
   state = {
     error: undefined
@@ -47,7 +45,7 @@ export default class AddCourse extends React.Component {
     if (error) {
       this.setState(() => ({ error: undefined }));
     }
-  }
+  };
 
   handleCourseDropdown = (event, data) => {
     // whenever course dropdown changes, we want to also add course to list
@@ -63,7 +61,7 @@ export default class AddCourse extends React.Component {
     // update selected course in root component
     // * addCourseSections will update selected course so might not even need the next line
     this.props.updateSelectedCourse(course);
-  }
+  };
 
   render() {
     return (

@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/bobcat-logo.png';
 
 const Header = (props) => {
@@ -14,8 +13,7 @@ const Header = (props) => {
         </div>
       </header>
     );
-
-}
+};
 
 Header.defaultProps = {
   title: 'Bobcat Courses',

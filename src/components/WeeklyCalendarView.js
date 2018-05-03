@@ -62,31 +62,14 @@ export default class WeeklyCalendarView extends React.Component {
   };
 
   render() {
-    const startTime = this.props.startTime;
-    const endTime = this.props.endTime;
-
-    const monSections = this.props.monSections;
-    const tueSections = this.props.tueSections;
-    const wedSections = this.props.wedSections;
-    const thuSections = this.props.thuSections;
-    const friSections = this.props.friSections;
-
+    const { startTime, endTime } = this.props;
+    const { monSections, tueSections, wedSections, thuSections, friSections } = this.props;
     return (
       <div className="weekly-cal-view__container">
         <div className="weekly-cal-view__time-col">
           { this.renderTimes(startTime, endTime) }
         </div>
         <div className="weekly-cal-view__monday-col" id="monday">
-          {/* <div className="event">
-            <div className="text">
-              <div className="title">
-                CSE 111 LAB 02L
-              </div>
-              <div className="location">
-                SCIENG 100
-              </div>
-            </div>
-          </div> */}
           { this.renderWeekColumnRows(endTime-startTime) }
           { this.renderSections(monSections) }
 

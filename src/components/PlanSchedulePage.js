@@ -1,27 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Alert from 'react-s-alert';
+import AuthService from './AuthService';
 import axios from 'axios';
 import CourseDetail from '../components/CourseDetail';
 import CourseSelector from '../components/CourseSelector';
-import Header from '../components/Header';
-import { Message, Button } from 'semantic-ui-react';
-import SaveScheduleButton from './SaveScheduleButton';
-import Schedules from '../components/Schedules';
-import courseJSON from '../../data/courses_sample_data.json';
 import deptJSON from '../../data/departments_FA18.json';
 import { extractSectionsFromSchedule } from '../lib/WeeklyCalendarUtils';
 import { extractSections } from '../lib/ExtractSections';
-import AuthService from './AuthService';
-import Alert from 'react-s-alert';
+import { Message } from 'semantic-ui-react';
+import SaveScheduleButton from './SaveScheduleButton';
+import Schedules from '../components/Schedules';
 import 'react-s-alert/dist/s-alert-default.css';
 
 const Auth = new AuthService();
-
-// TODO - fetch data from this component in addCourseSections.  After data is fetched, update the selectedCourse so that the course detail can render.
-// * in the course Detail first check if selected course is inside sections array.  Should be there tho since course detail won't render unless
-// data is fetched AND selectedCourse is there.
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
-
 // comparator used for sorting array of objects
 const compareSections = (me, other) => {
   let mySectNum = me['course_id'].split('-')[2];
@@ -31,10 +23,9 @@ const compareSections = (me, other) => {
   if (mySectNum > otherSectNum)
     return 1;
   return 0;
-}
+};
 
-
-class PlanSchedulePage extends React.Component {
+export default class PlanSchedulePage extends React.Component {
   state = {
     selectedDepartment: undefined,
     selectedCourse: undefined, // for course detail table
@@ -66,7 +57,6 @@ class PlanSchedulePage extends React.Component {
     for (let i = 0; i < sectionKeys.length; i++) {
       let currSectionKey = sectionKeys[i];
       let sectionsList = sections[course][currSectionKey];
-
       // case when we have one standalone section, i.e. WRI-1
       if (sectionsList.length === 1) {
 
@@ -105,20 +95,16 @@ class PlanSchedulePage extends React.Component {
                   }
                 }
               }
-
               // if current one is NOT checked, then when we check it,
               // we want to ALSO check the other one, since they are linked
-
               // in other words, leave it alone.
               continue;
             }
             // other case, if checked to unchecked AND other one is disabled, want enable it
             // uncheck  that one also
             // first search for it
-            let attachedSection = {};
             for (let idx = 0; idx < sectionsList.length; idx++) {
               if (sectionsList[idx]['crn'] == attachedCRN) {
-                let rowStatus = sectionsList[idx]['isRowDisabled'];
                 sections[course][currSectionKey][idx]['isSelected'] = false;
               }
             }
@@ -129,7 +115,6 @@ class PlanSchedulePage extends React.Component {
         // case where main section type is checked, i.e. LECT
         sections[course][currSectionKey][j]['isSelected'] = !checked;
         for (let k = j + 1; k < sectionsList.length; k++) {
-          let rowDisabled = sectionsList[k]['isRowDisabled'];
           if (checked) {
             // from checked to unchecked, disable and de-select all rows
             sections[course][currSectionKey][k]['isRowDisabled'] = true;
@@ -182,7 +167,6 @@ class PlanSchedulePage extends React.Component {
     // first, initalize main components
     for (let i = 0; i < courseData.length; i++) {
       if (courseData[i]['lecture_crn'] === null) {
-        // initalize section array
         courseData[i]["isSelected"] = true; // by default, everything is selected
         courseData[i]["isRowDisabled"] = false;
         output[courseData[i]['crn']] = [];
@@ -199,11 +183,10 @@ class PlanSchedulePage extends React.Component {
       }
     }
     return output;
-  }
+  };
 
   fetchCourseData = (course) => {
-    let sections = this.state.sections;
-
+    let { sections } = this.state;
     let data = JSON.stringify({
         course_list: [course],
         term: "201830",
@@ -216,8 +199,7 @@ class PlanSchedulePage extends React.Component {
     })
     .then(res => {
       const data = res.data[course];
-      let sectionsObj = this.postRequestDataExtractor(data);
-      sections[course] = sectionsObj;
+      sections[course] = this.postRequestDataExtractor(data);
       this.setState(() => ({ sections: sections }));
     })
     .catch(error => {
@@ -240,12 +222,6 @@ class PlanSchedulePage extends React.Component {
     }
     */
     this.fetchCourseData(course);
-    //this.setState(() => ({ selectedCourse: course }));
-    //this.setState(() => ({ sections: sections }));
-    // if we fetch the sections here, and pass it to the course detail than we can keep track of
-    // the selected state easier
-    // don't select course until course data is loaded
-
   };
 
   deleteCourseFromSections = (course) => {
@@ -269,11 +245,9 @@ class PlanSchedulePage extends React.Component {
 
 
   filterSectionsFromSchedules = (schedules, sections, doFilterBool) => {
-
     if (!doFilterBool) {
       return schedules;
     }
-
     let stack = []; // using stack to keep track of schedule adding
     for (let i = 0; i < schedules.length; i++) {
       let currScheduleSections = extractSectionsFromSchedule(schedules[i]);
@@ -302,14 +276,11 @@ class PlanSchedulePage extends React.Component {
         }
       }
     }
-
     return stack;
-
   };
 
 
   generateSchedules = (courses) => {
-
     // clear previous valid sections
     if (this.state.validSchedules.length > 0) {
       this.setState(() => ({ validSchedules: [] }));
@@ -408,16 +379,8 @@ class PlanSchedulePage extends React.Component {
     }));
   };
 
-
   render() {
-    // only render course detail if a course is selected
-    // only render calendar component if valid schedules has size > 0
-    // if generate schedules is ran, but there is a conflict, then
-    // notify user and reset state
-    const selectedDepartment = this.state.selectedDepartment;
-    const selectedCourse = this.state.selectedCourse;
-    const validSchedules = this.state.validSchedules;
-    const sectionKeys = Object.keys(this.state.sections);
+    const { selectedDepartment, selectedCourse, validSchedules }= this.state;
     const { isLoggedIn } = this.props;
     return (
       <div className="main-container">
@@ -445,7 +408,7 @@ class PlanSchedulePage extends React.Component {
           (selectedCourse) &&
           <CourseDetail
             department={selectedDepartment}
-            course={selectedCourse}
+            selectedCourse={selectedCourse}
             updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
             sections={this.state.sections}
           />
@@ -459,28 +422,25 @@ class PlanSchedulePage extends React.Component {
           </div>
         }
         { (selectedCourse === undefined && validSchedules.length > 0) &&
-          <div className="app-root__schedules-title-wrapper">
-            <h3 id="schedules-title__text">Schedules</h3>
-            <SaveScheduleButton
-              isLoggedIn={isLoggedIn}
-              saveSchedule={this.saveSchedule}
+        <div className="app-root__schedules-title-wrapper">
+          <h3 id="schedules-title__text">Schedules</h3>
+          <SaveScheduleButton
+            isLoggedIn={isLoggedIn}
+            saveSchedule={this.saveSchedule}
+          />
+          {
+            // don't render calendars unless both conditions inside () are true
+            // note: selectedCourse must get reset to undefined when running
+            // the algorithm
+            <Schedules
+              validSchedules={validSchedules}
+              updateCurrSchedule={this.updateCurrSchedule}
             />
-            {
-              // don't render calendars unless both conditions inside () are true
-              // note: selectedCourse must get reset to undefined when running
-              // the algorithm
-              <Schedules
-                validSchedules={validSchedules}
-                updateCurrSchedule={this.updateCurrSchedule}
-              />
-            }
-          </div>
+          }
+        </div>
         }
-        {/* footer component will go here */}
         <Alert stack={{limit: 2}} timeout={2000} />
       </div>
     );
   }
 }
-
-export default PlanSchedulePage;

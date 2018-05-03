@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
 import { Button } from 'semantic-ui-react';
 import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
@@ -23,7 +22,7 @@ let colors = [
 
 let colorsIdx = 0;
 
-class Schedules extends React.Component {
+export default class Schedules extends React.Component {
   state = {
     currIndex: 0,
   };
@@ -43,11 +42,8 @@ class Schedules extends React.Component {
     }
   }
 
-
   placeSectionsIntoCalendar = (startingHour, allSections) => {
-
     let startHr = (startingHour * 100).toString(10); // will be used for moment js
-
     let hr;
     if (startingHour < 10) {
        hr = `0${startHr.substring(0, 1)}`;
@@ -85,8 +81,6 @@ class Schedules extends React.Component {
         prevCourse = currCourse;
       }
       // get new color index when we encounter a change in course.
-
-
       // the following code does a calculation to find the offset of the section square
       // as well as the height based on how the calendar is structured.
       let timeRanges = convertTimeStringTo24(currSection['hours']);
@@ -155,7 +149,6 @@ class Schedules extends React.Component {
         }
       }
     }
-
     return {
       mondaySections: monSections,
       tuesdaySections: tueSections,
@@ -167,7 +160,6 @@ class Schedules extends React.Component {
   };
 
   handleLeftArrowButton = () => {
-
     let currIdx;
     if (this.props.currIndex >= 0) {
       currIdx = this.props.currIndex;
@@ -175,7 +167,6 @@ class Schedules extends React.Component {
     else {
       currIdx = this.state.currIndex;
     }
-
     const numValidSchedules = this.props.validSchedules.length;
     if (currIdx == 0) {
       currIdx = numValidSchedules - 1;
@@ -186,23 +177,14 @@ class Schedules extends React.Component {
 
     // update event placement
     const currSchedule = this.props.validSchedules[currIdx];
-    const sectionsList = extractSectionsFromSchedule(currSchedule);
-
-    const earliest = currSchedule['info']['earliest'];
-    const start = (Math.floor(earliest/100)*100)/100;
-
     this.setState(() => ({ currIndex: currIdx }));
 
     if (this.props.updateCurrSchedule) {
       this.props.updateCurrSchedule(currSchedule, currIdx);
     }
-
-
-
   };
 
   handleRightArrowButton = () => {
-
     let currIdx;
     if (this.props.currIndex >= 0) {
       currIdx = this.props.currIndex;
@@ -212,26 +194,18 @@ class Schedules extends React.Component {
     }
 
     const numValidSchedules = this.props.validSchedules.length;
-    if (currIdx == numValidSchedules-1) {
+    if (currIdx === numValidSchedules-1) {
       currIdx = 0;
     }
     else {
       currIdx += 1;
     }
-
     const currSchedule = this.props.validSchedules[currIdx];
-    const sectionsList = extractSectionsFromSchedule(currSchedule);
-
-    const earliest = currSchedule['info']['earliest'];
-    const start = (Math.floor(earliest/100)*100)/100;
-
-
     this.setState(() => ({ currIndex: currIdx }));
 
     if (this.props.updateCurrSchedule) {
       this.props.updateCurrSchedule(currSchedule, currIdx);
     }
-
   };
 
   render() {
@@ -245,15 +219,12 @@ class Schedules extends React.Component {
     else {
       currIdx = this.state.currIndex;
     }
-
     const currSchedule = this.props.validSchedules[currIdx];
     const numValidSchedules = this.props.validSchedules.length;
-
     const earliest = currSchedule['info']['earliest'];
     const latest = currSchedule['info']['latest'];
     const start = (Math.floor(earliest/100)*100)/100;
     const end = (Math.ceil(latest/100)*100)/100 + 1;
-
     const weekSections = this.placeSectionsIntoCalendar(start, extractSectionsFromSchedule(currSchedule));
 
     return (
@@ -291,10 +262,7 @@ class Schedules extends React.Component {
           startTime={start}
           endTime={end}
         />
-
       </div>
     );
   }
 }
-
-export default Schedules;

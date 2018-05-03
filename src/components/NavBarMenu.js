@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, Button } from 'semantic-ui-react';
 
@@ -12,8 +12,7 @@ const Nav = (props) => {
 };
 
 const NavBarMenu = (props) => {
-  const { isLoggedIn, username } = props;
-  const { updateLogoutStatus, history } = props;
+  const { updateLogoutStatus, isLoggedIn, username, history } = props;
   return (
     <Menu className="navbar-menu" stackable color='blue'>
       <Menu.Item

@@ -1,11 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from './AuthService';
 import Alert from 'react-s-alert';
 
 class LoginPage extends React.Component {
-
   componentWillMount() {
     // if we are already logged in, we don't want to stay in login page
     if (this.Auth.loggedIn()) {
@@ -22,7 +20,6 @@ class LoginPage extends React.Component {
   Auth = new AuthService();
 
   handleLoginSuccess = () => {
-    // call function from props
     this.props.updateLoginStatus();
   };
 
@@ -33,16 +30,11 @@ class LoginPage extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // get function pointer from props
-    const { updateLoginStatus } = this.props;
-    // check that both username AND password are not empty
     const { username, password } = this.state;
-    // alert("a username was submitted: " + username + "\na password was submitted: " + password);
-
     this.Auth.login(username, password)
       .then((res) => {
         // if successful, we will redirect to home page and update login status
-        this.props.updateLoginStatus();
+        this.handleLoginSuccess();
         Alert.success("Log In Successful", {
           position: 'top-right',
           offset: 0,
@@ -50,9 +42,6 @@ class LoginPage extends React.Component {
         this.props.history.replace('/');
       })
       .catch((err) => {
-        // otherwise, catch error and display to user
-        // console.log(err);
-        // alert(err);
         this.setState({ error: 'Invalid Username and/or Password' });
       })
   };
@@ -69,8 +58,8 @@ class LoginPage extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           {
             error &&  <Message size='small' negative>
-                        {error}
-                      </Message>
+              {error}
+            </Message>
           }
           <Form.Field required>
             <label>Username</label>
@@ -100,7 +89,6 @@ class LoginPage extends React.Component {
       </div>
     );
   }
-
 };
 
 export default LoginPage;

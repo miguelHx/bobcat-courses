@@ -11,6 +11,6 @@ const WeeklyCalendarHeader = (props) => {
       <div className="calendar-header__row-title">Fri</div>
     </div>
   );
-}
+};
 
 export default WeeklyCalendarHeader;

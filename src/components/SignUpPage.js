@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from './AuthService';
@@ -30,7 +29,6 @@ class SignUpPage extends React.Component {
 
   handleUserInput = (event) => {
     const { name, value } = event.target;
-
     this.setState(() => ({ [name]: value, error: '' }));
   };
 
@@ -39,9 +37,7 @@ class SignUpPage extends React.Component {
     event.preventDefault();
     // get password and confirmPassword
     const { username, password, confirmPassword } = this.state;
-
     // some form validation
-
     if (username.indexOf(" ") >= 0) {
       this.setState(() => ({ error: 'Username must contain NO spaces.' }));
       return;
@@ -110,10 +106,6 @@ class SignUpPage extends React.Component {
     });
   };
 
-
-
-
-
   render() {
     const { username, email, firstName, lastName, password, confirmPassword, error } = this.state;
     return (
@@ -126,8 +118,8 @@ class SignUpPage extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           {
             error &&  <Message size='small' negative>
-                        {error}
-                      </Message>
+              {error}
+            </Message>
           }
           <Form.Group widths='equal'>
             <Form.Field required>
@@ -210,6 +202,6 @@ class SignUpPage extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default SignUpPage;

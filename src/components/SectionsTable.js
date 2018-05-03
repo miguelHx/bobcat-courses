@@ -1,10 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Checkbox, Table } from 'semantic-ui-react';
 
-
-
-class SectionsTable extends React.Component {
+export default class SectionsTable extends React.Component {
 
   renderHeaderRow = () => {
     return (
@@ -72,5 +69,3 @@ class SectionsTable extends React.Component {
     );
   }
 }
-
-export default SectionsTable;

@@ -1,7 +1,6 @@
 import decode from 'jwt-decode';
 
 export default class AuthService {
-  //init import variables
   constructor(domain) {
     this.domain = domain || 'https://cse120-course-planner.herokuapp.com/api/' // API server domain
     this.fetch = this.fetch.bind(this);

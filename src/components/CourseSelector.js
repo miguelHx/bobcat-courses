@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import AddCourse from './AddCourse';
 import Courses from './Courses';
 import { Button } from 'semantic-ui-react';
@@ -8,22 +7,16 @@ import axios from 'axios';
 const MAX_NUM_COURSES = 7;
 const BASE_URL = `https://cse120-course-planner.herokuapp.com/api/courses-list/`;
 
-
 class CourseSelector extends React.Component {
   state = {
     courses: [], // array of course objects { name: '...', department: '...' }
     courseDropdownList: []
   };
 
-  componentDidMount() {
-
-  }
-
   handleDeptDropdown = (dept) => {
     // want to update selectedCourse state as well by calling handler from app root
     this.props.updateSelectedDept(dept);
     this.props.clearSelectedCourse();
-
     // just fetching list of courses here from backend rest api based on chosen department
     const deptEncoded = encodeURIComponent(dept);
     let params = `subject=${deptEncoded}&term=201830`;
@@ -40,8 +33,6 @@ class CourseSelector extends React.Component {
         }
         this.setState(() => ({ courseDropdownList: list }));
       });
-
-
   };
 
   handleDeleteOneCourse = (course) => {
@@ -50,19 +41,16 @@ class CourseSelector extends React.Component {
         return currCourseObj.name !== course
       })
     }));
-
     if (course === this.props.selectedCourse) {
       this.props.clearSelectedCourse();
     }
     // also update sections in root
     this.props.deleteCourseFromSections(course);
-
   };
 
   handleAddCourse = (course) => {
     const courses = this.state.courses;
     const dept = this.props.selectedDepartment;
-
     // loop through array of objects, and check if course already exists
     for (let i = 0; i < courses.length; i++) {
       let currObject = courses[i];
@@ -70,17 +58,12 @@ class CourseSelector extends React.Component {
         return "This course already exists.";
       }
     }
-
     if (!course) {
       return "Select a valid course to add.";
     }
-
     if (courses.length >= MAX_NUM_COURSES) {
       return "Max amount of courses reached.";
     }
-
-
-
     const courseObj = {
       name: course,
       department: dept

@@ -1,6 +1,5 @@
 import React from 'react';
 import Course from './Course';
-import { Button } from 'semantic-ui-react';
 
 const Courses = (props) => {
   return (
