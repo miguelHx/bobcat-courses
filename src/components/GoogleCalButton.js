@@ -22,7 +22,8 @@ const TERM_YEAR = '2018'; // static for now
 
 class GoogleCalButton extends React.Component {
   state = {
-    events: []
+    isSignedInToGoogle: false,
+    buttonClicked: false,
   };
 
   componentDidMount() {
@@ -58,7 +59,6 @@ class GoogleCalButton extends React.Component {
     }).then(() => {
       // Listen for sign-in state changes.
       gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
-
       // Handle the initial sign-in state.
       this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
     });
@@ -69,18 +69,24 @@ class GoogleCalButton extends React.Component {
    *  appropriately. After a sign-in, the API is called.
    */
   updateSigninStatus = (isSignedIn) => {
-    if (isSignedIn) {
+    this.setState(() => ({ isSignedInToGoogle: isSignedIn }));
+    if (isSignedIn && this.state.buttonClicked) {
       this.makeApiCall();
-    } else {
-      // do nothing, but leave here for now
     }
+    this.setState(() => ({ buttonClicked: false })); // reset button clicked state
   };
 
   /**
    *  Sign in the user upon button click.
    */
   handleAuthClick = (event) => {
-    gapi.auth2.getAuthInstance().signIn();
+    if (this.state.isSignedInToGoogle) {
+      this.makeApiCall();
+    }
+    else {
+      this.setState(() => ({ buttonClicked: true }));
+      gapi.auth2.getAuthInstance().signIn();
+    }
   };
 
   /**
