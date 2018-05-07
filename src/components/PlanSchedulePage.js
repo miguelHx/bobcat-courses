@@ -39,7 +39,7 @@ export default class PlanSchedulePage extends React.Component {
   componentDidMount() {
     const tempSchedules = sessionStorage.getItem("tempSchedules");
     const tempCourseInfo = sessionStorage.getItem("tempCourseInfo");
-    const savedIndex = sessionStorage.getItem("planSchedulesIndex");
+    const savedIndex = sessionStorage.getItem("planSchedulesIndex") || 0; // default to 0 if null
     if (tempCourseInfo !== null) {
       const parsedCI = JSON.parse(tempCourseInfo); // CI === 'course info'
       this.setState(() => ({
