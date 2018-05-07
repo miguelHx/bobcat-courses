@@ -1,3 +1,7 @@
 .navbar-menu {
   margin: 0 0 $l-size 0 !important;
 }
+
+.navbar-menu__header:hover {
+  background: none !important;
+}
