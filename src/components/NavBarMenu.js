@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, Button } from 'semantic-ui-react';
+import logo from '../../assets/images/bobcat-logo.png';
 
 const Nav = (props) => {
   return (
@@ -12,9 +13,10 @@ const Nav = (props) => {
 };
 
 const NavBarMenu = (props) => {
-  const { updateLogoutStatus, isLoggedIn, username, history } = props;
+  const { updateLogoutStatus, isLoggedIn } = props;
   return (
-    <Menu className="navbar-menu" stackable color='blue'>
+    <Menu className="navbar-menu" stackable color='blue' inverted size='small'>
+      <Menu.Item header><img src={logo} />Bobcat Courses</Menu.Item>
       <Menu.Item
         as={Nav} to="/"
         name='plan-schedule'

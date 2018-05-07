@@ -8,7 +8,7 @@ import WeeklyCalendarView from './WeeklyCalendarView';
 
 let id = 1000;
 
-const HOUR_SLOT_HEIGHT = 75;
+const HOUR_SLOT_HEIGHT = 50;
 
 let colors = [
   { bg: '#bfecff', border: '#34aadc', text: '#1f6583' }, // blue

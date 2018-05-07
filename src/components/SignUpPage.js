@@ -114,6 +114,7 @@ class SignUpPage extends React.Component {
           header='Welcome to Bobcat Courses!'
           content='Fill out the form below to sign-up for a new account'
           className='signup-page__welcome-msg'
+          info
         />
         <Form onSubmit={this.handleSubmit}>
           {

@@ -54,6 +54,7 @@ class LoginPage extends React.Component {
           header='Great to see you back!'
           content='Fill out the form below to log in.'
           className='signup-page__welcome-msg'
+          info
         />
         <Form onSubmit={this.handleSubmit}>
           {
