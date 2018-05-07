@@ -13,6 +13,24 @@ class CourseSelector extends React.Component {
     courseDropdownList: []
   };
 
+  componentDidMount() {
+    const tempCoursesList = sessionStorage.getItem("tempCoursesList");
+    if (tempCoursesList !== null) {
+      this.setState(() => ({ courses: JSON.parse(tempCoursesList) }));
+    }
+  }
+
+  componentWillUnmount() {
+    // want to save valid schedules (if any) to session storage
+    const { courses } = this.state;
+    if (courses.length > 0) {
+      sessionStorage.setItem("tempCoursesList", JSON.stringify(courses));
+    }
+    else {
+      sessionStorage.removeItem("tempCoursesList");
+    }
+  }
+
   handleDeptDropdown = (dept) => {
     // want to update selectedCourse state as well by calling handler from app root
     this.props.updateSelectedDept(dept);

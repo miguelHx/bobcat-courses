@@ -84,7 +84,7 @@ export default class AddCourse extends React.Component {
             selection
             options={this.loadCourseOptions()}
             onChange={this.handleCourseDropdown}
-            noResultsMessage='Loading...'
+            noResultsMessage='Please select a Department'
           />
         </div>
         {this.state.error && <p className="add-course-error">{this.state.error}</p>}

@@ -36,8 +36,47 @@ export default class PlanSchedulePage extends React.Component {
     error: undefined, // for when we have conflicting schedules.
   };
 
+  componentDidMount() {
+    const tempSchedules = sessionStorage.getItem("tempSchedules");
+    const tempCourseInfo = sessionStorage.getItem("tempCourseInfo");
+    const savedIndex = sessionStorage.getItem("planSchedulesIndex");
+    if (tempCourseInfo !== null) {
+      const parsedCI = JSON.parse(tempCourseInfo); // CI === 'course info'
+      this.setState(() => ({
+        selectedDepartment: parsedCI.selectedDepartment,
+        selectedCourse: parsedCI.selectedCourse,
+        sections: parsedCI.sections,
+        currScheduleIndex: JSON.parse(savedIndex),
+      }));
+    }
+    if (tempSchedules !== null) {
+      this.setState(() => ({
+        validSchedules: JSON.parse(tempSchedules),
+      }));
+    }
+  }
+
   componentWillMount() {
     window.deptList = deptJSON;
+  }
+
+  componentWillUnmount() {
+    // want to save valid schedules (if any) to session storage
+    const { validSchedules, currScheduleIndex, selectedDepartment, selectedCourse, sections } = this.state;
+    const selectedCourseInfo = {
+      selectedDepartment: selectedDepartment,
+      selectedCourse: selectedCourse,
+      sections: sections,
+    };
+    if (validSchedules.length > 0) {
+      // if schedules are here, might as well update ALL relevant state.
+      sessionStorage.setItem("tempSchedules", JSON.stringify(validSchedules));
+      sessionStorage.setItem("planSchedulesIndex", JSON.stringify(currScheduleIndex));
+      sessionStorage.setItem("tempCourseInfo", JSON.stringify(selectedCourseInfo));
+    }
+    if (selectedCourse && sections[selectedCourse]) {
+      sessionStorage.setItem("tempCourseInfo", JSON.stringify(selectedCourseInfo));
+    }
   }
 
   updateSelectedDept = (dept) => {
@@ -349,6 +388,9 @@ export default class PlanSchedulePage extends React.Component {
     .then(res => {
       const responseStatus = res.data;
       if ('success' in responseStatus) {
+        // want to clear session storage of 'cached' saved schedules and index
+        sessionStorage.removeItem("tempSavedSchedules");
+        sessionStorage.removeItem("savedSchedulesIndex");
         // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
         Alert.success(responseStatus['success'], {
           position: 'top-right',
@@ -380,7 +422,7 @@ export default class PlanSchedulePage extends React.Component {
   };
 
   render() {
-    const { selectedDepartment, selectedCourse, validSchedules }= this.state;
+    const { selectedDepartment, selectedCourse, validSchedules, currScheduleIndex }= this.state;
     const { isLoggedIn } = this.props;
     return (
       <div className="main-container">
@@ -397,7 +439,7 @@ export default class PlanSchedulePage extends React.Component {
           generateSchedules={this.generateSchedules}
         />
         {
-          (selectedDepartment === undefined && selectedCourse === undefined) &&
+          (selectedDepartment === undefined && selectedCourse === undefined && validSchedules.length === 0) &&
           <div className="app-root__error-msg-wrapper">
             <Message info>
               <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
@@ -435,6 +477,7 @@ export default class PlanSchedulePage extends React.Component {
             <Schedules
               validSchedules={validSchedules}
               updateCurrSchedule={this.updateCurrSchedule}
+              currIndex={currScheduleIndex}
             />
           }
         </div>

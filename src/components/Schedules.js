@@ -29,7 +29,7 @@ export default class Schedules extends React.Component {
 
   componentDidMount() {
     // initial rendering of sections onto page
-    const currIdx = this.state.currIndex;
+    const currIdx = this.props.currIndex || this.state.currIndex;
     const currSchedule = this.props.validSchedules[currIdx];
     const sectionsList = extractSectionsFromSchedule(currSchedule);
 
@@ -40,6 +40,7 @@ export default class Schedules extends React.Component {
     if (this.props.updateCurrSchedule) {
       this.props.updateCurrSchedule(currSchedule, currIdx);
     }
+
   }
 
   placeSectionsIntoCalendar = (startingHour, allSections) => {

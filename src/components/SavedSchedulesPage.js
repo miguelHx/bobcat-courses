@@ -32,8 +32,18 @@ class SavedSchedulesPage extends React.Component {
   };
 
   componentDidMount() {
-    // want to fetch schedule data if user is logged in
     if (this.props.isLoggedIn) {
+      // want to use 'cached' data from current session, only if saved schedules on server hasn't changed
+      const tempSavedSchedules = sessionStorage.getItem("tempSavedSchedules");
+      const savedIndex = sessionStorage.getItem("savedSchedulesIndex");
+      if (tempSavedSchedules !== null && savedIndex !== null) {
+        this.setState(() => ({
+          savedSchedules: JSON.parse(tempSavedSchedules),
+          currScheduleIndex: JSON.parse(savedIndex),
+        }));
+        return;
+      }
+      // Otherwise, want to fetch schedule data if user is logged in
       axios.get(`${BASE_URL}/users/schedule-dump/`, {
         headers: {
           Authorization: `Bearer ${Auth.getToken()}`
@@ -52,6 +62,16 @@ class SavedSchedulesPage extends React.Component {
         this.setState(() => ({ error: error }));
         // console.log(error);
       });
+    }
+  }
+
+  componentWillUnmount() {
+    // want to save valid schedules (if any) to session storage
+    const { savedSchedules, currScheduleIndex } = this.state;
+    if (savedSchedules.length > 0) {
+      // if schedules are here, might as well update ALL relevant state.
+      sessionStorage.setItem("tempSavedSchedules", JSON.stringify(savedSchedules));
+      sessionStorage.setItem("savedSchedulesIndex", JSON.stringify(currScheduleIndex));
     }
   }
 
