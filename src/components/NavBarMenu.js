@@ -55,6 +55,8 @@ const NavBarMenu = (props) => {
                         <Menu.Item>
                           <Button
                             onClick={() => {
+                              sessionStorage.clear();
+                              document.location.reload();
                               updateLogoutStatus();
                             }}
                             color='red'
