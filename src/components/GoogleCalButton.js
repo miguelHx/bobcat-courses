@@ -146,6 +146,7 @@ class GoogleCalButton extends React.Component {
       if (timeTo24.split('-')[0].length < 5) {
         // pad with leading 0, because we have 9:30 rather than 09:30
         startTime = `0${timeTo24.slice(0, 4)}:00`;
+        timeTo24 = `0${timeTo24}`; // also pad timeTo24 to avoid off by one error below in endTime slice
       }
       else {
         startTime = `${timeTo24.slice(0, 5)}:00`;
@@ -180,7 +181,7 @@ class GoogleCalButton extends React.Component {
         start: start,
         end: end,
         recurrence: [
-          `RRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=16`,
+          `RRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${currSection['days'].length * 17}`,// COUNT is by # of events, not number of weeks
         ],
         'reminders': {
               'useDefault': false,
