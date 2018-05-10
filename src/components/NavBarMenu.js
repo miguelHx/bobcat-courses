@@ -15,7 +15,7 @@ const Nav = (props) => {
 const NavBarMenu = (props) => {
   const { updateLogoutStatus, isLoggedIn } = props;
   return (
-    <Menu className="navbar-menu" stackable color='blue' inverted size='mini'>
+    <Menu className="navbar-menu" stackable color='blue' inverted size='small'>
       <Menu.Item
         header
         as={Link}
