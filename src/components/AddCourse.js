@@ -1,50 +1,16 @@
 import React from 'react';
+import _ from 'lodash';
 import { Dropdown } from 'semantic-ui-react';
 import { DEPT_SHORTHAND } from './../lib/ShorthandDeptLookup';
+import axios from "axios/index";
+
+const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
 
 export default class AddCourse extends React.Component {
   state = {
-    error: undefined
-  };
-
-  loadDepartmentOptions = () => {
-    // don't map until window.jsonData is loaded.
-    if (!window.deptList) {
-      return [];
-    }
-    return (
-      window.deptList.map((dept) => {
-        let text = `${dept} (${DEPT_SHORTHAND[dept]})`;
-        return (
-          { key: dept, value: dept, text: text }
-        );
-      })
-    );
-  };
-
-  loadCourseOptions = () => {
-    // don't map until window jsonData is loaded OR department is selected
-    if (!this.props.selectedDepartment) {
-      return [];
-    }
-    // update state to first option in department
-    return (
-      this.props.courseDropdownList.map((course) => {
-        return (
-          { key: course, value: course, text: course }
-        );
-      })
-    );
-  };
-
-  handleDeptDropdown = (event, data) => {
-    const error = this.state.error;
-    const dept = data.value;
-    this.props.handleDeptDropdown(dept);
-    // also remove error message if there is one.
-    if (error) {
-      this.setState(() => ({ error: undefined }));
-    }
+    error: undefined,
+    isFetching: false,
+    searchResults: [],
   };
 
   handleCourseDropdown = (event, data) => {
@@ -63,28 +29,54 @@ export default class AddCourse extends React.Component {
     this.props.updateSelectedCourse(course);
   };
 
+  handleSearch = _.debounce((event, data) => {
+    this.setState(() => ({ isFetching: true }));
+    if (data === '') {
+      return;
+    }
+    const query = encodeURIComponent(data.searchQuery);
+    let params = `course=${query}&term=201830`;
+    axios.get(`${ROOT_API_URL}/courses/course-search/?${params}`)
+      .then(res => {
+        // console.log(res);
+        let results = res.data;
+        if (!results) {
+          results = [];
+        }
+        else if (results.indexOf("Server Error") >= 0) {
+          results = [];
+          // console.log("SERVER ERROR"); // alert the user
+        }
+        this.setState(() => ({
+          isFetching: false,
+          searchResults: results.map((course) => {
+            return { key: course.name, value: course.name, text: course.name };
+          })
+        }));
+      })
+      .catch(error => {
+        // console.log("error: ", error); // alert user
+      });
+    }, 300);
+
+
   render() {
+    const { searchResults } = this.state;
     return (
       <div className="add-course__container">
         <h3 className="add-course__header__title">Add a Course</h3>
         <div className="add-course__dropdown-wrapper">
           <Dropdown
-            placeholder='Department/Subject'
+            placeholder={'Search For a Course'}
             selectOnNavigation={false}
             search
             selection
-            options={this.loadDepartmentOptions()}
-            onChange={this.handleDeptDropdown}
-            id="add-course__dept-dropdown"
-          />
-          <Dropdown
-            placeholder='Course Number/Title'
-            selectOnNavigation={false}
-            search
-            selection
-            options={this.loadCourseOptions()}
+            options={searchResults}
+            autoComplete='on'
             onChange={this.handleCourseDropdown}
-            noResultsMessage='Please select a Department'
+            onSearchChange={this.handleSearch}
+            noResultsMessage={'No results yet.'}
+            loading={this.state.isFetching}
           />
         </div>
         {this.state.error && <p className="add-course-error">{this.state.error}</p>}

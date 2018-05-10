@@ -15,7 +15,6 @@ const Courses = (props) => {
               count={index + 1}
               handleDeleteOneCourse={props.handleDeleteOneCourse}
               updateSelectedCourse={props.updateSelectedCourse}
-              updateSelectedDept={props.updateSelectedDept}
             />
           );
         })

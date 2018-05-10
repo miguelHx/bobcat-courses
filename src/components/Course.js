@@ -10,7 +10,6 @@ const Course = (props) => {
           size='mini'
           compact
           onClick={() => {
-            props.updateSelectedDept(props.deptText);
             props.updateSelectedCourse(props.courseText);
           }}
           >

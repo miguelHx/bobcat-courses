@@ -4,7 +4,6 @@ import AuthService from './AuthService';
 import axios from 'axios';
 import CourseDetail from '../components/CourseDetail';
 import CourseSelector from '../components/CourseSelector';
-import deptJSON from '../../data/departments_FA18.json';
 import { extractSectionsFromSchedule } from '../lib/WeeklyCalendarUtils';
 import { extractSections } from '../lib/ExtractSections';
 import { Message } from 'semantic-ui-react';
@@ -27,7 +26,6 @@ const compareSections = (me, other) => {
 
 export default class PlanSchedulePage extends React.Component {
   state = {
-    selectedDepartment: undefined,
     selectedCourse: undefined, // for course detail table
     sections: {}, // for algorithm, must be in same format as table row
     currSchedule: {},
@@ -43,7 +41,6 @@ export default class PlanSchedulePage extends React.Component {
     if (tempCourseInfo !== null) {
       const parsedCI = JSON.parse(tempCourseInfo); // CI === 'course info'
       this.setState(() => ({
-        selectedDepartment: parsedCI.selectedDepartment,
         selectedCourse: parsedCI.selectedCourse,
         sections: parsedCI.sections,
         currScheduleIndex: JSON.parse(savedIndex),
@@ -57,14 +54,13 @@ export default class PlanSchedulePage extends React.Component {
   }
 
   componentWillMount() {
-    window.deptList = deptJSON;
+    // window.deptList = deptJSON;
   }
 
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
-    const { validSchedules, currScheduleIndex, selectedDepartment, selectedCourse, sections } = this.state;
+    const { validSchedules, currScheduleIndex, selectedCourse, sections } = this.state;
     const selectedCourseInfo = {
-      selectedDepartment: selectedDepartment,
       selectedCourse: selectedCourse,
       sections: sections,
     };
@@ -78,10 +74,6 @@ export default class PlanSchedulePage extends React.Component {
       sessionStorage.setItem("tempCourseInfo", JSON.stringify(selectedCourseInfo));
     }
   }
-
-  updateSelectedDept = (dept) => {
-    this.setState(() => ({ selectedDepartment: dept, error: undefined, validSchedules: [] }));
-  };
 
   updateSelectedCourse = (course) => {
     this.setState(() => ({ selectedCourse: course, error: undefined, validSchedules: [] }));
@@ -273,11 +265,6 @@ export default class PlanSchedulePage extends React.Component {
     this.setState(() => ({ sections: {} }));
   };
 
-  // add two more functions to clearSelectedCourse and clearSelectedDept
-  clearSelectedDept = () => {
-    this.setState(() => ({ selectedDepartment: undefined }));
-  };
-
   clearSelectedCourse = () => {
     this.setState(() => ({ selectedCourse: undefined }));
   };
@@ -422,24 +409,21 @@ export default class PlanSchedulePage extends React.Component {
   };
 
   render() {
-    const { selectedDepartment, selectedCourse, validSchedules, currScheduleIndex }= this.state;
+    const { selectedCourse, validSchedules, currScheduleIndex, error } = this.state;
     const { isLoggedIn } = this.props;
     return (
       <div className="main-container">
         <CourseSelector
-          selectedDepartment={selectedDepartment}
           selectedCourse={selectedCourse}
-          updateSelectedDept={this.updateSelectedDept}
           updateSelectedCourse={this.updateSelectedCourse}
           addCourseSections={this.addCourseSections}
-          clearSelectedDept={this.clearSelectedDept}
           clearSelectedCourse={this.clearSelectedCourse}
           deleteCourseFromSections={this.deleteCourseFromSections}
           deleteAllSections={this.deleteAllSections}
           generateSchedules={this.generateSchedules}
         />
         {
-          (selectedDepartment === undefined && selectedCourse === undefined && validSchedules.length === 0) &&
+          (selectedCourse === undefined && validSchedules.length === 0 && error === undefined) &&
           <div className="app-root__error-msg-wrapper">
             <Message info>
               <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
@@ -449,7 +433,6 @@ export default class PlanSchedulePage extends React.Component {
         {
           (selectedCourse) &&
           <CourseDetail
-            department={selectedDepartment}
             selectedCourse={selectedCourse}
             updateSectionCheckboxToggle={this.updateSectionCheckboxToggle}
             sections={this.state.sections}
