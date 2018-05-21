@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Button } from 'semantic-ui-react';
+import { Button, Popup } from 'semantic-ui-react';
 import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
 import { convertTimeStringTo24 } from './../lib/WeeklyCalendarUtils';
 import WeeklyCalendarHeader from './WeeklyCalendarHeader';
@@ -113,10 +113,10 @@ export default class Schedules extends React.Component {
 
         let newEventTextStyle = {
           color: colorObj.text,
-        }
-        const split = currSection['course_id'].split('-');
+        };
         const sectionID = currSection['course_id'];
         const sectionType = currSection['type'];
+        // want event element to contain more details on hover
         let newEventDOMelement = (
           <div key={id++} style={newEventStyle} className="cal-event">
             <div style={newEventTextStyle} className="cal-event__text">
@@ -129,21 +129,31 @@ export default class Schedules extends React.Component {
             </div>
           </div>
         );
+        let popupElement = (
+          <Popup key={id++} trigger={newEventDOMelement}>
+            <p className="popup-info"><b>{currSection['course_name']}</b></p>
+            <p className="popup-info">Hours: {currSection['hours']}</p>
+            <p className="popup-info">Location: {currSection['room']}</p>
+            <p className="popup-info">CRN: {currSection['crn']}</p>
+            <p className="popup-info">Instructor: {currSection['instructor']}</p>
+            <p className="popup-info">Enrolled: {currSection['enrolled']}/{currSection['capacity']}</p>
+          </Popup>
+        );
         switch (currChar) {
           case 'M':
-            monSections.push(newEventDOMelement);
+            monSections.push(popupElement);
             break;
           case 'T':
-            tueSections.push(newEventDOMelement);
+            tueSections.push(popupElement);
             break;
           case 'W':
-            wedSections.push(newEventDOMelement);
+            wedSections.push(popupElement);
             break;
           case 'R':
-            thuSections.push(newEventDOMelement);
+            thuSections.push(popupElement);
             break;
           case 'F':
-            friSections.push(newEventDOMelement);
+            friSections.push(popupElement);
             break;
           default:
             break;
