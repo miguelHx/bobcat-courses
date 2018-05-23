@@ -1,10 +1,16 @@
 import React from 'react';
 import _ from 'lodash';
 import { Dropdown } from 'semantic-ui-react';
-import { DEPT_SHORTHAND } from './../lib/ShorthandDeptLookup';
 import axios from "axios/index";
 
 const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
+
+const ignoreHyphenSearch = (options, query) => {
+  const re = new RegExp('^' + query, 'i');
+  return options.filter((option) => {
+    return re.test(option.text.replace('-', ''));
+  });
+};
 
 export default class AddCourse extends React.Component {
   state = {
@@ -69,7 +75,7 @@ export default class AddCourse extends React.Component {
           <Dropdown
             placeholder={'Search For a Course'}
             selectOnNavigation={false}
-            search
+            search={ignoreHyphenSearch}
             selection
             options={searchResults}
             autoComplete='on'
