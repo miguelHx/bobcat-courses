@@ -43,3 +43,18 @@ button:disabled {
   min-height: 400px;
   height: auto;
 }
+
+.loader__container {
+  min-width: 18.75rem;
+  width: 70%;
+  margin-top: 0;
+  margin-bottom: $xl-size;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 1.75rem;
+}
+
+.loader {
+  position: relative !important;
+  margin: 0 auto;
+}

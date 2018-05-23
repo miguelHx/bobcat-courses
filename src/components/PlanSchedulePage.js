@@ -6,7 +6,7 @@ import CourseDetail from '../components/CourseDetail';
 import CourseSelector from '../components/CourseSelector';
 import { extractSectionsFromSchedule } from '../lib/WeeklyCalendarUtils';
 import { extractSections } from '../lib/ExtractSections';
-import { Message } from 'semantic-ui-react';
+import { Message, Loader } from 'semantic-ui-react';
 import SaveScheduleButton from './SaveScheduleButton';
 import Schedules from '../components/Schedules';
 import 'react-s-alert/dist/s-alert-default.css';
@@ -32,6 +32,7 @@ export default class PlanSchedulePage extends React.Component {
     currScheduleIndex: 0,
     validSchedules: [], // for calendars
     error: undefined, // for when we have conflicting schedules.
+    loadingSchedules: false,
   };
 
   componentDidMount() {
@@ -308,6 +309,7 @@ export default class PlanSchedulePage extends React.Component {
 
   generateSchedules = (courses) => {
     // clear previous valid sections
+    this.setState(() => ({ loadingSchedules: true }));
     if (this.state.validSchedules.length > 0) {
       this.setState(() => ({ validSchedules: [] }));
     }
@@ -345,11 +347,13 @@ export default class PlanSchedulePage extends React.Component {
         }
       }
 
-      this.setState(() => ({ validSchedules: data, error: error }));
+      this.setState(() => ({ validSchedules: data, error: error, loadingSchedules: false }));
     })
     .catch(error => {
       console.log(error);
+      this.setState(() => ({ loadingSchedules: false }));
     });
+
   };
 
   saveSchedule = () => {
@@ -409,7 +413,7 @@ export default class PlanSchedulePage extends React.Component {
   };
 
   render() {
-    const { selectedCourse, validSchedules, currScheduleIndex, error } = this.state;
+    const { selectedCourse, validSchedules, currScheduleIndex, error, loadingSchedules } = this.state;
     const { isLoggedIn } = this.props;
     return (
       <div className="main-container">
@@ -424,11 +428,17 @@ export default class PlanSchedulePage extends React.Component {
         />
         {
           (selectedCourse === undefined && validSchedules.length === 0 && error === undefined) &&
-          <div className="app-root__error-msg-wrapper">
-            <Message info>
-              <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
-            </Message>
-          </div>
+          (loadingSchedules ?
+            <div className="loader__container">
+              <Loader className='loader' active>Loading Schedules...</Loader>
+            </div>
+            :
+            <div className="app-root__error-msg-wrapper">
+              <Message info>
+                <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
+              </Message>
+            </div>
+          )
         }
         {
           (selectedCourse) &&

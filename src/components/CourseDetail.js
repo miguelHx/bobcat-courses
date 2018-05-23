@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionsTable from './SectionsTable';
+import { Loader } from 'semantic-ui-react';
 
 const buildSectionsList = (keys, sections) => {
   // put all sections into array for table rows.  Maybe sort by discussion number??
@@ -17,7 +18,11 @@ const buildSectionsList = (keys, sections) => {
 const CourseDetail = (props) => {
   const { sections, selectedCourse } = props;
   if (!sections[selectedCourse]) {
-    return <div className="course-detail__container">Loading...</div>;
+    return (
+      <div className="loader__container">
+        <Loader className='loader' active>Loading Sections...</Loader>
+      </div>
+    );
   }
   const keys = Object.keys(sections[selectedCourse]);
   const tempList = sections[selectedCourse][keys[0]];

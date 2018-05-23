@@ -24,3 +24,6 @@ import 'semantic-ui-css/components/segment.min.css';
 
 // Popup
 import 'semantic-ui-css/components/popup.min.css';
+
+// Loader
+import 'semantic-ui-css/components/loader.min.css';
