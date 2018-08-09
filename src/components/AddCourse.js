@@ -5,10 +5,11 @@ import axios from "axios/index";
 
 const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
 
-const ignoreHyphenSearch = (options, query) => {
+const customSearch = (options, query) => {
   const re = new RegExp('^' + query, 'i');
   return options.filter((option) => {
-    return re.test(option.text.replace('-', ''));
+    // test original text, or without hyphen, or without space
+    return re.test(option.text.replace('-', '')) || re.test(option.text.replace('-', ' '));
   });
 };
 
@@ -75,7 +76,7 @@ export default class AddCourse extends React.Component {
           <Dropdown
             placeholder={'Search For a Course'}
             selectOnNavigation={false}
-            search={ignoreHyphenSearch}
+            search={customSearch}
             selection
             options={searchResults}
             autoComplete='on'
