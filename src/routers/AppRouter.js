@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from '../components/LoginPage';
-import NavBarMenu from '../components/NavBarMenu';
+import NavBar from '../components/NavBar/NavBar';
 import NotFoundPage from '../components/NotFoundPage';
 import SignUpPage from '../components/SignUpPage';
 import SettingsPage from '../components/SettingsPage';
@@ -20,7 +20,7 @@ const AppRouter = (props) => {
   return (
     <HashRouter >
       <div>
-        <NavBarMenu
+        <NavBar
           history={props.history}
           username={props.username}
           isLoggedIn={props.isLoggedIn}

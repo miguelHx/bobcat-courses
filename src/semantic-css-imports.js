@@ -27,3 +27,9 @@ import 'semantic-ui-css/components/popup.min.css';
 
 // Loader
 import 'semantic-ui-css/components/loader.min.css';
+
+// Sidebar
+import 'semantic-ui-css/components/sidebar.min.css';
+
+// Icon
+import 'semantic-ui-css/components/icon.min.css';
