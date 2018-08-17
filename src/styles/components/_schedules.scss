@@ -31,44 +31,6 @@
   border: 1px solid red;
 }
 
-.event {
-  display: block;
-  top: 100px;
-  background-color: #fff2bf;
-  border-left: 4px solid darken(#fff2bf, 50%);
-  height: 100px;
-  width: 100%;
-  opacity: 0.6;
-  position: absolute;
-  z-index: 1;
-}
-
-.text {
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 14px;
-  padding: 1px 5px 1px 5px;
-  word-break: break-word;
-}
-
-.title {
-  font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 16px;
-  position: relative;
-}
-
-.detail {
-  font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
-  font-size: 11px;
-  font-weight: 300;
-  line-height: 14px;
-  position: relative;
-  top: 1px;
-  margin-top: 0px;
-}
-
 .popup-info {
   margin-bottom: 0;
   font-size: 14px;

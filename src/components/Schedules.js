@@ -120,10 +120,10 @@ export default class Schedules extends React.Component {
         let newEventDOMelement = (
           <div key={id++} style={newEventStyle} className="cal-event">
             <div style={newEventTextStyle} className="cal-event__text">
-              <div className="title">
+              <div className="cal-event__title">
                 {sectionID}
               </div>
-              <div className="detail">
+              <div className="cal-event__detail">
                 {sectionType}
               </div>
             </div>

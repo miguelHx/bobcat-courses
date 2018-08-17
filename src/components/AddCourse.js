@@ -57,7 +57,7 @@ export default class AddCourse extends React.Component {
         this.setState(() => ({
           isFetching: false,
           searchResults: results.map((course) => {
-            return { key: course.name, value: course.name, text: course.name };
+            return { key: course.name, value: course.name, text: `${course.name}: ${course.description}` };
           })
         }));
       })
