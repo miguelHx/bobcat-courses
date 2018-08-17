@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Menu, Sidebar, Icon } from 'semantic-ui-react';
+import { Menu, Sidebar } from 'semantic-ui-react';
 import { NavBarMenuItemsMobile } from './NavBarMenuItems';
 import onClickOutside from "react-onclickoutside";
-import logo from "../../../assets/images/bobcat-logo.png";
+import { HamburgerButton } from 'react-hamburger-button';
 
 class MobileNavBarMenu extends Component {
   state = {
@@ -36,14 +36,13 @@ class MobileNavBarMenu extends Component {
         />
       </Sidebar>,
       <Menu.Item position='right' key='mobile-button'>
-        <Button
+        <HamburgerButton
+          open={visible}
           onClick={this.handleButtonClick}
-          size='mini'
-          color='blue'
-          compact
-        >
-          
-        </Button>
+          width={18}
+          height={15}
+          color='white'
+        />
       </Menu.Item>
     ];
   }
