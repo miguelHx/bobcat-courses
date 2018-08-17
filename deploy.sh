@@ -1,4 +1,4 @@
-
+# first, make sure to delete the gh-pages branch on github repo online
 git branch -D gh-pages
 git checkout -b gh-pages
 yarn install
