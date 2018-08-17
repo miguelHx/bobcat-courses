@@ -19,6 +19,7 @@ const NavBarMenuItemsMobile = (props) => {
       as={Nav} to="/"
       name='plan-schedule'
       key='plan-schedule-mobile'
+      onClick={props.handleButtonClick}
     >
       Plan Schedule
     </Menu.Item>,
@@ -26,6 +27,7 @@ const NavBarMenuItemsMobile = (props) => {
       as={Nav} to="/saved-schedules"
       name='saved-schedules'
       key='saved-schedules-mobile'
+      onClick={props.handleButtonClick}
     >
       Saved Schedules
     </Menu.Item>,
@@ -36,12 +38,14 @@ const NavBarMenuItemsMobile = (props) => {
           to="/signup"
           name='sign up'
           key='sign-up-mobile'
+          onClick={props.handleButtonClick}
         />,
         <Menu.Item
           as={Nav}
           to="/login"
           name='log in'
           key='log-in-mobile'
+          onClick={props.handleButtonClick}
         />
       ]
       :
@@ -51,6 +55,7 @@ const NavBarMenuItemsMobile = (props) => {
           to="/settings"
           name='settings'
           key='settings-mobile'
+          onClick={props.handleButtonClick}
         />,
         <Menu.Item key='log-out-mobile'>
           <Button

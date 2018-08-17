@@ -30,6 +30,7 @@
     "node-sass": "4.5.3",
     "react": "16.0.0",
     "react-dom": "16.0.0",
+    "react-onclickoutside": "^6.7.1",
     "react-router-dom": "4.2.2",
     "react-s-alert": "^1.4.1",
     "react-sizes": "^1.0.4",

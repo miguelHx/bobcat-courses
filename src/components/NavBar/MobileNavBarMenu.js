@@ -1,30 +1,22 @@
 import React, { Component } from 'react';
-import { Button, Menu, Sidebar } from 'semantic-ui-react';
+import { Button, Menu, Sidebar, Icon } from 'semantic-ui-react';
 import { NavBarMenuItemsMobile } from './NavBarMenuItems';
+import onClickOutside from "react-onclickoutside";
+import logo from "../../../assets/images/bobcat-logo.png";
 
-export default class VisibilityExampleCallbackFrequency extends Component {
+class MobileNavBarMenu extends Component {
   state = {
     visible: false,
   };
 
   handleButtonClick = () => this.setState({ visible: !this.state.visible });
 
+  handleClickOutside = (event) => this.setState({ visible: false }); // used by react-onclickOutside.
+
   render() {
     const { visible } = this.state;
     const { updateLogoutStatus, isLoggedIn } = this.props;
     return [
-      <Menu.Item position='right' key='mobile-button'>
-        <Button
-          onClick={this.handleButtonClick}
-          size='mini'
-          color='blue'
-          compact
-        >
-          -
-          -
-          -
-        </Button>
-      </Menu.Item>,
       <Sidebar
         as={Menu}
         animation='overlay'
@@ -40,8 +32,21 @@ export default class VisibilityExampleCallbackFrequency extends Component {
         <NavBarMenuItemsMobile
           updateLogoutStatus={updateLogoutStatus}
           isLoggedIn={isLoggedIn}
+          handleButtonClick={this.handleButtonClick}
         />
-      </Sidebar>
+      </Sidebar>,
+      <Menu.Item position='right' key='mobile-button'>
+        <Button
+          onClick={this.handleButtonClick}
+          size='mini'
+          color='blue'
+          compact
+        >
+          
+        </Button>
+      </Menu.Item>
     ];
   }
 }
+
+export default onClickOutside(MobileNavBarMenu);
