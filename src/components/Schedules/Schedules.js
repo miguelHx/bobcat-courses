@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { Button, Popup } from 'semantic-ui-react';
-import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
-import { convertTimeStringTo24 } from './../lib/WeeklyCalendarUtils';
+import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
+import { convertTimeStringTo24 } from '../../utils/WeeklyCalendarUtils';
 import WeeklyCalendarHeader from './WeeklyCalendarHeader';
 import WeeklyCalendarView from './WeeklyCalendarView';
 

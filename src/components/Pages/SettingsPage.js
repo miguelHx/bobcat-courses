@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthService from './AuthService';
+import AuthService from '../AuthService';
 import { Redirect } from "react-router-dom";
 
 class SettingsPage extends React.Component {

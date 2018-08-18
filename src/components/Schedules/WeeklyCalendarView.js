@@ -1,5 +1,5 @@
 import React from 'react';
-import { convert24to12HourFormat } from './../lib/WeeklyCalendarUtils';
+import { convert24to12HourFormat } from '../../utils/WeeklyCalendarUtils';
 
 let id = 0;
 

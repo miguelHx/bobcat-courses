@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Button, Message } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import { extractSectionsFromSchedule } from './../lib/WeeklyCalendarUtils';
-import GoogleCalButton from './GoogleCalButton';
-import Schedules from './Schedules';
-import AuthService from './AuthService';
+import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
+import GoogleCalButton from '../Buttons/GoogleCalButton';
+import Schedules from '../Schedules/Schedules';
+import AuthService from '../AuthService';
 import Alert from 'react-s-alert';
 
 const Auth = new AuthService();

@@ -1,14 +1,14 @@
 import React from 'react';
 import Alert from 'react-s-alert';
-import AuthService from './AuthService';
+import AuthService from '../AuthService';
 import axios from 'axios';
-import CourseDetail from '../components/CourseDetail';
-import CourseSelector from '../components/CourseSelector';
-import { extractSectionsFromSchedule } from '../lib/WeeklyCalendarUtils';
-import { extractSections } from '../lib/ExtractSections';
+import CourseDetail from '../CourseDetail/CourseDetail';
+import CourseSelector from '../CourseSelector/CourseSelector';
+import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
+import { extractSections } from '../../utils/ExtractSections';
 import { Message, Loader } from 'semantic-ui-react';
-import SaveScheduleButton from './SaveScheduleButton';
-import Schedules from '../components/Schedules';
+import SaveScheduleButton from '../Buttons/SaveScheduleButton';
+import Schedules from '../Schedules/Schedules';
 import 'react-s-alert/dist/s-alert-default.css';
 
 const Auth = new AuthService();

@@ -1,12 +1,12 @@
 import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import LoginPage from '../components/LoginPage';
+import LoginPage from '../components/Pages/LoginPage';
 import NavBar from '../components/NavBar/NavBar';
-import NotFoundPage from '../components/NotFoundPage';
-import SignUpPage from '../components/SignUpPage';
-import SettingsPage from '../components/SettingsPage';
-import PlanSchedulePage from '../components/PlanSchedulePage';
-import SavedSchedulesPage from '../components/SavedSchedulesPage';
+import NotFoundPage from '../components/Pages/NotFoundPage';
+import SignUpPage from '../components/Pages/SignUpPage';
+import SettingsPage from '../components/Pages/SettingsPage';
+import PlanSchedulePage from '../components/Pages/PlanSchedulePage';
+import SavedSchedulesPage from '../components/Pages/SavedSchedulesPage';
 import withAuth from './../components/withAuth';
 
 // pages: 1. PlanSchedulePage 2. SavedSchedulesPage 3. Login Page 4. Register Page

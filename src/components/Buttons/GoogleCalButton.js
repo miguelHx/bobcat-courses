@@ -1,10 +1,10 @@
 import React from 'react';
 import Alert from 'react-s-alert';
 import { Button } from 'semantic-ui-react';
-import { MONTH_TABLE } from './../lib/MonthLookupTable';
-import { DAY_TABLE } from "../lib/DayTableLookup";
-import { extractSectionsFromSchedule, convertTimeStringTo24 } from './../lib/WeeklyCalendarUtils';
-import { getMon, getTue, getWed, getThu, getFri } from '../lib/DayOfWeekFinder';
+import { MONTH_TABLE } from '../../utils/MonthLookupTable';
+import { DAY_TABLE } from "../../utils/DayTableLookup";
+import { extractSectionsFromSchedule, convertTimeStringTo24 } from '../../utils/WeeklyCalendarUtils';
+import { getMon, getTue, getWed, getThu, getFri } from '../../utils/DayOfWeekFinder';
 
 // Client ID and API key from the Developer Console
 const CLIENT_ID = '753790478110-vqi6frrhbhdnjiosc24l0rr5o4emi8sa.apps.googleusercontent.com';
