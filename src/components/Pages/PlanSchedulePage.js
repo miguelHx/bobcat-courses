@@ -13,6 +13,7 @@ import 'react-s-alert/dist/s-alert-default.css';
 
 const Auth = new AuthService();
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
+const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 // comparator used for sorting array of objects
 const compareSections = (me, other) => {
   let mySectNum = me['course_id'].split('-')[2];
@@ -33,9 +34,12 @@ export default class PlanSchedulePage extends React.Component {
     validSchedules: [], // for calendars
     error: undefined, // for when we have conflicting schedules.
     loadingSchedules: false,
+    selectedTermObject: DEFAULT_TERM,
   };
 
   componentDidMount() {
+    const tempTermValue = sessionStorage.getItem("tempTermValue");
+    const tempTermText = sessionStorage.getItem("tempTermText");
     const tempSchedules = sessionStorage.getItem("tempSchedules");
     const tempCourseInfo = sessionStorage.getItem("tempCourseInfo");
     const savedIndex = sessionStorage.getItem("planSchedulesIndex") || 0; // default to 0 if null
@@ -52,6 +56,14 @@ export default class PlanSchedulePage extends React.Component {
         validSchedules: JSON.parse(tempSchedules),
       }));
     }
+    if (tempTermValue && tempTermText) {
+      this.setState(() => ({
+        selectedTermObject: {
+          text: JSON.parse(tempTermText),
+          value: JSON.parse(tempTermValue),
+        },
+      }));
+    }
   }
 
   componentWillMount() {
@@ -61,6 +73,8 @@ export default class PlanSchedulePage extends React.Component {
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
     const { validSchedules, currScheduleIndex, selectedCourse, sections } = this.state;
+    // want to also save currently selected term
+    const { selectedTermObject } = this.state;
     const selectedCourseInfo = {
       selectedCourse: selectedCourse,
       sections: sections,
@@ -74,7 +88,15 @@ export default class PlanSchedulePage extends React.Component {
     if (selectedCourse && sections[selectedCourse]) {
       sessionStorage.setItem("tempCourseInfo", JSON.stringify(selectedCourseInfo));
     }
+    if (selectedTermObject) {
+      sessionStorage.setItem("tempTermText", JSON.stringify(selectedTermObject.text));
+      sessionStorage.setItem("tempTermValue", JSON.stringify(selectedTermObject.value));
+    }
   }
+
+  updateSelectedTermObject = (termObject) => {
+    this.setState(() => ({ selectedTermObject: termObject, selectedCourse: undefined, validSchedules: [], sections: {} }));
+  };
 
   updateSelectedCourse = (course) => {
     this.setState(() => ({ selectedCourse: course, error: undefined, validSchedules: [] }));
@@ -217,11 +239,11 @@ export default class PlanSchedulePage extends React.Component {
     return output;
   };
 
-  fetchCourseData = (course) => {
+  fetchCourseData = (course, term) => {
     let { sections } = this.state;
     let data = JSON.stringify({
         course_list: [course],
-        term: "201830",
+        term: term,
     });
 
     axios.post(`${BASE_URL}/courses/course-match/`, data, {
@@ -239,7 +261,7 @@ export default class PlanSchedulePage extends React.Component {
     });
   };
 
-  addCourseSections = (course) => {
+  addCourseSections = (course, term) => {
     //const courseData = window.jsonData[dept][course];
     /*
     sections: {
@@ -253,7 +275,7 @@ export default class PlanSchedulePage extends React.Component {
       }
     }
     */
-    this.fetchCourseData(course);
+    this.fetchCourseData(course, term);
   };
 
   deleteCourseFromSections = (course) => {
@@ -307,7 +329,7 @@ export default class PlanSchedulePage extends React.Component {
   };
 
 
-  generateSchedules = (courses) => {
+  generateSchedules = (courses, term) => {
     // clear previous valid sections
     this.setState(() => ({ loadingSchedules: true }));
     if (this.state.validSchedules.length > 0) {
@@ -324,7 +346,7 @@ export default class PlanSchedulePage extends React.Component {
     let sections = this.state.sections;
     let data = JSON.stringify({
         course_list: coursesList,
-        term: "201830",
+        term: term,
         search_full: true
     });
 
@@ -355,7 +377,7 @@ export default class PlanSchedulePage extends React.Component {
     });
 
   };
-
+  // TODO move this to SaveScheduleButton
   saveSchedule = () => {
     let crns = [];
     const schedule = this.state.currSchedule;
@@ -419,6 +441,8 @@ export default class PlanSchedulePage extends React.Component {
       <div className="main-container">
         <CourseSelector
           selectedCourse={selectedCourse}
+          selectedTermObject={this.state.selectedTermObject}
+          updateSelectedTermObject={this.updateSelectedTermObject}
           updateSelectedCourse={this.updateSelectedCourse}
           addCourseSections={this.addCourseSections}
           clearSelectedCourse={this.clearSelectedCourse}
@@ -462,6 +486,7 @@ export default class PlanSchedulePage extends React.Component {
           <SaveScheduleButton
             isLoggedIn={isLoggedIn}
             saveSchedule={this.saveSchedule}
+            selectedTermObject={this.state.selectedTermObject}
           />
           {
             // don't render calendars unless both conditions inside () are true

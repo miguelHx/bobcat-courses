@@ -8,7 +8,6 @@ const MAX_NUM_COURSES = 7;
 class CourseSelector extends React.Component {
   state = {
     courses: [],
-    courseDropdownList: []
   };
 
   componentDidMount() {
@@ -29,6 +28,15 @@ class CourseSelector extends React.Component {
     }
   }
 
+  handleTermChange = (termObject) => {
+    this.props.updateSelectedTermObject(termObject);
+    this.setState(() => ({
+      selectedTermObject: termObject,
+      searchResults: [],
+      courses: [],
+    }));
+  };
+
   handleDeleteOneCourse = (course) => {
     this.setState((prevState) => ({
       courses: prevState.courses.filter((currCourseObj) => {
@@ -42,7 +50,7 @@ class CourseSelector extends React.Component {
     this.props.deleteCourseFromSections(course);
   };
 
-  handleAddCourse = (course) => {
+  handleAddCourse = (course, term) => {
     const courses = this.state.courses;
     // loop through array of objects, and check if course already exists
     for (let i = 0; i < courses.length; i++) {
@@ -64,7 +72,7 @@ class CourseSelector extends React.Component {
     this.setState((prevState) => ({
       courses: prevState.courses.concat(courseObj)
     }));
-    this.props.addCourseSections(course);
+    this.props.addCourseSections(course, term);
   };
 
   render() {
@@ -72,6 +80,8 @@ class CourseSelector extends React.Component {
       <div className="course-selector__container">
         <div className="course-selector__courses">
           <AddCourse
+            selectedTermObject={this.props.selectedTermObject}
+            handleTermChange={this.handleTermChange}
             handleAddCourse={this.handleAddCourse}
             updateSelectedCourse={this.props.updateSelectedCourse}
             courseDropdownList={this.state.courseDropdownList}
@@ -82,14 +92,10 @@ class CourseSelector extends React.Component {
             handleDeleteOneCourse={this.handleDeleteOneCourse}
             updateSelectedCourse={this.props.updateSelectedCourse}
           />
-          {
-            this.state.courses.length === 0 &&
-            <p className="course-selector__message">Add a course to get started :)</p>
-          }
           <div className="course-selector__gen-button-wrapper">
             <Button
               primary
-              onClick={() => { this.props.generateSchedules(this.state.courses) }}
+              onClick={() => { this.props.generateSchedules(this.state.courses, this.props.selectedTermObject.value) }}
               disabled={this.state.courses.length === 0}
               size='large'
             >

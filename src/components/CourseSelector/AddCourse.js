@@ -2,8 +2,10 @@ import React from 'react';
 import _ from 'lodash';
 import { Dropdown } from 'semantic-ui-react';
 import axios from "axios/index";
+import TermDropdown from "../TermDropdown";
 
 const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
+const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 
 const customSearch = (options, query) => {
   const re = new RegExp('^' + query, 'i');
@@ -18,18 +20,29 @@ export default class AddCourse extends React.Component {
     error: undefined,
     isFetching: false,
     searchResults: [],
+    selectedTermObject: DEFAULT_TERM, // an object
   };
 
-  handleCourseDropdown = (event, data) => {
+  handleTermDropdownChange = (event, data) => {
+    event.persist();
+    const termText = event.target.textContent;
+    const termValue = data.value;
+    const termObject = { text: termText, value: termValue };
+    this.props.handleTermChange(termObject);
+    this.setState(() => ({ searchResults: [], selectedTermObject: termObject }));
+  };
+
+  handleCourseDropdownChange = (event, data) => {
     // whenever course dropdown changes, we want to also add course to list
     const course = data.value;
-    const error = this.props.handleAddCourse(course);
+    const { selectedTermObject } = this.props;
+    const error = this.props.handleAddCourse(course, selectedTermObject.value);
 
     if (error) {
       this.setState(() => ({ error: error }));
       return;
     }
-    // remove previous error (if there is one)
+    // remove previous error (if there is one) and set course text.
     this.setState(() => ({ error: undefined }));
     // update selected course in root component
     // * addCourseSections will update selected course so might not even need the next line
@@ -42,7 +55,8 @@ export default class AddCourse extends React.Component {
       return;
     }
     const query = encodeURIComponent(data.searchQuery);
-    let params = `course=${query}&term=201830`;
+    const { selectedTermObject } = this.props;
+    let params = `course=${query}&term=${selectedTermObject.value}`;
     axios.get(`${ROOT_API_URL}/courses/course-search/?${params}`)
       .then(res => {
         // console.log(res);
@@ -62,7 +76,7 @@ export default class AddCourse extends React.Component {
         }));
       })
       .catch(error => {
-        // console.log("error: ", error); // alert user
+        console.log("error: ", error); // alert user
       });
     }, 300);
 
@@ -71,6 +85,10 @@ export default class AddCourse extends React.Component {
     const { searchResults } = this.state;
     return (
       <div className="add-course__container">
+        <TermDropdown
+          handleTermDropdownChange={this.handleTermDropdownChange}
+          selectedTermObject={this.props.selectedTermObject}
+        />
         <h3 className="add-course__header__title">Add a Course</h3>
         <div className="add-course__dropdown-wrapper">
           <Dropdown
@@ -80,7 +98,7 @@ export default class AddCourse extends React.Component {
             selection
             options={searchResults}
             autoComplete='on'
-            onChange={this.handleCourseDropdown}
+            onChange={this.handleCourseDropdownChange}
             onSearchChange={this.handleSearch}
             noResultsMessage={'No results yet.'}
             loading={this.state.isFetching}

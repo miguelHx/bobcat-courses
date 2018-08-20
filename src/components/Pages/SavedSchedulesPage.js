@@ -12,6 +12,7 @@ import Alert from 'react-s-alert';
 const Auth = new AuthService();
 
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
+const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 
 const Nav = (props) => {
   return (
@@ -28,14 +29,25 @@ class SavedSchedulesPage extends React.Component {
     currSchedule: {},
     currScheduleIndex: 0, // for getting correct index of updated schedule after delete.
     savedSchedules: [],
+    selectedTermObject: DEFAULT_TERM,
     error: undefined
   };
 
   componentDidMount() {
     if (this.props.isLoggedIn) {
       // want to use 'cached' data from current session, only if saved schedules on server hasn't changed
+      const tempTermValue = sessionStorage.getItem("tempTermValue"); // want to keep term in sync with other pages.
+      const tempTermText = sessionStorage.getItem("tempTermText");
       const tempSavedSchedules = sessionStorage.getItem("tempSavedSchedules");
       const savedIndex = sessionStorage.getItem("savedSchedulesIndex");
+      if (tempTermValue && tempTermText) {
+        this.setState(() => ({
+          selectedTermObject: {
+            text: JSON.parse(tempTermText),
+            value: JSON.parse(tempTermValue),
+          }
+        }));
+      }
       if (tempSavedSchedules !== null && savedIndex !== null) {
         this.setState(() => ({
           savedSchedules: JSON.parse(tempSavedSchedules),
@@ -43,6 +55,7 @@ class SavedSchedulesPage extends React.Component {
         }));
         return;
       }
+
       // Otherwise, want to fetch schedule data if user is logged in
       axios.get(`${BASE_URL}/users/schedule-dump/`, {
         headers: {
@@ -67,11 +80,15 @@ class SavedSchedulesPage extends React.Component {
 
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
-    const { savedSchedules, currScheduleIndex } = this.state;
+    const { savedSchedules, currScheduleIndex, selectedTermObject } = this.state;
     if (savedSchedules.length > 0) {
       // if schedules are here, might as well update ALL relevant state.
       sessionStorage.setItem("tempSavedSchedules", JSON.stringify(savedSchedules));
       sessionStorage.setItem("savedSchedulesIndex", JSON.stringify(currScheduleIndex));
+    }
+    if (selectedTermObject) {
+      sessionStorage.setItem("tempTermText", JSON.stringify(selectedTermObject.text));
+      sessionStorage.setItem("tempTermValue", JSON.stringify(selectedTermObject.value));
     }
   }
 
@@ -86,7 +103,7 @@ class SavedSchedulesPage extends React.Component {
 
     let data = JSON.stringify({
         crns: crns,
-        term: "201830",
+        term: this.state.selectedTermObject.value,
     });
 
     axios.post(`${BASE_URL}/users/delete-schedule/`, data, {
