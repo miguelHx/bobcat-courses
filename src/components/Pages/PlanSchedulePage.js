@@ -369,7 +369,7 @@ export default class PlanSchedulePage extends React.Component {
         }
       }
 
-      this.setState(() => ({ validSchedules: data, error: error, loadingSchedules: false }));
+      this.setState(() => ({ validSchedules: data, error: error, loadingSchedules: false, currScheduleIndex: 0 }));
     })
     .catch(error => {
       console.log(error);
