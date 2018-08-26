@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from '../AuthService';
 import Alert from 'react-s-alert';
+import './SignUpPage.css';
 
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
 
@@ -95,9 +96,7 @@ class SignUpPage extends React.Component {
 
       }
       else {
-        let error = new Error(res.statusText);
-        error.response = response;
-        throw error;
+        throw new Error(res.statusText);
       }
     })
     .catch(error => {

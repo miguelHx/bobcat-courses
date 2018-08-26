@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Button, Message } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
@@ -8,6 +7,7 @@ import GoogleCalButton from '../Buttons/GoogleCalButton';
 import Schedules from '../Schedules/Schedules';
 import AuthService from '../AuthService';
 import Alert from 'react-s-alert';
+import './SavedSchedulesPage.css';
 
 const Auth = new AuthService();
 

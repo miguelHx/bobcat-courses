@@ -1,5 +1,6 @@
 import React from "react";
 import { Dropdown } from "semantic-ui-react";
+import './TermDropdown.css';
 
 const TERM_OPTIONS = [
   { key: 'Fall 2018', value: '201830', text: 'Fall 2018' },

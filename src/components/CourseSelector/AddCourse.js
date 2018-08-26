@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Dropdown } from 'semantic-ui-react';
 import axios from "axios/index";
 import TermDropdown from "../TermDropdown";
+import './AddCourse.css';
 
 const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
 const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018

@@ -1,0 +1,7 @@
+.navbar-menu {
+  margin: 0 0 2rem 0 !important;
+}
+
+.navbar-menu__header:hover {
+  background: none !important;
+}

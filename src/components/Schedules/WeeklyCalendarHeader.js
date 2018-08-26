@@ -1,4 +1,5 @@
 import React from 'react';
+import './WeeklyCalendarHeader.css';
 
 const WeeklyCalendarHeader = (props) => {
   return (

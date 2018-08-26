@@ -1,0 +1,20 @@
+.saved-schedules__main-container {
+  margin-bottom: 25rem;
+  background-color: white;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  border-radius: 6px;
+  min-height: 400px;
+  height: auto;
+}
+.saved-schedules__warning-msg-wrapper {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 1rem;
+  top: 160px;
+}
+.saved-schedules__schedules-display {
+
+}

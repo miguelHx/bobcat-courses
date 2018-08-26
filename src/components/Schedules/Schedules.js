@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import WeeklyCalendarHeader from './WeeklyCalendarHeader';
 import WeeklyCalendarView from './WeeklyCalendarView';
+import './Schedules.css';
 
 export default class Schedules extends React.Component {
   state = {
@@ -27,7 +28,7 @@ export default class Schedules extends React.Component {
       currIdx = this.state.currIndex;
     }
     const numValidSchedules = this.props.validSchedules.length;
-    if (currIdx == 0) {
+    if (currIdx === 0) {
       currIdx = numValidSchedules - 1;
     }
     else {

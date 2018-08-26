@@ -1,5 +1,6 @@
 import React from 'react';
 import Course from './Course';
+import './Courses.css';
 
 const Courses = (props) => {
   return (

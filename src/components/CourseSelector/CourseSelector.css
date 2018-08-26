@@ -1,0 +1,29 @@
+.course-selector__container {
+  width: 300px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 2rem;
+  margin-right: auto;
+}
+
+.course-selector__courses {
+  background-color: white;
+  margin: 0 auto 3rem auto;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.course-selector__message {
+  color: blue;
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.course-selector__gen-button-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}

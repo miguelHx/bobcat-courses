@@ -10,6 +10,7 @@ import { Message, Loader } from 'semantic-ui-react';
 import SaveScheduleButton from '../Buttons/SaveScheduleButton';
 import Schedules from '../Schedules/Schedules';
 import 'react-s-alert/dist/s-alert-default.css';
+import './PlanSchedulePage.css';
 
 const Auth = new AuthService();
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
@@ -158,7 +159,7 @@ export default class PlanSchedulePage extends React.Component {
             // uncheck  that one also
             // first search for it
             for (let idx = 0; idx < sectionsList.length; idx++) {
-              if (sectionsList[idx]['crn'] == attachedCRN) {
+              if (sectionsList[idx]['crn'] === attachedCRN) {
                 sections[course][currSectionKey][idx]['isSelected'] = false;
               }
             }

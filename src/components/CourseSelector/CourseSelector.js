@@ -2,6 +2,7 @@ import React from 'react';
 import AddCourse from './AddCourse';
 import Courses from './Courses';
 import { Button } from 'semantic-ui-react';
+import './CourseSelector.css';
 
 const MAX_NUM_COURSES = 7;
 
