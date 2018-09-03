@@ -14,7 +14,7 @@ const Courses = (props) => {
               deptText={course.department}
               count={index + 1}
               handleDeleteOneCourse={props.handleDeleteOneCourse}
-              updateSelectedCourse={props.updateSelectedCourse}
+              clearErrorAndValidSchedules={props.clearErrorAndValidSchedules}
             />
           );
         })

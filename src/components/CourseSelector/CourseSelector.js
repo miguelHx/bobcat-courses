@@ -83,14 +83,14 @@ class CourseSelector extends React.Component {
             selectedTermObject={this.props.selectedTermObject}
             handleTermChange={this.handleTermChange}
             handleAddCourse={this.handleAddCourse}
-            updateSelectedCourse={this.props.updateSelectedCourse}
+            clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
             courseDropdownList={this.state.courseDropdownList}
           />
           <Courses
             courses={this.state.courses}
             handleDeleteCourses={this.handleDeleteCourses}
             handleDeleteOneCourse={this.handleDeleteOneCourse}
-            updateSelectedCourse={this.props.updateSelectedCourse}
+            clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
           />
           <div className="course-selector__gen-button-wrapper">
             <Button

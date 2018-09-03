@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './react-redux/store/configureStore';
-import {addSelectedCourse, clearSelectedCourse} from "./react-redux/actions/selectedCourse";
+import {setSelectedCourse, clearSelectedCourse} from "./react-redux/actions/selectedCourse";
 import './semantic-css-imports';
 import './styles/styles.scss';
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Alert from 'react-s-alert';
 import AuthService from '../AuthService';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import CourseDetail from '../CourseDetail/CourseDetail';
 import CourseSelector from '../CourseSelector/CourseSelector';
 import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
@@ -10,6 +11,7 @@ import { Message, Loader } from 'semantic-ui-react';
 import SaveScheduleButton from '../Buttons/SaveScheduleButton';
 import Schedules from '../Schedules/Schedules';
 import 'react-s-alert/dist/s-alert-default.css';
+import {clearSelectedCourse} from "../../react-redux/actions/selectedCourse";
 
 const Auth = new AuthService();
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
@@ -25,9 +27,9 @@ const compareSections = (me, other) => {
   return 0;
 };
 
-export default class PlanSchedulePage extends React.Component {
+class PlanSchedulePage extends React.Component {
   state = {
-    selectedCourse: undefined, // for course detail table
+    selectedCourse: this.props.selectedCourse ? this.props.selectedCourse : '', // for course detail table
     sections: {}, // for algorithm, must be in same format as table row
     currSchedule: {},
     currScheduleIndex: 0,
@@ -46,7 +48,6 @@ export default class PlanSchedulePage extends React.Component {
     if (tempCourseInfo !== null) {
       const parsedCI = JSON.parse(tempCourseInfo); // CI === 'course info'
       this.setState(() => ({
-        selectedCourse: parsedCI.selectedCourse,
         sections: parsedCI.sections,
         currScheduleIndex: JSON.parse(savedIndex),
       }));
@@ -76,7 +77,6 @@ export default class PlanSchedulePage extends React.Component {
     // want to also save currently selected term
     const { selectedTermObject } = this.state;
     const selectedCourseInfo = {
-      selectedCourse: selectedCourse,
       sections: sections,
     };
     if (validSchedules.length > 0) {
@@ -95,17 +95,19 @@ export default class PlanSchedulePage extends React.Component {
   }
 
   updateSelectedTermObject = (termObject) => {
-    this.setState(() => ({ selectedTermObject: termObject, selectedCourse: undefined, validSchedules: [], sections: {} }));
+    this.setState(() => ({ selectedTermObject: termObject, selectedCourse: '', validSchedules: [], sections: {} }));
   };
 
-  updateSelectedCourse = (course) => {
-    this.setState(() => ({ selectedCourse: course, error: undefined, validSchedules: [] }));
+  clearErrorAndValidSchedules = () => {
+    this.setState(() => ({ error: undefined, validSchedules: [] }));
   };
+
+
 
   updateSectionCheckboxToggle = (sectionNumber) => {
     // loop through sections of selectedCourse
     let sections = this.state.sections;
-    const course = this.state.selectedCourse;
+    const course = this.props.selectedCourse;
     const sectionKeys = Object.keys(sections[course]);
 
     for (let i = 0; i < sectionKeys.length; i++) {
@@ -288,11 +290,6 @@ export default class PlanSchedulePage extends React.Component {
     this.setState(() => ({ sections: {} }));
   };
 
-  clearSelectedCourse = () => {
-    this.setState(() => ({ selectedCourse: undefined }));
-  };
-
-
   filterSectionsFromSchedules = (schedules, sections, doFilterBool) => {
     if (!doFilterBool) {
       return schedules;
@@ -341,7 +338,7 @@ export default class PlanSchedulePage extends React.Component {
       coursesList.push(courses[i].name);
     }
 
-    this.clearSelectedCourse();
+    this.props.dispatch(clearSelectedCourse());
 
     let sections = this.state.sections;
     let data = JSON.stringify({
@@ -435,7 +432,8 @@ export default class PlanSchedulePage extends React.Component {
   };
 
   render() {
-    const { selectedCourse, validSchedules, currScheduleIndex, error, loadingSchedules } = this.state;
+    const { validSchedules, currScheduleIndex, error, loadingSchedules } = this.state;
+    const { selectedCourse } = this.props; // getting from redux store now
     const { isLoggedIn } = this.props;
     return (
       <div className="main-container">
@@ -443,7 +441,7 @@ export default class PlanSchedulePage extends React.Component {
           selectedCourse={selectedCourse}
           selectedTermObject={this.state.selectedTermObject}
           updateSelectedTermObject={this.updateSelectedTermObject}
-          updateSelectedCourse={this.updateSelectedCourse}
+          clearErrorAndValidSchedules={this.clearErrorAndValidSchedules}
           addCourseSections={this.addCourseSections}
           clearSelectedCourse={this.clearSelectedCourse}
           deleteCourseFromSections={this.deleteCourseFromSections}
@@ -451,7 +449,7 @@ export default class PlanSchedulePage extends React.Component {
           generateSchedules={this.generateSchedules}
         />
         {
-          (selectedCourse === undefined && validSchedules.length === 0 && error === undefined) &&
+          (selectedCourse === '' && validSchedules.length === 0 && error === undefined) &&
           (loadingSchedules ?
             <div className="loader__container">
               <Loader className='loader' active>Loading Schedules...</Loader>
@@ -480,7 +478,7 @@ export default class PlanSchedulePage extends React.Component {
             </Message>
           </div>
         }
-        { (selectedCourse === undefined && validSchedules.length > 0) &&
+        { (selectedCourse === '' && validSchedules.length > 0) &&
         <div className="app-root__schedules-title-wrapper">
           <h3 id="schedules-title__text">Schedules</h3>
           <SaveScheduleButton
@@ -505,3 +503,11 @@ export default class PlanSchedulePage extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    selectedCourse: state.selectedCourse
+  };
+};
+
+export default connect(mapStateToProps)(PlanSchedulePage);
