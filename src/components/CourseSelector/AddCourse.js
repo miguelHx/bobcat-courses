@@ -1,8 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 import { Dropdown } from 'semantic-ui-react';
 import axios from "axios/index";
 import TermDropdown from "../TermDropdown";
+import { clearSelectedCourse, setSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import './AddCourse.css';
 
 const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
@@ -16,7 +18,7 @@ const customSearch = (options, query) => {
   });
 };
 
-export default class AddCourse extends React.Component {
+class AddCourse extends React.Component {
   state = {
     error: undefined,
     isFetching: false,
@@ -30,6 +32,7 @@ export default class AddCourse extends React.Component {
     const termValue = data.value;
     const termObject = { text: termText, value: termValue };
     this.props.handleTermChange(termObject);
+    this.props.dispatch(clearSelectedCourse());
     this.setState(() => ({ searchResults: [], selectedTermObject: termObject }));
   };
 
@@ -47,7 +50,8 @@ export default class AddCourse extends React.Component {
     this.setState(() => ({ error: undefined }));
     // update selected course in root component
     // * addCourseSections will update selected course so might not even need the next line
-    this.props.updateSelectedCourse(course);
+    this.props.dispatch(setSelectedCourse(course));
+    this.props.clearErrorAndValidSchedules();
   };
 
   handleSearch = _.debounce((event, data) => {
@@ -110,3 +114,7 @@ export default class AddCourse extends React.Component {
     );
   }
 }
+
+// connecting will give use access to dispatch function
+export default connect()(AddCourse);
+

@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
+import { setSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import './Course.css';
 
 const Course = (props) => {
@@ -12,6 +14,8 @@ const Course = (props) => {
           compact
           onClick={() => {
             props.updateSelectedCourse(props.courseText);
+            props.dispatch(setSelectedCourse(props.courseText));
+            props.clearErrorAndValidSchedules();
           }}
           >
           (Sections)
@@ -29,4 +33,4 @@ const Course = (props) => {
   );
 };
 
-export default Course;
+export default connect()(Course);

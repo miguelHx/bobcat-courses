@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AddCourse from './AddCourse';
 import Courses from './Courses';
 import { Button } from 'semantic-ui-react';
 import './CourseSelector.css';
+import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
 
 const MAX_NUM_COURSES = 7;
 
@@ -45,7 +47,7 @@ class CourseSelector extends React.Component {
       })
     }));
     if (course === this.props.selectedCourse) {
-      this.props.clearSelectedCourse();
+      this.props.dispatch(clearSelectedCourse());
     }
     // also update sections in root
     this.props.deleteCourseFromSections(course);
@@ -84,14 +86,14 @@ class CourseSelector extends React.Component {
             selectedTermObject={this.props.selectedTermObject}
             handleTermChange={this.handleTermChange}
             handleAddCourse={this.handleAddCourse}
-            updateSelectedCourse={this.props.updateSelectedCourse}
+            clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
             courseDropdownList={this.state.courseDropdownList}
           />
           <Courses
             courses={this.state.courses}
             handleDeleteCourses={this.handleDeleteCourses}
             handleDeleteOneCourse={this.handleDeleteOneCourse}
-            updateSelectedCourse={this.props.updateSelectedCourse}
+            clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
           />
           <div className="course-selector__gen-button-wrapper">
             <Button
@@ -110,4 +112,4 @@ class CourseSelector extends React.Component {
   }
 }
 
-export default CourseSelector;
+export default connect()(CourseSelector);
