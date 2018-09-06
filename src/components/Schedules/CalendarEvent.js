@@ -3,8 +3,8 @@ import './CalendarEvent.css';
 
 const CalendarEvent = (props) => {
   return (
-    <div {...props} style={props.eventStyle} className="cal-event">
-      <div style={props.textStyle} className="cal-event__text">
+    <div {...props} style={props.eventstyle} className="cal-event">
+      <div style={props.textstyle} className="cal-event__text">
         <div className="cal-event__title">
           {props.title}
         </div>

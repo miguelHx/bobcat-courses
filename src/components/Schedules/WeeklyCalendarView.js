@@ -101,8 +101,8 @@ export default class WeeklyCalendarView extends React.Component {
         let newEventDOMelement = (
           <CalendarEvent
             key={`${sectionID}-${sectionType}`}
-            eventStyle={newEventStyle}
-            textStyle={newEventTextStyle}
+            eventstyle={newEventStyle}
+            textstyle={newEventTextStyle}
             title={sectionID}
             detail={sectionType}
           />
