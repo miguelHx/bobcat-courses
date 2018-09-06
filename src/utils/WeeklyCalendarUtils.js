@@ -16,7 +16,7 @@ const extractSectionsFromSchedule = (currSchedule) => {
   return sectionsList;
 };
 
-// maybe add testing for this funcion to handle all types of errors
+// maybe add testing for this function to handle all types of errors
 const convert24to12HourFormat = (time24) => {
   // expecting numbers such as 7, 8, 9, 10, 11, 12, 13, 14 etc.
   if (time24 <= 12) {
@@ -41,7 +41,7 @@ const convertTimeStringTo24 = (time12) => {
   let endingMinutes = parts[1].split(':')[1].substring(0, 2);
   let AMorPM = parts[1].slice(-2); // am or pm
 
-  if (AMorPM == 'pm') {
+  if (AMorPM === 'pm') {
     if (endingHour === 12) {
       // handle case of 12:00 - 12:50pm
       // or 11:00 - 12:15pm

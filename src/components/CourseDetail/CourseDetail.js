@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionsTable from './SectionsTable';
 import { Loader } from 'semantic-ui-react';
+import './CourseDetail.css';
 
 const buildSectionsList = (keys, sections) => {
   // put all sections into array for table rows.  Maybe sort by discussion number??

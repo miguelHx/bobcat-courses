@@ -1,11 +1,13 @@
 import React from 'react';
 import moment from "moment";
 import { Popup } from "semantic-ui-react";
+import CalendarEvent from "./CalendarEvent";
 import {
   convertTimeStringTo24,
   extractSectionsFromSchedule,
   convert24to12HourFormat
 } from '../../utils/WeeklyCalendarUtils';
+import './WeeklyCalendarView.css';
 
 const HOUR_SLOT_HEIGHT = 45;
 let colorsIdx = 0;
@@ -97,16 +99,13 @@ export default class WeeklyCalendarView extends React.Component {
         const sectionType = currSection['type'];
         // want event element to contain more details on hover
         let newEventDOMelement = (
-          <div key={`${sectionID}-${sectionType}`} style={newEventStyle} className="cal-event">
-            <div style={newEventTextStyle} className="cal-event__text">
-              <div className="cal-event__title">
-                {sectionID}
-              </div>
-              <div className="cal-event__detail">
-                {sectionType}
-              </div>
-            </div>
-          </div>
+          <CalendarEvent
+            key={`${sectionID}-${sectionType}`}
+            eventstyle={newEventStyle}
+            textstyle={newEventTextStyle}
+            title={sectionID}
+            detail={sectionType}
+          />
         );
         let popupElement = (
           <Popup key={`${sectionID}-${sectionType}-popup`} trigger={newEventDOMelement}>

@@ -1,0 +1,27 @@
+.add-course__container {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.add-course__header__title {
+  text-align: center;
+  color: black;
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.add-course-error {
+  color: red;
+  font-style: italic;
+  padding: 1rem;
+}
+
+.add-course__dropdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  padding: 0 !important;
+}
+
+#add-course__dept-dropdown {
+  margin-bottom: 0.75rem;
+}

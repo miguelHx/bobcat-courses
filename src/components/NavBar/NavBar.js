@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import { NavBarMenuItemsFull } from './NavBarMenuItems';
 import MobileNavBarMenu from './MobileNavBarMenu';
-import logo from '../../../assets/images/bobcat-logo.png';
+import logo from '../../assets/images/bobcat-logo.png';
 import withSizes from 'react-sizes';
+import './NavBar.css';
 
 // for giving isMobile prop to NavBar
 const mapSizesToProps = ({ width }) => ({
@@ -21,7 +22,7 @@ const NavBar = (props) => {
         to="/"
         className="navbar-menu__header"
       >
-        <img src={logo} />
+        <img src={logo} alt="Bobcat Courses" />
         Bobcat Courses
       </Menu.Item>
       { isMobile ?

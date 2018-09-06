@@ -1,0 +1,166 @@
+html {
+  font-size: 14px !important; /* base font size */
+  /*overflow-y: scroll;*/
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif !important;
+  background-color: #EBEBEB !important;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.is-active {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.s-alert-box {
+  border-radius: 3px;
+}
+
+.login-signup-page__main-container {
+ /*flex-direction: row;*/
+ /*justify-content: space-around;*/
+  margin-bottom: 25rem;
+  background-color: white;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding: 3rem 100px;
+  border-radius: 6px;
+  min-height: 400px;
+  height: auto;
+}
+
+.loader__container {
+  min-width: 18.75rem;
+  width: 70%;
+  margin-top: 0;
+  margin-bottom: 3rem;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 1.75rem;
+}
+
+.loader {
+  position: relative !important;
+  margin: 0 auto;
+}
+/*// Colors*/
+/*$navy-blue: #0D293C;*/
+/*$off-white: #A5AFD7;*/
+/*$blue: #3C4251;*/
+/*$light-blue: #464B5E;*/
+
+/*// Spacing*/
+/*$s-size: 0.75rem; // 12 px*/
+/*$m-size: 1rem; // 16 px*/
+/*$l-size: 2rem; // 32 px*/
+/*$xl-size: 3rem; // 48 px*/
+/*$desktop-breakpoint: 28rem;*/
+
+/*// Calendar Heights for different break points.*/
+/*$mobile-hr-slot-height: 75px;*/
+/*$bigger-hr-slot-height: 60px;*/
+/*$regular-hr-slot-height: 45px;*/
+
+/* RESPONSIVE STYLES */
+
+/* devices <= 1024px */
+@media (max-width: 64rem) {
+  .header {
+    margin: 0;
+  }
+  .main-container, .saved-schedules__main-container,
+  .login-signup-page__main-container {
+    flex-direction: column;
+    margin-bottom: 25rem;
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
+  .course-selector__container {
+    margin: 0 auto;
+  }
+  .course-selector__courses {
+    margin: 0;
+  }
+  .add-course__header__title {
+    font-size: 24px;
+  }
+  .add-course__dropdown-wrapper {
+    font-size: 1rem;
+  }
+  .course-detail__container, .loader__container {
+    padding: 0 1rem 1rem 1rem;
+    width: 100% !important;
+  }
+  .course-detail__header-text h3 {
+    font-size: 24px;
+  }
+  .course-detail__header-text p {
+    font-size: 1.1rem;
+  }
+  .sections-table {
+    display: flex;
+    overflow-x: scroll;
+    overflow-x: auto;
+  }
+  .app-root__error-msg-wrapper {
+    padding: 0 1rem;
+    width: 100%;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+  .app-root__schedules-title-wrapper {
+    width: 100%;
+    margin-left: auto;
+  }
+  .schedules__container {
+    padding: 0 1rem;
+  }
+
+  .login-signup-page__main-container {
+    padding: 3rem 50px;
+  }
+
+}
+
+/* devices <= 640px */
+@media (max-width: 40rem) {
+  table {
+    /* this will allow for overflow scrolling */
+    display: block;
+    width: 100% !important;
+    border: none !important;
+  }
+  .sections-table {
+    border: 1px solid rgba(34, 36, 38, 0.15) !important;
+    border-radius: .28571429rem;
+  }
+  .course-selector__container {
+    margin: 0 auto;
+  }
+  .schedules__container {
+    padding: 0 0.75rem !important;
+  }
+  .add-course__header__title {
+    font-size: 24px;
+  }
+  .add-course__dropdown-wrapper {
+    font-size: 1.2rem;
+  }
+  .course__text {
+    font-size: 1.2rem;
+  }
+  .login-signup-page__main-container {
+    padding: 3rem 25px;
+  }
+
+}

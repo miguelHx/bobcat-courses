@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from '../AuthService';
 import Alert from 'react-s-alert';
+import './SignUpPage.css';
 
 const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
 
@@ -95,14 +96,24 @@ class SignUpPage extends React.Component {
 
       }
       else {
-        let error = new Error(res.statusText);
-        error.response = response;
-        throw error;
+        throw new Error(res.statusText);
       }
     })
     .catch(error => {
-      // console.log(error);
-      this.setState(() => ({ error: error }));
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        this.setState(() => ({ error: error.response.data['error'] }));
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      // console.log(error.config);
     });
   };
 

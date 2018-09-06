@@ -1,5 +1,6 @@
 import React from 'react';
 import { Checkbox, Table } from 'semantic-ui-react';
+import './SectionsTable.css';
 
 export default class SectionsTable extends React.Component {
 
