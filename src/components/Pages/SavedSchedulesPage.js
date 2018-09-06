@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
 import GoogleCalButton from '../Buttons/GoogleCalButton';
 import Schedules from '../Schedules/Schedules';
-import AuthService from '../AuthService';
+import AuthService from '../../login/AuthService';
 import Alert from 'react-s-alert';
 import './SavedSchedulesPage.css';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Alert from 'react-s-alert';
-import AuthService from '../AuthService';
+import AuthService from '../../login/AuthService';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import CourseDetail from '../CourseDetail/CourseDetail';

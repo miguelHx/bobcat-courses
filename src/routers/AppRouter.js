@@ -7,7 +7,7 @@ import SignUpPage from '../components/Pages/SignUpPage';
 import SettingsPage from '../components/Pages/SettingsPage';
 import PlanSchedulePage from '../components/Pages/PlanSchedulePage';
 import SavedSchedulesPage from '../components/Pages/SavedSchedulesPage';
-import withAuth from './../components/withAuth';
+import withAuth from '../login/withAuth';
 
 // pages: 1. PlanSchedulePage 2. SavedSchedulesPage 3. Login Page 4. Register Page
 // will have authentication state in this component.  This means that when we log in, we want to update login state.

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Form, Message } from 'semantic-ui-react';
-import AuthService from '../AuthService';
+import AuthService from '../../login/AuthService';
 import Alert from 'react-s-alert';
 import './SignUpPage.css';
 

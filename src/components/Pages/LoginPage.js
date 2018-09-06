@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
-import AuthService from '../AuthService';
+import AuthService from '../../login/AuthService';
 import Alert from 'react-s-alert';
 import './LoginPage.css';
 

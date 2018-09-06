@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthService from '../AuthService';
+import AuthService from '../../login/AuthService';
 import './SettingsPage.css';
 
 class SettingsPage extends React.Component {
