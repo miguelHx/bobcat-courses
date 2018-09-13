@@ -1,7 +1,7 @@
 import React from 'react';
 import Alert from 'react-s-alert';
 import AuthService from '../../login/AuthService';
-import axios from 'axios';
+import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import { connect } from 'react-redux';
 import CourseDetail from '../CourseDetail/CourseDetail';
 import CourseSelector from '../CourseSelector/CourseSelector';
@@ -15,7 +15,6 @@ import 'react-s-alert/dist/s-alert-default.css';
 import './PlanSchedulePage.css';
 
 const Auth = new AuthService();
-const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
 const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 // comparator used for sorting array of objects
 const compareSections = (me, other) => {
@@ -247,11 +246,7 @@ class PlanSchedulePage extends React.Component {
         term: term,
     });
 
-    axios.post(`${BASE_URL}/courses/course-match/`, data, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    BobcatCoursesApi.fetchCourseData(data)
     .then(res => {
       const data = res.data[course];
       sections[course] = this.postRequestDataExtractor(data);
@@ -346,11 +341,7 @@ class PlanSchedulePage extends React.Component {
         search_full: true
     });
 
-    axios.post(`${BASE_URL}/courses/schedule-search/`, data, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    BobcatCoursesApi.fetchValidSchedules(data)
     .then(res => {
       let error = undefined;
       let data = res.data;
@@ -388,26 +379,22 @@ class PlanSchedulePage extends React.Component {
         term: "201830",
     });
 
-    axios.post(`${BASE_URL}/users/save-schedule/`, data, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${Auth.getToken()}`
-        }
-    })
+    BobcatCoursesApi.saveUserSchedule(data, Auth.getToken())
     .then(res => {
       const responseStatus = res.data;
-      if ('success' in responseStatus) {
+      if (responseStatus['success']) {
         // want to clear session storage of 'cached' saved schedules and index
         sessionStorage.removeItem("tempSavedSchedules");
         sessionStorage.removeItem("savedSchedulesIndex");
         // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
-        Alert.success(responseStatus['success'], {
+        Alert.success("Schedule Saved Successfully", {
           position: 'top-right',
           offset: 0,
         });
       }
       else if ('error' in responseStatus) {
         // error, schedule probably deleted, update state error Message
+        console.log(responseStatus);
         Alert.error(responseStatus['error'], {
           position: 'top-right',
           offset: 0,
@@ -415,7 +402,7 @@ class PlanSchedulePage extends React.Component {
       }
     })
     .catch(error => {
-      // console.log(error);
+      console.log(error);
       Alert.error(error, {
         position: 'top-right',
         offset: 0,
