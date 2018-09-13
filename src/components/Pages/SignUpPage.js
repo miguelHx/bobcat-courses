@@ -1,11 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from '../../login/AuthService';
 import Alert from 'react-s-alert';
 import './SignUpPage.css';
+import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 
-const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
 
 class SignUpPage extends React.Component {
 
@@ -27,6 +26,55 @@ class SignUpPage extends React.Component {
   };
 
   Auth = new AuthService();
+
+  // makes an api call to sign up user and handles then logic
+  signUpUser = (userData) => {
+    BobcatCoursesApi.signUp(userData)
+      .then(res => {
+        if (res.status >= 200 && res.status < 300) {
+          // success status lies between 200 to 300
+          // if successful, want alert user, then attempt a log in.
+          Alert.success("Sign Up Successful", {
+            position: 'top-right',
+            offset: 0,
+          });
+
+          this.Auth.login(userData.username, userData.password)
+            .then((res) => {
+              // if successful, we will redirect to home page and update login status
+              this.props.updateLoginStatus();
+              Alert.success("Log In Successful", {
+                position: 'top-right',
+                offset: 0,
+              });
+              this.props.history.replace('/');
+            })
+            .catch((err) => {
+              this.setState({ error: 'Unable to Login at this time.' });
+            })
+
+        }
+        else {
+          throw new Error(res.statusText);
+        }
+      })
+      .catch(error => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          this.setState(() => ({ error: error.response.data['error'] }));
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        // console.log(error.config);
+      });
+  };
 
   handleUserInput = (event) => {
     const { name, value } = event.target;
@@ -66,55 +114,8 @@ class SignUpPage extends React.Component {
         password: password,
     });
 
-    axios.post(`${BASE_URL}/register/`, data, {
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(res => {
-      if (res.status >= 200 && res.status < 300) {
-        // success status lies between 200 to 300
-        // if successful, want alert user, then attempt a log in.
-        Alert.success("Sign Up Successful", {
-          position: 'top-right',
-          offset: 0,
-        });
+    this.signUpUser(data);
 
-        this.Auth.login(username, password)
-          .then((res) => {
-            // if successful, we will redirect to home page and update login status
-            this.props.updateLoginStatus();
-            Alert.success("Log In Successful", {
-              position: 'top-right',
-              offset: 0,
-            });
-            this.props.history.replace('/');
-          })
-          .catch((err) => {
-            this.setState({ error: 'Unable to Login at this time.' });
-          })
-
-      }
-      else {
-        throw new Error(res.statusText);
-      }
-    })
-    .catch(error => {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        this.setState(() => ({ error: error.response.data['error'] }));
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.log(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-      }
-      // console.log(error.config);
-    });
   };
 
   render() {

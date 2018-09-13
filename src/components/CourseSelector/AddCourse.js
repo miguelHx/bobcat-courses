@@ -2,12 +2,11 @@ import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dropdown } from 'semantic-ui-react';
-import axios from "axios/index";
+import BobcatCoursesApi from '../../api/BobcatCoursesApi';
 import TermDropdown from "../TermDropdown";
 import { clearSelectedCourse, setSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import './AddCourse.css';
 
-const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
 const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 
 const customSearch = (options, query) => {
@@ -62,7 +61,7 @@ class AddCourse extends React.Component {
     const query = encodeURIComponent(data.searchQuery);
     const { selectedTermObject } = this.props;
     let params = `course=${query}&term=${selectedTermObject.value}`;
-    axios.get(`${ROOT_API_URL}/courses/course-search/?${params}`)
+    BobcatCoursesApi.searchCourses(params)
       .then(res => {
         // console.log(res);
         let results = res.data;
