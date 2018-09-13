@@ -77,6 +77,36 @@ class BobcatCoursesApi {
       }
     });
   }
+
+  /**
+   * Fetches user's saved schedules
+   * @param authToken - JWT token used to authenticate and identify logged-in user
+   * @returns {AxiosPromise<any>}
+   */
+  static fetchSavedSchedules(authToken) {
+    return axios.get(`${ROOT_API_URL}/users/schedule-dump/`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    });
+  }
+
+  /**
+   * Deletes a user's saved schedule.
+   * @param postData - a stringified json object containing the following properties:
+   *                  crns - an array of crns that we want to delete,
+   *                  term - the currently saved term
+   * @param authToken - JWT token used to authenticate and identify logged-in user
+   * @returns {AxiosPromise<any>}
+   */
+  static deleteSavedSchedule(postData, authToken) {
+    return axios.post(`${ROOT_API_URL}/users/delete-schedule/`, postData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+  }
 }
 
 export default BobcatCoursesApi;
