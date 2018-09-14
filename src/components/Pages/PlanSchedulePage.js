@@ -1,6 +1,5 @@
 import React from 'react';
 import Alert from 'react-s-alert';
-import AuthService from '../../login/AuthService';
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import { connect } from 'react-redux';
 import CourseDetail from '../CourseDetail/CourseDetail';
@@ -14,7 +13,6 @@ import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import 'react-s-alert/dist/s-alert-default.css';
 import './PlanSchedulePage.css';
 
-const Auth = new AuthService();
 const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 // comparator used for sorting array of objects
 const compareSections = (me, other) => {
@@ -364,51 +362,6 @@ class PlanSchedulePage extends React.Component {
     });
 
   };
-  // TODO move this to SaveScheduleButton
-  saveSchedule = () => {
-    let crns = [];
-    const schedule = this.state.currSchedule;
-    const sectionsList = extractSectionsFromSchedule(schedule);
-
-    for (let i = 0; i < sectionsList.length; i++) {
-      crns.push(sectionsList[i]['crn']);
-    }
-
-    let data = JSON.stringify({
-        crns: crns,
-        term: "201830",
-    });
-
-    BobcatCoursesApi.saveUserSchedule(data, Auth.getToken())
-    .then(res => {
-      const responseStatus = res.data;
-      if (responseStatus['success']) {
-        // want to clear session storage of 'cached' saved schedules and index
-        sessionStorage.removeItem("tempSavedSchedules");
-        sessionStorage.removeItem("savedSchedulesIndex");
-        // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
-        Alert.success("Schedule Saved Successfully", {
-          position: 'top-right',
-          offset: 0,
-        });
-      }
-      else if ('error' in responseStatus) {
-        // error, schedule probably deleted, update state error Message
-        console.log(responseStatus);
-        Alert.error(responseStatus['error'], {
-          position: 'top-right',
-          offset: 0,
-        });
-      }
-    })
-    .catch(error => {
-      console.log(error);
-      Alert.error(error, {
-        position: 'top-right',
-        offset: 0,
-      });
-    });
-  };
 
   updateCurrSchedule = (schedule, index) => {
     this.setState(() => ({
@@ -468,8 +421,9 @@ class PlanSchedulePage extends React.Component {
           <h3 id="schedules-title__text">Schedules</h3>
           <SaveScheduleButton
             isLoggedIn={isLoggedIn}
-            saveSchedule={this.saveSchedule}
             selectedTermObject={this.state.selectedTermObject}
+            term={this.state.selectedTermObject.value}
+            currSchedule={this.state.currSchedule}
           />
           {
             // don't render calendars unless both conditions inside () are true
