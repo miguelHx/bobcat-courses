@@ -1,24 +1,9 @@
 import React from 'react';
 import { Checkbox, Table } from 'semantic-ui-react';
 import './SectionsTable.css';
+import SectionsTableHeader from "./SectionsTableHeader";
 
 export default class SectionsTable extends React.Component {
-
-  renderHeaderRow = () => {
-    return (
-      <Table.Row>
-        <Table.HeaderCell></Table.HeaderCell>
-        <Table.HeaderCell>Section</Table.HeaderCell>
-        <Table.HeaderCell>CRN</Table.HeaderCell>
-        <Table.HeaderCell>Time</Table.HeaderCell>
-        <Table.HeaderCell>Day(s)</Table.HeaderCell>
-        <Table.HeaderCell>Location</Table.HeaderCell>
-        <Table.HeaderCell>Instructor</Table.HeaderCell>
-        <Table.HeaderCell>Units</Table.HeaderCell>
-        <Table.HeaderCell>Enrolled</Table.HeaderCell>
-      </Table.Row>
-    );
-  };
 
   renderTableData = (data, index) => {
     // want number of rows to equal number of LECT sections + number of DISC sections + number of XXXX sections
@@ -45,19 +30,19 @@ export default class SectionsTable extends React.Component {
     );
   };
 
-
+  // TODO re-evaluate how to take care of filtering
   handleCheckboxChange = (event, data) => {
     const sectionNum = data.id;
     // want to update state of section to change isSelected boolean in root app state
     // call handler to update selected courses state
-    this.props.updateSectionCheckboxToggle(sectionNum);
+    this.props.updateSectionCheckboxToggle(sectionNum); // this is preventing us from using the table as a stateless functional component.
   };
 
   render() {
     return (
       <div className="sections-table">
         <Table
-          headerRow={this.renderHeaderRow()}
+          headerRow={ <SectionsTableHeader /> }
           renderBodyRow={this.renderTableData} // this will map over tableData
           tableData={this.props.sectionsList}
           selectable={true}
