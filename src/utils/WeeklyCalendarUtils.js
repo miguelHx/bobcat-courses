@@ -65,7 +65,7 @@ const convertTimeStringTo24 = (time12) => {
   // put time period back together in 24 hour format.
   let time = `${startingHour}:${startingMinutes}-${endingHour}:${endingMinutes}`;
   return time;
-}
+};
 
 
 
