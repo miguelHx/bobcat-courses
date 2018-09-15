@@ -63,14 +63,13 @@ class AddCourse extends React.Component {
     let params = `course=${query}&term=${selectedTermObject.value}`;
     BobcatCoursesApi.searchCourses(params)
       .then(res => {
-        // console.log(res);
         let results = res.data;
         if (!results) {
           results = [];
         }
-        else if (results.indexOf("Server Error") >= 0) {
+        else if (res.status < 200 && res.status >= 300) {
           results = [];
-          // console.log("SERVER ERROR"); // alert the user
+          console.log("SERVER ERROR"); // alert the user
         }
         this.setState(() => ({
           isFetching: false,
@@ -116,4 +115,3 @@ class AddCourse extends React.Component {
 
 // connecting will give use access to dispatch function
 export default connect()(AddCourse);
-

@@ -9,7 +9,7 @@ export default function withAuth(AuthComponent) {
       this.state = {
         username: null,
         isLoggedIn: false,
-      }
+      };
       this.updateLoginStatus = this.updateLoginStatus.bind(this);
       this.updateLogoutStatus = this.updateLogoutStatus.bind(this);
     }

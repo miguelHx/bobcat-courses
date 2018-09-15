@@ -34,8 +34,6 @@ class CourseSelector extends React.Component {
   handleTermChange = (termObject) => {
     this.props.updateSelectedTermObject(termObject);
     this.setState(() => ({
-      selectedTermObject: termObject,
-      searchResults: [],
       courses: [],
     }));
   };
@@ -87,11 +85,9 @@ class CourseSelector extends React.Component {
             handleTermChange={this.handleTermChange}
             handleAddCourse={this.handleAddCourse}
             clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
-            courseDropdownList={this.state.courseDropdownList}
           />
           <Courses
             courses={this.state.courses}
-            handleDeleteCourses={this.handleDeleteCourses}
             handleDeleteOneCourse={this.handleDeleteOneCourse}
             clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
           />
