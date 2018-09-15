@@ -71,7 +71,8 @@ class PlanSchedulePage extends React.Component {
 
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
-    const { validSchedules, currScheduleIndex, selectedCourse, sections } = this.state;
+    const { validSchedules, currScheduleIndex, sections } = this.state;
+    const { selectedCourse } = this.props; // getting from redux store now, so props.
     // want to also save currently selected term
     const { selectedTermObject } = this.state;
     const selectedCourseInfo = {
