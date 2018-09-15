@@ -1,8 +1,58 @@
 import React from 'react';
 import { Button, Popup } from 'semantic-ui-react';
+import AuthService from "../../login/AuthService";
+import BobcatCoursesApi from "../../api/BobcatCoursesApi";
+import {extractSectionsFromSchedule} from "../../utils/WeeklyCalendarUtils";
+import Alert from 'react-s-alert';
+
+const Auth = new AuthService();
+
+const saveSchedule = (schedule, term) => {
+  let crns = [];
+  const sectionsList = extractSectionsFromSchedule(schedule);
+
+  for (let i = 0; i < sectionsList.length; i++) {
+    crns.push(sectionsList[i]['crn']);
+  }
+
+  let data = JSON.stringify({
+    crns: crns,
+    term: term,
+  });
+
+  BobcatCoursesApi.saveUserSchedule(data, Auth.getToken())
+    .then(res => {
+      const responseStatus = res.data;
+      if (responseStatus['success']) {
+        // want to clear session storage of 'cached' saved schedules and index
+        sessionStorage.removeItem("tempSavedSchedules");
+        sessionStorage.removeItem("savedSchedulesIndex");
+        // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
+        Alert.success("Schedule Saved Successfully", {
+          position: 'top-right',
+          offset: 0,
+        });
+      }
+      else if ('error' in responseStatus) {
+        // error, schedule probably deleted, update state error Message
+        console.log(responseStatus);
+        Alert.error(responseStatus['error'], {
+          position: 'top-right',
+          offset: 0,
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      Alert.error(error, {
+        position: 'top-right',
+        offset: 0,
+      });
+    });
+};
 
 const SaveScheduleButton = (props) => {
-  const { isLoggedIn, saveSchedule } = props;
+  const { isLoggedIn, term, currSchedule } = props;
   return (
     <div>
       {/* if not logged in, render the button with popup, otherwise, render regular save schedule button */}
@@ -18,13 +68,14 @@ const SaveScheduleButton = (props) => {
       }
       { isLoggedIn &&
         <Button
-          onClick={saveSchedule}
+          onClick={() => { saveSchedule(currSchedule, term) }}
           color='yellow'
           disabled={!isLoggedIn}
         >
           Save Schedule
         </Button>
       }
+      <Alert stack={{limit: 2}} timeout={2000} />
     </div>
 
   );

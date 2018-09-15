@@ -3,6 +3,7 @@ import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from '../../login/AuthService';
 import Alert from 'react-s-alert';
 import './LoginPage.css';
+import { withSizes } from "react-sizes";
 
 class LoginPage extends React.Component {
   componentWillMount() {
@@ -49,6 +50,7 @@ class LoginPage extends React.Component {
 
   render() {
     const { username, password, error } = this.state;
+    const { isMobile } = this.props;
     return (
       <div className="login-signup-page__main-container">
         <Message
@@ -57,7 +59,7 @@ class LoginPage extends React.Component {
           className='signup-page__welcome-msg'
           info
         />
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} size={isMobile ? 'big' : 'large'}>
           {
             error &&  <Message size='small' negative>
               {error}
@@ -85,12 +87,16 @@ class LoginPage extends React.Component {
               required
             />
           </Form.Field>
-          <Button type="submit" color="blue" size="small">Log In</Button>
+          <Button type="submit" color="blue" size={isMobile ? 'big' : 'large'}>Log In</Button>
         </Form>
         <Alert stack={{limit: 2}} timeout={2000} />
       </div>
     );
   }
-};
+}
 
-export default LoginPage;
+const mapSizesToProps = ({ width }) => ({
+  isMobile: width < 600,
+});
+
+export default withSizes(mapSizesToProps)(LoginPage);

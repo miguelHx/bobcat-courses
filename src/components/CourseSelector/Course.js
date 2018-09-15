@@ -13,7 +13,6 @@ const Course = (props) => {
           size='mini'
           compact
           onClick={() => {
-            props.updateSelectedCourse(props.courseText);
             props.dispatch(setSelectedCourse(props.courseText));
             props.clearErrorAndValidSchedules();
           }}

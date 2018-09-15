@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import { Button, Message } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
@@ -11,7 +11,6 @@ import './SavedSchedulesPage.css';
 
 const Auth = new AuthService();
 
-const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
 const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 
 const Nav = (props) => {
@@ -57,12 +56,8 @@ class SavedSchedulesPage extends React.Component {
       }
 
       // Otherwise, want to fetch schedule data if user is logged in
-      axios.get(`${BASE_URL}/users/schedule-dump/`, {
-        headers: {
-          Authorization: `Bearer ${Auth.getToken()}`
-        }
-      })
-      .then(response => {
+      BobcatCoursesApi.fetchSavedSchedules(Auth.getToken())
+        .then(response => {
         const data = response.data;
         if (data.length === 0) {
           this.setState(() => ({ error: 'No saved schedules.' }));
@@ -106,13 +101,8 @@ class SavedSchedulesPage extends React.Component {
         term: this.state.selectedTermObject.value,
     });
 
-    axios.post(`${BASE_URL}/users/delete-schedule/`, data, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${Auth.getToken()}`
-        }
-    })
-    .then(res => {
+    BobcatCoursesApi.deleteSavedSchedule(data, Auth.getToken())
+      .then(res => {
       // console.log(res.data);
       const responseStatus = res.data;
       let currIdx = this.state.currScheduleIndex;
@@ -147,12 +137,8 @@ class SavedSchedulesPage extends React.Component {
 
 
           // fetch new schedules list after the deletion via api call just like in componentDidMount but with extra checks for index update.
-          axios.get(`${BASE_URL}/users/schedule-dump/`, {
-            headers: {
-              Authorization: `Bearer ${Auth.getToken()}`
-            }
-          })
-          .then(response => {
+          BobcatCoursesApi.fetchSavedSchedules(Auth.getToken())
+            .then(response => {
             const data = response.data;
 
             this.setState(() => ({

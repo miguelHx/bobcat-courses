@@ -3,6 +3,13 @@ import SectionsTable from './SectionsTable';
 import { Loader } from 'semantic-ui-react';
 import './CourseDetail.css';
 
+// TODO: redux action might handle this instead, idk yet.
+/**
+ * puts all sections into an array.
+ * @param keys - JSON keys of the selected course's sections
+ * @param sections - the sections of the selected course
+ * @returns {Array} - array containing each section from the selected course
+ */
 const buildSectionsList = (keys, sections) => {
   // put all sections into array for table rows.  Maybe sort by discussion number??
   let output = [];

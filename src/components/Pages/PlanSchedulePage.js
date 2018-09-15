@@ -1,7 +1,6 @@
 import React from 'react';
 import Alert from 'react-s-alert';
-import AuthService from '../../login/AuthService';
-import axios from 'axios';
+import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import { connect } from 'react-redux';
 import CourseDetail from '../CourseDetail/CourseDetail';
 import CourseSelector from '../CourseSelector/CourseSelector';
@@ -14,8 +13,6 @@ import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import 'react-s-alert/dist/s-alert-default.css';
 import './PlanSchedulePage.css';
 
-const Auth = new AuthService();
-const BASE_URL = 'https://cse120-course-planner.herokuapp.com/api';
 const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 // comparator used for sorting array of objects
 const compareSections = (me, other) => {
@@ -74,7 +71,8 @@ class PlanSchedulePage extends React.Component {
 
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
-    const { validSchedules, currScheduleIndex, selectedCourse, sections } = this.state;
+    const { validSchedules, currScheduleIndex, sections } = this.state;
+    const { selectedCourse } = this.props; // getting from redux store now, so props.
     // want to also save currently selected term
     const { selectedTermObject } = this.state;
     const selectedCourseInfo = {
@@ -247,11 +245,7 @@ class PlanSchedulePage extends React.Component {
         term: term,
     });
 
-    axios.post(`${BASE_URL}/courses/course-match/`, data, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    BobcatCoursesApi.fetchCourseData(data)
     .then(res => {
       const data = res.data[course];
       sections[course] = this.postRequestDataExtractor(data);
@@ -289,6 +283,7 @@ class PlanSchedulePage extends React.Component {
     this.setState(() => ({ sections: {} }));
   };
 
+  // TODO figure out an alternate way to filter, maybe using redux
   filterSectionsFromSchedules = (schedules, sections, doFilterBool) => {
     if (!doFilterBool) {
       return schedules;
@@ -346,11 +341,7 @@ class PlanSchedulePage extends React.Component {
         search_full: true
     });
 
-    axios.post(`${BASE_URL}/courses/schedule-search/`, data, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    BobcatCoursesApi.fetchValidSchedules(data)
     .then(res => {
       let error = undefined;
       let data = res.data;
@@ -372,55 +363,6 @@ class PlanSchedulePage extends React.Component {
       this.setState(() => ({ loadingSchedules: false }));
     });
 
-  };
-  // TODO move this to SaveScheduleButton
-  saveSchedule = () => {
-    let crns = [];
-    const schedule = this.state.currSchedule;
-    const sectionsList = extractSectionsFromSchedule(schedule);
-
-    for (let i = 0; i < sectionsList.length; i++) {
-      crns.push(sectionsList[i]['crn']);
-    }
-
-    let data = JSON.stringify({
-        crns: crns,
-        term: "201830",
-    });
-
-    axios.post(`${BASE_URL}/users/save-schedule/`, data, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${Auth.getToken()}`
-        }
-    })
-    .then(res => {
-      const responseStatus = res.data;
-      if ('success' in responseStatus) {
-        // want to clear session storage of 'cached' saved schedules and index
-        sessionStorage.removeItem("tempSavedSchedules");
-        sessionStorage.removeItem("savedSchedulesIndex");
-        // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
-        Alert.success(responseStatus['success'], {
-          position: 'top-right',
-          offset: 0,
-        });
-      }
-      else if ('error' in responseStatus) {
-        // error, schedule probably deleted, update state error Message
-        Alert.error(responseStatus['error'], {
-          position: 'top-right',
-          offset: 0,
-        });
-      }
-    })
-    .catch(error => {
-      // console.log(error);
-      Alert.error(error, {
-        position: 'top-right',
-        offset: 0,
-      });
-    });
   };
 
   updateCurrSchedule = (schedule, index) => {
@@ -481,8 +423,9 @@ class PlanSchedulePage extends React.Component {
           <h3 id="schedules-title__text">Schedules</h3>
           <SaveScheduleButton
             isLoggedIn={isLoggedIn}
-            saveSchedule={this.saveSchedule}
             selectedTermObject={this.state.selectedTermObject}
+            term={this.state.selectedTermObject.value}
+            currSchedule={this.state.currSchedule}
           />
           {
             // don't render calendars unless both conditions inside () are true

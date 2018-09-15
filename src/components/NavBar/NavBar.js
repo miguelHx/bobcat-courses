@@ -15,7 +15,12 @@ const mapSizesToProps = ({ width }) => ({
 const NavBar = (props) => {
   const { updateLogoutStatus, isLoggedIn, isMobile } = props;
   return (
-    <Menu className="navbar-menu" color='blue' inverted size='small'>
+    <Menu
+      className="navbar-menu"
+      color='blue'
+      inverted
+      size={isMobile ? 'large' : 'medium'}
+    >
       <Menu.Item
         header
         as={Link}

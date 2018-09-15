@@ -1,7 +1,7 @@
 import React from 'react';
 import './WeeklyCalendarHeader.css';
 
-const WeeklyCalendarHeader = (props) => {
+const WeeklyCalendarHeader = () => {
   return (
     <div className="calendar-header__row">
       <div className="time-header"></div>
