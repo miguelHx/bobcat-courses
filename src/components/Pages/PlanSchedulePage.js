@@ -282,6 +282,7 @@ class PlanSchedulePage extends React.Component {
     this.setState(() => ({ sections: {} }));
   };
 
+  // TODO figure out an alternate way to filter, maybe using redux
   filterSectionsFromSchedules = (schedules, sections, doFilterBool) => {
     if (!doFilterBool) {
       return schedules;

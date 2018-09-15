@@ -1,4 +1,5 @@
-
+// This file contains helper functions that are used by calendar components
+// TODO add unit tests for these.
 
 const extractSectionsFromSchedule = (currSchedule) => {
   const coursesList = Object.keys(currSchedule['schedule']); // ['ANTH-1', 'MATH-32', etc.]

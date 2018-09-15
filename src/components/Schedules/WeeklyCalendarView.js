@@ -10,6 +10,7 @@ import {
 import './WeeklyCalendarView.css';
 
 const HOUR_SLOT_HEIGHT = 45;
+const TOP_OFFSET = 10;
 let colorsIdx = 0;
 
 let colors = [
@@ -24,7 +25,7 @@ let colors = [
 
 export default class WeeklyCalendarView extends React.Component {
 
-  placeSectionsIntoCalendar = (startingHour, allSections) => {
+  generateCalendarEvents = (startingHour, allSections) => {
     let startHr = (startingHour * 100).toString(10); // will be used for moment js
     let hr;
     if (startingHour < 10) {
@@ -71,7 +72,7 @@ export default class WeeklyCalendarView extends React.Component {
       }
       timeRanges = timeRanges.split('-');
       let sectionStart = moment(timeRanges[0], 'HH:mm');
-      let offset = ((sectionStart.diff(startHr, 'hours', true)) * HOUR_SLOT_HEIGHT) + 10; // 10 original top offset in px and 50 for height of each hr-row
+      let offset = ((sectionStart.diff(startHr, 'hours', true)) * HOUR_SLOT_HEIGHT) + TOP_OFFSET; // 10 original top offset in px and 50 for height of each hr-row
 
       let sectionEnd = moment(timeRanges[1], 'HH:mm');
       let difference = sectionEnd.diff(sectionStart, 'hours', true);
@@ -203,7 +204,7 @@ export default class WeeklyCalendarView extends React.Component {
   render() {
     const { startTime, endTime, currSchedule } = this.props;
     const allSections = extractSectionsFromSchedule(currSchedule);
-    const dayOfWeekEvents = this.placeSectionsIntoCalendar(startTime, allSections);
+    const dayOfWeekEvents = this.generateCalendarEvents(startTime, allSections);
     return (
       <div className="weekly-cal-view__container">
         <div className="weekly-cal-view__time-col">
@@ -212,7 +213,6 @@ export default class WeeklyCalendarView extends React.Component {
         <div className="weekly-cal-view__monday-col" id="monday">
           { this.renderWeekColumnRows(endTime-startTime) }
           { this.renderSections(dayOfWeekEvents['mondaySections']) }
-
         </div>
         <div className="weekly-cal-view__tuesday-col" id="tuesday">
           { this.renderWeekColumnRows(endTime-startTime) }

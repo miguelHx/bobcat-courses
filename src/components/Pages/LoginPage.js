@@ -91,6 +91,6 @@ class LoginPage extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default LoginPage;
