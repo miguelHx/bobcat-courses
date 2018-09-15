@@ -42,6 +42,11 @@ yarn start
 ```
 5. open up the site using chrome on localhost:3000
 
+If you want to run a production build, run the following command:
+```bash
+yarn build
+```
+
 ## Code Style
 
 Using ES6 syntax
