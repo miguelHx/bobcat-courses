@@ -52,7 +52,7 @@ const saveSchedule = (schedule, term) => {
 };
 
 const SaveScheduleButton = (props) => {
-  const { isLoggedIn, term, currSchedule } = props;
+  const { isLoggedIn, selectedTerm, currSchedule } = props;
   return (
     <div>
       {/* if not logged in, render the button with popup, otherwise, render regular save schedule button */}
@@ -68,7 +68,7 @@ const SaveScheduleButton = (props) => {
       }
       { isLoggedIn &&
         <Button
-          onClick={() => { saveSchedule(currSchedule, term) }}
+          onClick={() => { saveSchedule(currSchedule, selectedTerm.value) }}
           color='yellow'
           disabled={!isLoggedIn}
         >

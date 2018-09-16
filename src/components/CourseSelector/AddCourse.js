@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { Dropdown } from 'semantic-ui-react';
 import BobcatCoursesApi from '../../api/BobcatCoursesApi';
 import TermDropdown from "../TermDropdown";
-import { clearSelectedCourse, setSelectedCourse } from "../../react-redux/actions/selectedCourse";
+import { setSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import './AddCourse.css';
 
-const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 
 const customSearch = (options, query) => {
   const re = new RegExp('^' + query, 'i');
@@ -22,24 +21,20 @@ class AddCourse extends React.Component {
     error: undefined,
     isFetching: false,
     searchResults: [],
-    selectedTermObject: DEFAULT_TERM, // an object
+    selectedTerm: this.props.selectedTerm, // an object, from parent plan schedule
   };
 
-  handleTermDropdownChange = (event, data) => {
-    event.persist();
-    const termText = event.target.textContent;
-    const termValue = data.value;
+  handleTermDropdownChange = (termText, termValue) => {
     const termObject = { text: termText, value: termValue };
-    this.props.handleTermChange(termObject);
-    this.props.dispatch(clearSelectedCourse());
-    this.setState(() => ({ searchResults: [], selectedTermObject: termObject }));
+    this.props.handleTermChange();
+    this.setState({ searchResults: [], selectedTerm: termObject });
   };
 
   handleCourseDropdownChange = (event, data) => {
     // whenever course dropdown changes, we want to also add course to list
     const course = data.value;
-    const { selectedTermObject } = this.props;
-    const error = this.props.handleAddCourse(course, selectedTermObject.value);
+    const { selectedTerm } = this.props; // from parent
+    const error = this.props.handleAddCourse(course, selectedTerm.value);
 
     if (error) {
       this.setState(() => ({ error: error }));
@@ -59,8 +54,8 @@ class AddCourse extends React.Component {
       return;
     }
     const query = encodeURIComponent(data.searchQuery);
-    const { selectedTermObject } = this.props;
-    let params = `course=${query}&term=${selectedTermObject.value}`;
+    const { selectedTerm } = this.props;
+    let params = `course=${query}&term=${selectedTerm.value}`;
     BobcatCoursesApi.searchCourses(params)
       .then(res => {
         let results = res.data;
@@ -90,7 +85,6 @@ class AddCourse extends React.Component {
       <div className="add-course__container">
         <TermDropdown
           handleTermDropdownChange={this.handleTermDropdownChange}
-          selectedTermObject={this.props.selectedTermObject}
         />
         <h3 className="add-course__header__title">Add a Course</h3>
         <div className="add-course__dropdown-wrapper">
