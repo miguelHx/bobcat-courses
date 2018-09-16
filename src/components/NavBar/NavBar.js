@@ -19,7 +19,7 @@ const NavBar = (props) => {
       className="navbar-menu"
       color='blue'
       inverted
-      size={isMobile ? 'large' : 'medium'}
+      size={isMobile ? 'large' : 'small'}
     >
       <Menu.Item
         header
