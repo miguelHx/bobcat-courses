@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import { Button, Message } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
@@ -7,6 +8,7 @@ import GoogleCalButton from '../Buttons/GoogleCalButton';
 import Schedules from '../Schedules/Schedules';
 import AuthService from '../../login/AuthService';
 import Alert from 'react-s-alert';
+import { setCurrSavedScheduleIndex } from "../../react-redux/actions/currSavedScheduleIndex";
 import './SavedSchedulesPage.css';
 
 const Auth = new AuthService();
@@ -26,7 +28,7 @@ class SavedSchedulesPage extends React.Component {
 
   state = {
     currSchedule: {},
-    currScheduleIndex: 0, // for getting correct index of updated schedule after delete.
+    currSavedScheduleIndex: this.props.currSavedScheduleIndex, // for getting correct index of updated schedule after delete.
     savedSchedules: [],
     selectedTermObject: DEFAULT_TERM,
     error: undefined
@@ -38,7 +40,6 @@ class SavedSchedulesPage extends React.Component {
       const tempTermValue = sessionStorage.getItem("tempTermValue"); // want to keep term in sync with other pages.
       const tempTermText = sessionStorage.getItem("tempTermText");
       const tempSavedSchedules = sessionStorage.getItem("tempSavedSchedules");
-      const savedIndex = sessionStorage.getItem("savedSchedulesIndex");
       if (tempTermValue && tempTermText) {
         this.setState(() => ({
           selectedTermObject: {
@@ -47,10 +48,9 @@ class SavedSchedulesPage extends React.Component {
           }
         }));
       }
-      if (tempSavedSchedules !== null && savedIndex !== null) {
+      if (tempSavedSchedules !== null) {
         this.setState(() => ({
           savedSchedules: JSON.parse(tempSavedSchedules),
-          currScheduleIndex: JSON.parse(savedIndex),
         }));
         return;
       }
@@ -75,11 +75,10 @@ class SavedSchedulesPage extends React.Component {
 
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
-    const { savedSchedules, currScheduleIndex, selectedTermObject } = this.state;
+    const { savedSchedules, selectedTermObject } = this.state;
     if (savedSchedules.length > 0) {
       // if schedules are here, might as well update ALL relevant state.
       sessionStorage.setItem("tempSavedSchedules", JSON.stringify(savedSchedules));
-      sessionStorage.setItem("savedSchedulesIndex", JSON.stringify(currScheduleIndex));
     }
     if (selectedTermObject) {
       sessionStorage.setItem("tempTermText", JSON.stringify(selectedTermObject.text));
@@ -105,7 +104,7 @@ class SavedSchedulesPage extends React.Component {
       .then(res => {
       // console.log(res.data);
       const responseStatus = res.data;
-      let currIdx = this.state.currScheduleIndex;
+      let currIdx = this.props.currSavedScheduleIndex;
       const newLength = this.state.savedSchedules.length - 1;
       // on success, delete schedule from local state
       if ('success' in responseStatus) {
@@ -130,9 +129,7 @@ class SavedSchedulesPage extends React.Component {
           // if index points to edge of array, then decrement by one to avoid going out of bounds.
           if (currIdx === newLength) {
             currIdx = newLength-1;
-            this.setState(() => ({
-              currScheduleIndex: currIdx
-            }));
+            this.props.dispatch(setCurrSavedScheduleIndex(currIdx));
           }
 
 
@@ -176,17 +173,16 @@ class SavedSchedulesPage extends React.Component {
   };
 
   updateCurrSchedule = (schedule, index) => {
-    this.setState(() => ({
-      currSchedule: schedule,
-      currScheduleIndex: index,
-    }));
+    this.props.dispatch(setCurrSavedScheduleIndex(index));
+    this.setState(() => ({ currSchedule: schedule }));
   };
 
 
   render() {
     const { isLoggedIn } = this.props;
     // console.log("[saved schedules state]: ", this.state);
-    const { error, currScheduleIndex } = this.state;
+    const { error } = this.state;
+    const { currSavedScheduleIndex } = this.props;
     // if not logged in, tell user that they must log in to see this page
     // provide them a link to login.
     // if user is logged in AND has saved some schedules, then render schedules onto screen along with options.
@@ -213,7 +209,7 @@ class SavedSchedulesPage extends React.Component {
                 <Schedules
                   validSchedules={this.state.savedSchedules}
                   updateCurrSchedule={this.updateCurrSchedule}
-                  currIndex={currScheduleIndex}
+                  currIndex={currSavedScheduleIndex}
                 />
               </div>
             }
@@ -235,4 +231,10 @@ class SavedSchedulesPage extends React.Component {
   }
 }
 
-export default SavedSchedulesPage;
+const mapStateToProps = (state) => {
+  return {
+    currSavedScheduleIndex: state.currSavedScheduleIndex
+  };
+};
+
+export default connect(mapStateToProps)(SavedSchedulesPage);
