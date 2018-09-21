@@ -8,10 +8,21 @@ class BobcatCoursesApi {
    * Searches courses given a parameter of a course search query and term
    * @param params - course & term, course is the course search query
    *                 while term is the semester
-   * @returns {AxiosPromise<any>}
+   * @returns {Promise<Response | never>}
    */
   static searchCourses(params) {
-    return axios.get(`${ROOT_API_URL}/courses/course-search/?${params}`);
+    const request = new Request(`${ROOT_API_URL}/courses/course-search/?${params}`, {
+      method: 'GET'
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
   }
 
   /**

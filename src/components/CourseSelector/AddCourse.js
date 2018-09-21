@@ -50,21 +50,19 @@ class AddCourse extends React.Component {
 
   handleSearch = _.debounce((event, data) => {
     this.setState(() => ({ isFetching: true }));
-    if (data === '') {
+    const query = encodeURIComponent(data.searchQuery);
+    if (query === '') {
+      this.setState({ isFetching: false });
       return;
     }
-    const query = encodeURIComponent(data.searchQuery);
     const { selectedTerm } = this.props;
     let params = `course=${query}&term=${selectedTerm.value}`;
     BobcatCoursesApi.searchCourses(params)
       .then(res => {
-        let results = res.data;
-        if (!results) {
-          results = [];
-        }
-        else if (res.status < 200 && res.status >= 300) {
-          results = [];
-          console.log("SERVER ERROR"); // alert the user
+        let results = res || [];
+        if (results.length === 0) {
+          this.setState({ isFetching: false });
+          return;
         }
         this.setState(() => ({
           isFetching: false,
@@ -74,7 +72,7 @@ class AddCourse extends React.Component {
         }));
       })
       .catch(error => {
-        console.log("error: ", error); // alert user
+        this.setState({ error: error.toString() });
       });
     }, 300);
 
