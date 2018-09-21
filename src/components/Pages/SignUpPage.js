@@ -29,35 +29,30 @@ class SignUpPage extends React.Component {
   Auth = new AuthService();
 
   // makes an api call to sign up user and handles then logic
+  // NOTE: userData is stringified!
   signUpUser = (userData) => {
     BobcatCoursesApi.signUp(userData)
       .then(res => {
-        if (res.status >= 200 && res.status < 300) {
-          // success status lies between 200 to 300
-          // if successful, want alert user, then attempt a log in.
-          Alert.success("Sign Up Successful", {
-            position: 'top-right',
-            offset: 0,
+        // success status lies between 200 to 300
+        // if successful, want alert user, then attempt a log in.
+        Alert.success("Sign Up Successful", {
+          position: 'top-right',
+          offset: 0,
+        });
+        let parsed = JSON.parse(userData);
+        this.Auth.login(parsed.username, parsed.password)
+          .then((res) => {
+            // if successful, we will redirect to home page and update login status
+            this.props.updateLoginStatus();
+            Alert.success("Log In Successful", {
+              position: 'top-right',
+              offset: 0,
+            });
+            this.props.history.replace('/');
+          })
+          .catch((err) => {
+            this.setState({ error: 'Unable to Login at this time.' });
           });
-
-          this.Auth.login(userData.username, userData.password)
-            .then((res) => {
-              // if successful, we will redirect to home page and update login status
-              this.props.updateLoginStatus();
-              Alert.success("Log In Successful", {
-                position: 'top-right',
-                offset: 0,
-              });
-              this.props.history.replace('/');
-            })
-            .catch((err) => {
-              this.setState({ error: 'Unable to Login at this time.' });
-            })
-
-        }
-        else {
-          throw new Error(res.statusText);
-        }
       })
       .catch(error => {
         if (error.response) {

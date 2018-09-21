@@ -30,13 +30,24 @@ class BobcatCoursesApi {
    * @param postData - an object that should contain a stringified object of
    *                  the following properties:
    *                  username, email, name, firstname, lastname, password
-   * @returns {AxiosPromise<any>}
+   * @returns {Promise<Response | never>}
    */
   static signUp(postData) {
-    return axios.post(`${ROOT_API_URL}/register/`, postData, {
-      headers: {
+    const request = new Request(`${ROOT_API_URL}/register/`, {
+      method: 'POST',
+      headers: new Headers({
         'Content-Type': 'application/json',
+      }),
+      body: postData
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
       }
+      return response.json();
+    }).catch(error => {
+      return error;
     });
   }
 

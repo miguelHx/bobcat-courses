@@ -20,7 +20,10 @@ export default class AuthService {
       // console.log(res);
       this.setTokens(res.access, res.refresh, username); // Setting the token in localStorage
       return Promise.resolve(res);
-    })
+    }).catch(error => {
+      console.log("ERROR IN LOGIN: ", error);
+      return error;
+    });
   }
 
   loggedIn() {
