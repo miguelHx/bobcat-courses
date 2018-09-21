@@ -13,8 +13,6 @@ import './SavedSchedulesPage.css';
 
 const Auth = new AuthService();
 
-const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
-
 const Nav = (props) => {
   return (
     <NavLink
@@ -30,24 +28,13 @@ class SavedSchedulesPage extends React.Component {
     currSchedule: {},
     currSavedScheduleIndex: this.props.currSavedScheduleIndex, // for getting correct index of updated schedule after delete.
     savedSchedules: [],
-    selectedTermObject: DEFAULT_TERM,
     error: undefined
   };
 
   componentDidMount() {
     if (this.props.isLoggedIn) {
       // want to use 'cached' data from current session, only if saved schedules on server hasn't changed
-      const tempTermValue = sessionStorage.getItem("tempTermValue"); // want to keep term in sync with other pages.
-      const tempTermText = sessionStorage.getItem("tempTermText");
       const tempSavedSchedules = sessionStorage.getItem("tempSavedSchedules");
-      if (tempTermValue && tempTermText) {
-        this.setState(() => ({
-          selectedTermObject: {
-            text: JSON.parse(tempTermText),
-            value: JSON.parse(tempTermValue),
-          }
-        }));
-      }
       if (tempSavedSchedules !== null) {
         this.setState(() => ({
           savedSchedules: JSON.parse(tempSavedSchedules),
@@ -75,14 +62,10 @@ class SavedSchedulesPage extends React.Component {
 
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
-    const { savedSchedules, selectedTermObject } = this.state;
+    const { savedSchedules } = this.state;
     if (savedSchedules.length > 0) {
       // if schedules are here, might as well update ALL relevant state.
       sessionStorage.setItem("tempSavedSchedules", JSON.stringify(savedSchedules));
-    }
-    if (selectedTermObject) {
-      sessionStorage.setItem("tempTermText", JSON.stringify(selectedTermObject.text));
-      sessionStorage.setItem("tempTermValue", JSON.stringify(selectedTermObject.value));
     }
   }
 
@@ -95,9 +78,11 @@ class SavedSchedulesPage extends React.Component {
       crns.push(sectionsList[i]['crn']);
     }
 
+    const scheduleTerm = sectionsList[0]['term'];
+
     let data = JSON.stringify({
         crns: crns,
-        term: this.state.selectedTermObject.value,
+        term: scheduleTerm,
     });
 
     BobcatCoursesApi.deleteSavedSchedule(data, Auth.getToken())
@@ -107,10 +92,9 @@ class SavedSchedulesPage extends React.Component {
       let currIdx = this.props.currSavedScheduleIndex;
       const newLength = this.state.savedSchedules.length - 1;
       // on success, delete schedule from local state
-      if ('success' in responseStatus) {
+      if (responseStatus['success']) {
         // schedule deleted, so notify user via Alert
-
-        Alert.info(responseStatus['success'], {
+        Alert.info("Schedule Deleted.", {
           position: 'top-right',
           offset: 0,
         });
@@ -154,7 +138,7 @@ class SavedSchedulesPage extends React.Component {
         }
 
       }
-      else if ('error' in responseStatus) {
+      else {
         // error, schedule probably deleted, update state error Message
         Alert.error(responseStatus['error'], {
           position: 'top-right',
@@ -233,7 +217,8 @@ class SavedSchedulesPage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currSavedScheduleIndex: state.currSavedScheduleIndex
+    currSavedScheduleIndex: state.currSavedScheduleIndex,
+    selectedTerm: state.selectedTerm,
   };
 };
 

@@ -33,18 +33,24 @@ const saveSchedule = (schedule, term) => {
           offset: 0,
         });
       }
-      else if ('error' in responseStatus) {
-        // error, schedule probably deleted, update state error Message
-        console.log(responseStatus);
-        Alert.error(responseStatus['error'], {
+      else {
+        // error, schedule probably exists, update state error Message
+        let error;
+        if (responseStatus['type'] === 'already_exists') {
+          error = `Schedule already saved (#${responseStatus['schedule_index']})`;
+        }
+        else {
+          error = responseStatus['error'];
+        }
+        Alert.error(error, {
           position: 'top-right',
           offset: 0,
         });
       }
     })
     .catch(error => {
-      console.log(error);
-      Alert.error(error, {
+      // console.log(error);
+      Alert.error('An error has occurred.', {
         position: 'top-right',
         offset: 0,
       });
