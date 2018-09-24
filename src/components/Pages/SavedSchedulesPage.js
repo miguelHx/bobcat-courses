@@ -45,7 +45,7 @@ class SavedSchedulesPage extends React.Component {
       // Otherwise, want to fetch schedule data if user is logged in
       BobcatCoursesApi.fetchSavedSchedules(Auth.getToken())
         .then(response => {
-        const data = response.data;
+        const data = response || [];
         if (data.length === 0) {
           this.setState(() => ({ error: 'No saved schedules.' }));
           return;
@@ -54,8 +54,7 @@ class SavedSchedulesPage extends React.Component {
         // console.log(response.data);
       })
       .catch(error => {
-        this.setState(() => ({ error: error }));
-        // console.log(error);
+        console.log(error);
       });
     }
   }
@@ -87,8 +86,8 @@ class SavedSchedulesPage extends React.Component {
 
     BobcatCoursesApi.deleteSavedSchedule(data, Auth.getToken())
       .then(res => {
-      // console.log(res.data);
-      const responseStatus = res.data;
+      console.log(res);
+      const responseStatus = res;
       let currIdx = this.props.currSavedScheduleIndex;
       const newLength = this.state.savedSchedules.length - 1;
       // on success, delete schedule from local state
@@ -120,7 +119,7 @@ class SavedSchedulesPage extends React.Component {
           // fetch new schedules list after the deletion via api call just like in componentDidMount but with extra checks for index update.
           BobcatCoursesApi.fetchSavedSchedules(Auth.getToken())
             .then(response => {
-            const data = response.data;
+            const data = response;
 
             this.setState(() => ({
               currSchedule: data[currIdx],

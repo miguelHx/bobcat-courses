@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
 
 class BobcatCoursesApi {
@@ -136,13 +134,23 @@ class BobcatCoursesApi {
   /**
    * Fetches user's saved schedules
    * @param authToken - JWT token used to authenticate and identify logged-in user
-   * @returns {AxiosPromise<any>}
+   * @returns {Promise<Response | never>}
    */
   static fetchSavedSchedules(authToken) {
-    return axios.get(`${ROOT_API_URL}/users/schedule-dump/`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`
+    const request = new Request(`${ROOT_API_URL}/users/schedule-dump/`, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${authToken}`
+      })
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
       }
+      return response.json();
+    }).catch(error => {
+      return error;
     });
   }
 
@@ -152,14 +160,25 @@ class BobcatCoursesApi {
    *                  crns - an array of crns that we want to delete,
    *                  term - the currently saved term
    * @param authToken - JWT token used to authenticate and identify logged-in user
-   * @returns {AxiosPromise<any>}
+   * @returns {Promise<Response | never>}
    */
   static deleteSavedSchedule(postData, authToken) {
-    return axios.post(`${ROOT_API_URL}/users/delete-schedule/`, postData, {
-      headers: {
+    const request = new Request(`${ROOT_API_URL}/users/delete-schedule/`, {
+      method: 'POST',
+      headers: new Headers({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`
+      }),
+      body: postData
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
       }
+      return response.json();
+    }).catch(error => {
+      return error;
     });
   }
 }
