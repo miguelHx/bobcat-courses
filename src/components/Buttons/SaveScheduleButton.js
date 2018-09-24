@@ -22,7 +22,7 @@ const saveSchedule = (schedule, term) => {
 
   BobcatCoursesApi.saveUserSchedule(data, Auth.getToken())
     .then(res => {
-      const responseStatus = res.data;
+      const responseStatus = res;
       if (responseStatus['success']) {
         // want to clear session storage of 'cached' saved schedules and index
         sessionStorage.removeItem("tempSavedSchedules");
@@ -36,6 +36,7 @@ const saveSchedule = (schedule, term) => {
       else {
         // error, schedule probably exists, update state error Message
         let error;
+        console.log(responseStatus);
         if (responseStatus['type'] === 'already_exists') {
           error = `Schedule already saved (#${responseStatus['schedule_index']})`;
         }

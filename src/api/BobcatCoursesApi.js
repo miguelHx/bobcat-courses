@@ -55,13 +55,24 @@ class BobcatCoursesApi {
    * Fetches course data with its respective sections
    * @param postData - a stringified object that contains an array called course_list
    *                   and a term for the semester
-   * @returns {AxiosPromise<any>}
+   * @returns {Promise<Response | never>}
    */
   static fetchCourseData(postData) {
-    return axios.post(`${ROOT_API_URL}/courses/course-match/`, postData, {
-      headers: {
+    const request = new Request(`${ROOT_API_URL}/courses/course-match/`, {
+      method: 'POST',
+      headers: new Headers({
         'Content-Type': 'application/json'
+      }),
+      body: postData
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
       }
+      return response.json();
+    }).catch(error => {
+      return error;
     });
   }
 
@@ -72,13 +83,24 @@ class BobcatCoursesApi {
    *                   course_list - a list of courses to generate schedules from,
    *                   term - the semester term
    *                   search_full - whether to give back full courses or not
-   * @returns {AxiosPromise<any>}
+   * @returns {Promise<Response | never>}
    */
   static fetchValidSchedules(postData) {
-    return axios.post(`${ROOT_API_URL}/courses/schedule-search/`, postData, {
-      headers: {
+    const request = new Request(`${ROOT_API_URL}/courses/schedule-search/`, {
+      method: 'POST',
+      headers: new Headers({
         'Content-Type': 'application/json'
+      }),
+      body: postData
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
       }
+      return response.json();
+    }).catch(error => {
+      return error;
     });
   }
 
@@ -89,14 +111,25 @@ class BobcatCoursesApi {
    *                  crns - an array of crns that we want to save
    *                  term - the semester term
    * @param authToken - the JSON Web Token used to save the schedule with the proper user.
-   * @returns {AxiosPromise<any>}
+   * @returns {Promise<Response | never>}
    */
   static saveUserSchedule(postData, authToken) {
-    return axios.post(`${ROOT_API_URL}/users/save-schedule/`, postData, {
-      headers: {
+    const request = new Request(`${ROOT_API_URL}/users/save-schedule/`, {
+      method: 'POST',
+      headers: new Headers({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`
+      }),
+      body: postData
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
       }
+      return response.json();
+    }).catch(error => {
+      return error;
     });
   }
 

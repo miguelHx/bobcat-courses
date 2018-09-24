@@ -226,12 +226,12 @@ class PlanSchedulePage extends React.Component {
 
     BobcatCoursesApi.fetchCourseData(data)
     .then(res => {
-      const data = res.data[course];
+      const data = res[course];
       sections[course] = this.postRequestDataExtractor(data);
       this.setState(() => ({ sections: sections }));
     })
     .catch(error => {
-      console.log(error);
+      this.setState(() => ({ error: error.toString() }));
     });
   };
 
@@ -323,7 +323,7 @@ class PlanSchedulePage extends React.Component {
     BobcatCoursesApi.fetchValidSchedules(data)
     .then(res => {
       let error = undefined;
-      let data = res.data;
+      let data = res || [];
 
       if (data.length === 0) {
         error = 'No Valid Schedules found due to time conflicts. Please choose different courses and try again.';
@@ -338,8 +338,8 @@ class PlanSchedulePage extends React.Component {
       this.setState(() => ({ validSchedules: data, error: error, loadingSchedules: false }));
     })
     .catch(error => {
-      console.log(error);
-      this.setState(() => ({ loadingSchedules: false }));
+      // console.log(error);
+      this.setState(() => ({ loadingSchedules: false, error: 'An error has occurred.' }));
     });
 
   };
