@@ -6,6 +6,11 @@
 //   return new Date(dt.setDate(diff));
 // };
 
+/**
+ * Returns a date object which represents the monday of that week
+ * @param d - a date object that you want the week monday of
+ * @returns {Date}
+ */
 const getMon = (d) => {
   let dt = new Date(d);
   let day = dt.getDay();
