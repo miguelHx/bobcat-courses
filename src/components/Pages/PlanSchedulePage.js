@@ -9,11 +9,11 @@ import { extractSections } from '../../utils/ExtractSections';
 import { Message, Loader } from 'semantic-ui-react';
 import SaveScheduleButton from '../Buttons/SaveScheduleButton';
 import Schedules from '../Schedules/Schedules';
+import { setCurrPlanScheduleIndex } from "../../react-redux/actions/currPlanScheduleIndex";
 import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import 'react-s-alert/dist/s-alert-default.css';
 import './PlanSchedulePage.css';
 
-const DEFAULT_TERM = { text: 'Fall 2018', value: '201830' }; // fall 2018
 // comparator used for sorting array of objects
 const compareSections = (me, other) => {
   let mySectNum = me['course_id'].split('-')[2];
@@ -30,38 +30,24 @@ class PlanSchedulePage extends React.Component {
     selectedCourse: this.props.selectedCourse ? this.props.selectedCourse : '', // for course detail table
     sections: {}, // for algorithm, must be in same format as table row
     currSchedule: {},
-    currScheduleIndex: 0,
+    currPlanScheduleIndex: this.props.currPlanScheduleIndex, // redux store, default is 0
     validSchedules: [], // for calendars
     error: undefined, // for when we have conflicting schedules.
     loadingSchedules: false,
-    selectedTermObject: DEFAULT_TERM,
+    selectedTerm: this.props.selectedTerm, // from redux, will have a term by default, never empty
   };
 
   componentDidMount() {
-    const tempTermValue = sessionStorage.getItem("tempTermValue");
-    const tempTermText = sessionStorage.getItem("tempTermText");
     const tempSchedules = sessionStorage.getItem("tempSchedules");
     const tempCourseInfo = sessionStorage.getItem("tempCourseInfo");
-    const savedIndex = sessionStorage.getItem("planSchedulesIndex") || 0; // default to 0 if null
     if (tempCourseInfo !== null) {
       const parsedCI = JSON.parse(tempCourseInfo); // CI === 'course info'
       this.setState(() => ({
         sections: parsedCI.sections,
-        currScheduleIndex: JSON.parse(savedIndex),
       }));
     }
     if (tempSchedules !== null) {
-      this.setState(() => ({
-        validSchedules: JSON.parse(tempSchedules),
-      }));
-    }
-    if (tempTermValue && tempTermText) {
-      this.setState(() => ({
-        selectedTermObject: {
-          text: JSON.parse(tempTermText),
-          value: JSON.parse(tempTermValue),
-        },
-      }));
+      this.setState(() => ({ validSchedules: JSON.parse(tempSchedules) }));
     }
   }
 
@@ -71,30 +57,23 @@ class PlanSchedulePage extends React.Component {
 
   componentWillUnmount() {
     // want to save valid schedules (if any) to session storage
-    const { validSchedules, currScheduleIndex, sections } = this.state;
+    const { validSchedules, sections } = this.state;
     const { selectedCourse } = this.props; // getting from redux store now, so props.
-    // want to also save currently selected term
-    const { selectedTermObject } = this.state;
     const selectedCourseInfo = {
       sections: sections,
     };
     if (validSchedules.length > 0) {
       // if schedules are here, might as well update ALL relevant state.
       sessionStorage.setItem("tempSchedules", JSON.stringify(validSchedules));
-      sessionStorage.setItem("planSchedulesIndex", JSON.stringify(currScheduleIndex));
       sessionStorage.setItem("tempCourseInfo", JSON.stringify(selectedCourseInfo));
     }
     if (selectedCourse && sections[selectedCourse]) {
       sessionStorage.setItem("tempCourseInfo", JSON.stringify(selectedCourseInfo));
     }
-    if (selectedTermObject) {
-      sessionStorage.setItem("tempTermText", JSON.stringify(selectedTermObject.text));
-      sessionStorage.setItem("tempTermValue", JSON.stringify(selectedTermObject.value));
-    }
   }
 
-  updateSelectedTermObject = (termObject) => {
-    this.setState(() => ({ selectedTermObject: termObject, selectedCourse: '', validSchedules: [], sections: {} }));
+  clearValidSchedules = () => {
+    this.setState(() => ({ validSchedules: [] }));
   };
 
   clearErrorAndValidSchedules = () => {
@@ -247,12 +226,12 @@ class PlanSchedulePage extends React.Component {
 
     BobcatCoursesApi.fetchCourseData(data)
     .then(res => {
-      const data = res.data[course];
+      const data = res[course];
       sections[course] = this.postRequestDataExtractor(data);
       this.setState(() => ({ sections: sections }));
     })
     .catch(error => {
-      console.log(error);
+      this.setState(() => ({ error: error.toString() }));
     });
   };
 
@@ -344,7 +323,7 @@ class PlanSchedulePage extends React.Component {
     BobcatCoursesApi.fetchValidSchedules(data)
     .then(res => {
       let error = undefined;
-      let data = res.data;
+      let data = res || [];
 
       if (data.length === 0) {
         error = 'No Valid Schedules found due to time conflicts. Please choose different courses and try again.';
@@ -355,33 +334,31 @@ class PlanSchedulePage extends React.Component {
           error = 'No valid schedules found. Please select more sections and try again.';
         }
       }
-
-      this.setState(() => ({ validSchedules: data, error: error, loadingSchedules: false, currScheduleIndex: 0 }));
+      this.props.dispatch(setCurrPlanScheduleIndex(0));
+      this.setState(() => ({ validSchedules: data, error: error, loadingSchedules: false }));
     })
     .catch(error => {
-      console.log(error);
-      this.setState(() => ({ loadingSchedules: false }));
+      // console.log(error);
+      this.setState(() => ({ loadingSchedules: false, error: 'An error has occurred.' }));
     });
 
   };
 
   updateCurrSchedule = (schedule, index) => {
-    this.setState(() => ({
-      currSchedule: schedule,
-      currScheduleIndex: index,
-    }));
+    this.props.dispatch(setCurrPlanScheduleIndex(index));
+    this.setState(() => ({ currSchedule: schedule }));
   };
 
   render() {
-    const { validSchedules, currScheduleIndex, error, loadingSchedules } = this.state;
-    const { selectedCourse } = this.props;
+    const { validSchedules, error, loadingSchedules } = this.state;
+    const { selectedCourse, selectedTerm, currPlanScheduleIndex } = this.props; // redux store
     const { isLoggedIn } = this.props;
     return (
       <div className="main-container">
         <CourseSelector
           selectedCourse={selectedCourse}
-          selectedTermObject={this.state.selectedTermObject}
-          updateSelectedTermObject={this.updateSelectedTermObject}
+          selectedTerm={selectedTerm}
+          clearValidSchedules={this.clearValidSchedules}
           clearErrorAndValidSchedules={this.clearErrorAndValidSchedules}
           addCourseSections={this.addCourseSections}
           deleteCourseFromSections={this.deleteCourseFromSections}
@@ -423,8 +400,7 @@ class PlanSchedulePage extends React.Component {
           <h3 id="schedules-title__text">Schedules</h3>
           <SaveScheduleButton
             isLoggedIn={isLoggedIn}
-            selectedTermObject={this.state.selectedTermObject}
-            term={this.state.selectedTermObject.value}
+            selectedTerm={selectedTerm}
             currSchedule={this.state.currSchedule}
           />
           {
@@ -434,7 +410,7 @@ class PlanSchedulePage extends React.Component {
             <Schedules
               validSchedules={validSchedules}
               updateCurrSchedule={this.updateCurrSchedule}
-              currIndex={currScheduleIndex}
+              currIndex={currPlanScheduleIndex}
             />
           }
         </div>
@@ -447,7 +423,9 @@ class PlanSchedulePage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedCourse: state.selectedCourse
+    selectedCourse: state.selectedCourse,
+    selectedTerm: state.selectedTerm,
+    currPlanScheduleIndex: state.currPlanScheduleIndex,
   };
 };
 

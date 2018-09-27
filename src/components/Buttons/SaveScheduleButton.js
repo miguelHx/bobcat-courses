@@ -22,7 +22,7 @@ const saveSchedule = (schedule, term) => {
 
   BobcatCoursesApi.saveUserSchedule(data, Auth.getToken())
     .then(res => {
-      const responseStatus = res.data;
+      const responseStatus = res;
       if (responseStatus['success']) {
         // want to clear session storage of 'cached' saved schedules and index
         sessionStorage.removeItem("tempSavedSchedules");
@@ -33,18 +33,25 @@ const saveSchedule = (schedule, term) => {
           offset: 0,
         });
       }
-      else if ('error' in responseStatus) {
-        // error, schedule probably deleted, update state error Message
+      else {
+        // error, schedule probably exists, update state error Message
+        let error;
         console.log(responseStatus);
-        Alert.error(responseStatus['error'], {
+        if (responseStatus['type'] === 'already_exists') {
+          error = `Schedule already saved (#${responseStatus['schedule_index']})`;
+        }
+        else {
+          error = responseStatus['error'];
+        }
+        Alert.error(error, {
           position: 'top-right',
           offset: 0,
         });
       }
     })
     .catch(error => {
-      console.log(error);
-      Alert.error(error, {
+      // console.log(error);
+      Alert.error('An error has occurred.', {
         position: 'top-right',
         offset: 0,
       });
@@ -52,7 +59,7 @@ const saveSchedule = (schedule, term) => {
 };
 
 const SaveScheduleButton = (props) => {
-  const { isLoggedIn, term, currSchedule } = props;
+  const { isLoggedIn, selectedTerm, currSchedule } = props;
   return (
     <div>
       {/* if not logged in, render the button with popup, otherwise, render regular save schedule button */}
@@ -68,7 +75,7 @@ const SaveScheduleButton = (props) => {
       }
       { isLoggedIn &&
         <Button
-          onClick={() => { saveSchedule(currSchedule, term) }}
+          onClick={() => { saveSchedule(currSchedule, selectedTerm.value) }}
           color='yellow'
           disabled={!isLoggedIn}
         >

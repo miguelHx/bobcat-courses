@@ -1,8 +1,8 @@
-import { SET_SELECTED_COURSE, CLEAR_SELECTED_COURSE } from "../actions/selectedCourse";
+import { SET_SELECTED_COURSE, CLEAR_SELECTED_COURSE } from "../actions/actionTypes";
 
-const selectedCourseReducerDefaultState = '';
+const selectedCourseDefaultState = '';
 
-const selectedCourseReducer = (state = selectedCourseReducerDefaultState, action) => {
+const selectedCourseReducer = (state = selectedCourseDefaultState, action) => {
   switch (action.type) {
     case SET_SELECTED_COURSE:
       return action.payload;

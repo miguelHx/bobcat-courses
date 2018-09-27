@@ -1,9 +1,4 @@
-/*
- * action types​
- */
-
-export const SET_SELECTED_COURSE = 'SET_SELECTED_COURSE';
-export const CLEAR_SELECTED_COURSE = 'CLEAR_SELECTED_COURSE';
+import { SET_SELECTED_COURSE, CLEAR_SELECTED_COURSE } from "./actionTypes";
 
 
 // ADD SELECTED COURSE

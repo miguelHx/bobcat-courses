@@ -31,11 +31,11 @@ class CourseSelector extends React.Component {
     }
   }
 
-  handleTermChange = (termObject) => {
-    this.props.updateSelectedTermObject(termObject);
-    this.setState(() => ({
-      courses: [],
-    }));
+  handleTermChange = () => {
+    // want to clear valid schedules and sections
+    this.props.clearValidSchedules();
+    this.props.deleteAllSections();
+    this.setState({ courses: [] });
   };
 
   handleDeleteOneCourse = (course) => {
@@ -77,24 +77,26 @@ class CourseSelector extends React.Component {
   };
 
   render() {
+    const { selectedTerm } = this.props;
+    const { courses } = this.state;
     return (
       <div className="course-selector__container">
         <div className="course-selector__courses">
           <AddCourse
-            selectedTermObject={this.props.selectedTermObject}
+            selectedTerm={selectedTerm}
             handleTermChange={this.handleTermChange}
             handleAddCourse={this.handleAddCourse}
             clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
           />
           <Courses
-            courses={this.state.courses}
+            courses={courses}
             handleDeleteOneCourse={this.handleDeleteOneCourse}
             clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
           />
           <div className="course-selector__gen-button-wrapper">
             <Button
               primary
-              onClick={() => { this.props.generateSchedules(this.state.courses, this.props.selectedTermObject.value) }}
+              onClick={() => { this.props.generateSchedules(courses, selectedTerm.value) }}
               disabled={this.state.courses.length === 0}
               size='large'
             >
