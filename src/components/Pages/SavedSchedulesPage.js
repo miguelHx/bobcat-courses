@@ -50,7 +50,7 @@ class SavedSchedulesPage extends React.Component {
           this.setState(() => ({ error: 'No saved schedules.' }));
           return;
         }
-        this.setState(() => ({ savedSchedules: data, error: undefined }));
+        this.setState(() => ({ savedSchedules: data.reverse(), error: undefined }));
         // console.log(response.data);
       })
       .catch(error => {
@@ -86,7 +86,6 @@ class SavedSchedulesPage extends React.Component {
 
     BobcatCoursesApi.deleteSavedSchedule(data, Auth.getToken())
       .then(res => {
-      console.log(res);
       const responseStatus = res;
       let currIdx = this.props.currSavedScheduleIndex;
       const newLength = this.state.savedSchedules.length - 1;

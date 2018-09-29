@@ -36,9 +36,8 @@ const saveSchedule = (schedule, term) => {
       else {
         // error, schedule probably exists, update state error Message
         let error;
-        console.log(responseStatus);
         if (responseStatus['type'] === 'already_exists') {
-          error = `Schedule already saved (#${responseStatus['schedule_index']})`;
+          error = `Schedule already saved (#${responseStatus['schedule_index']+1})`;
         }
         else {
           error = responseStatus['error'];
