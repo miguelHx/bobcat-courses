@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import AuthService from './AuthService';
 
 export default function withAuth(AuthComponent) {
-  const Auth = new AuthService();
   return class AuthWrapped extends Component {
     constructor() {
       super();
@@ -16,7 +15,7 @@ export default function withAuth(AuthComponent) {
 
     updateLogoutStatus() {
       // TODO - redirect to index page from here
-      Auth.logout();
+      AuthService.logout();
       this.setState({
         username: null,
         isLoggedIn: false
@@ -25,21 +24,21 @@ export default function withAuth(AuthComponent) {
 
     updateLoginStatus() {
       try {
-        const username = Auth.getUsername();
+        const username = AuthService.getUsername();
         this.setState({
           username: username,
           isLoggedIn: true,
         });
       }
       catch(err) {
-        Auth.logout();
+        AuthService.logout();
         this.props.history.replace('/');
       }
 
     }
 
     componentWillMount() {
-      if (!Auth.loggedIn()) {
+      if (!AuthService.loggedIn()) {
         this.setState({ isLoggedIn: false });
       }
       else {

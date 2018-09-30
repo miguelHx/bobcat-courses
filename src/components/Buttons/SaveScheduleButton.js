@@ -5,8 +5,6 @@ import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import {extractSectionsFromSchedule} from "../../utils/WeeklyCalendarUtils";
 import Alert from 'react-s-alert';
 
-const Auth = new AuthService();
-
 const saveSchedule = (schedule, term) => {
   let crns = [];
   const sectionsList = extractSectionsFromSchedule(schedule);
@@ -20,7 +18,7 @@ const saveSchedule = (schedule, term) => {
     term: term,
   });
 
-  BobcatCoursesApi.saveUserSchedule(data, Auth.getToken())
+  BobcatCoursesApi.saveUserSchedule(data, AuthService.getToken())
     .then(res => {
       const responseStatus = res;
       if (responseStatus['success']) {

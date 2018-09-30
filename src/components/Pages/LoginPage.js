@@ -8,7 +8,7 @@ import { withSizes } from "react-sizes";
 class LoginPage extends React.Component {
   componentWillMount() {
     // if we are already logged in, we don't want to stay in login page
-    if (this.Auth.loggedIn()) {
+    if (AuthService.loggedIn()) {
       this.props.history.replace('/');
     }
   }
@@ -18,8 +18,6 @@ class LoginPage extends React.Component {
     password: '',
     error: '',
   };
-
-  Auth = new AuthService();
 
   handleLoginSuccess = () => {
     this.props.updateLoginStatus();
@@ -33,7 +31,7 @@ class LoginPage extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
-    this.Auth.login(username, password)
+    AuthService.login(username, password)
       .then((res) => {
         // if successful, we will redirect to home page and update login status
         this.handleLoginSuccess();
@@ -44,7 +42,7 @@ class LoginPage extends React.Component {
         this.props.history.replace('/');
       })
       .catch((err) => {
-        this.setState({ error: 'Invalid Username and/or Password' });
+        this.setState({ error: 'Error during login (Invalid user/pass)' });
       })
   };
 

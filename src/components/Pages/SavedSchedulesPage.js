@@ -11,8 +11,6 @@ import Alert from 'react-s-alert';
 import { setCurrSavedScheduleIndex } from "../../react-redux/actions/currSavedScheduleIndex";
 import './SavedSchedulesPage.css';
 
-const Auth = new AuthService();
-
 const Nav = (props) => {
   return (
     <NavLink
@@ -32,7 +30,7 @@ class SavedSchedulesPage extends React.Component {
   };
 
   componentDidMount() {
-    if (this.props.isLoggedIn) {
+    if (AuthService.loggedIn()) {
       // want to use 'cached' data from current session, only if saved schedules on server hasn't changed
       const tempSavedSchedules = sessionStorage.getItem("tempSavedSchedules");
       if (tempSavedSchedules !== null) {
@@ -43,7 +41,7 @@ class SavedSchedulesPage extends React.Component {
       }
 
       // Otherwise, want to fetch schedule data if user is logged in
-      BobcatCoursesApi.fetchSavedSchedules(Auth.getToken())
+      BobcatCoursesApi.fetchSavedSchedules(AuthService.getToken())
         .then(response => {
         const data = response || [];
         if (data.length === 0) {
@@ -84,7 +82,7 @@ class SavedSchedulesPage extends React.Component {
         term: scheduleTerm,
     });
 
-    BobcatCoursesApi.deleteSavedSchedule(data, Auth.getToken())
+    BobcatCoursesApi.deleteSavedSchedule(data, AuthService.getToken())
       .then(res => {
       const responseStatus = res;
       let currIdx = this.props.currSavedScheduleIndex;
@@ -116,7 +114,7 @@ class SavedSchedulesPage extends React.Component {
 
 
           // fetch new schedules list after the deletion via api call just like in componentDidMount but with extra checks for index update.
-          BobcatCoursesApi.fetchSavedSchedules(Auth.getToken())
+          BobcatCoursesApi.fetchSavedSchedules(AuthService.getToken())
             .then(response => {
             const data = response;
 

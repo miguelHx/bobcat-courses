@@ -4,11 +4,9 @@ import './SettingsPage.css';
 
 class SettingsPage extends React.Component {
 
-  Auth = new AuthService();
-
   componentWillMount() {
     // if we are already logged in, we don't want to stay in settings page
-    if (!this.Auth.loggedIn()) {
+    if (AuthService.loggedIn()) {
       this.props.history.replace('/');
     }
   }

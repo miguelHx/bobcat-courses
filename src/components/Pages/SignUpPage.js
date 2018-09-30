@@ -11,7 +11,7 @@ class SignUpPage extends React.Component {
 
   componentWillMount() {
     // if we are already logged in, we don't want to stay in login page
-    if (this.Auth.loggedIn()) {
+    if (AuthService.loggedIn()) {
       this.props.history.replace('/');
     }
   }
@@ -26,8 +26,6 @@ class SignUpPage extends React.Component {
     error: '',
   };
 
-  Auth = new AuthService();
-
   // makes an api call to sign up user and handles then logic
   // NOTE: userData is stringified!
   signUpUser = (userData) => {
@@ -40,7 +38,7 @@ class SignUpPage extends React.Component {
           offset: 0,
         });
         let parsed = JSON.parse(userData);
-        this.Auth.login(parsed.username, parsed.password)
+        AuthService.login(parsed.username, parsed.password)
           .then((res) => {
             // if successful, we will redirect to home page and update login status
             this.props.updateLoginStatus();
