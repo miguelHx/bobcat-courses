@@ -1,0 +1,32 @@
+export const EARLIEST_TIMES = [
+  { key: 'none', value: null, text: 'N/A' },
+  { key: '730am', value: 730, text: '7:30am' },
+  { key: '8am', value: 800, text: '8:00am' },
+  { key: '830am', value: 830, text: '8:30am' },
+  { key: '9am', value: 900, text: '9:00am' },
+  { key: '930am', value: 930, text: '9:30am' },
+  { key: '10am', value: 1000, text: '10:00am' },
+  { key: '1030am', value: 1030, text: '10:30am' },
+  { key: '11am', value: 1100, text: '11:00am' },
+  { key: '1130am', value: 1130, text: '11:30am' },
+  { key: 'noon', value: 1200, text: '12:00 (Noon)' },
+];
+
+export const LATEST_TIMES = [
+  { key: 'none', value: null, text: 'N/A' },
+  { key: '3pm', value: 1500, text: '3:00pm' },
+  { key: '330pm', value: 1530, text: '3:30pm' },
+  { key: '4pm', value: 1600, text: '4:00pm' },
+  { key: '430pm', value: 1630, text: '4:30pm' },
+  { key: '5pm', value: 1700, text: '5:00pm' },
+  { key: '530pm', value: 1730, text: '5:30pm' },
+  { key: '6pm', value: 1800, text: '6:00pm' },
+  { key: '630pm', value: 1830, text: '6:30pm' },
+  { key: '7pm', value: 1900, text: '7:00pm' },
+  { key: '730pm', value: 1930, text: '7:30pm' },
+  { key: '8pm', value: 2000, text: '8:00pm' },
+  { key: '830pm', value: 2030, text: '8:30pm' },
+  { key: '9pm', value: 2100, text: '9:00pm' },
+  { key: '930pm', value: 2130, text: '9:30pm' },
+  { key: '10pm', value: 2200, text: '10:00pm' },
+];

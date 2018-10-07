@@ -27,3 +27,9 @@
   justify-content: center;
   padding: 1rem;
 }
+
+
+#course-selector__advanced-options-text {
+  font-weight: bold;
+  font-size: 1.1rem;
+}

@@ -2,15 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AddCourse from './AddCourse';
 import Courses from './Courses';
-import { Button } from 'semantic-ui-react';
-import './CourseSelector.css';
+import { Button, Accordion } from 'semantic-ui-react';
 import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
+import AdvancedOptionsForm from "./AdvancedOptionsForm";
+import './CourseSelector.css';
 
 const MAX_NUM_COURSES = 7;
 
 class CourseSelector extends React.Component {
   state = {
     courses: [],
+    accordionActive: false,
+    gaps: null,
+    days: null,
+    earliest_time: null,
+    latest_time: null,
   };
 
   componentDidMount() {
@@ -76,6 +82,17 @@ class CourseSelector extends React.Component {
     this.props.addCourseSections(course, term);
   };
 
+  handleAccordionClick = (event) => { this.setState((prevState) => ({ accordionActive: !prevState.accordionActive })); };
+
+  handleGapsChange = (gaps) => { this.setState({ gaps }) };
+
+  handleDaysChange = (days) => { this.setState({ days }) };
+
+  handleEarliestTimeChange = (earliest_time) => { this.setState({ earliest_time }) };
+
+  handleLatestTimeChange = (latest_time) => { this.setState({ latest_time }) };
+
+
   render() {
     const { selectedTerm } = this.props;
     const { courses } = this.state;
@@ -96,14 +113,33 @@ class CourseSelector extends React.Component {
           <div className="course-selector__gen-button-wrapper">
             <Button
               primary
-              onClick={() => { this.props.generateSchedules(courses, selectedTerm.value) }}
+              onClick={() => {
+                const { days, gaps, earliest_time, latest_time } = this.state;
+                this.props.generateSchedules(courses, selectedTerm.value, days, gaps, earliest_time, latest_time);
+              }}
               disabled={this.state.courses.length === 0}
               size='large'
             >
               Generate Schedules
             </Button>
           </div>
-
+          <div>
+            <Accordion>
+              <Accordion.Title
+                active={this.state.accordionActive}
+                content={<span id="course-selector__advanced-options-text">Advanced Options...</span>}
+                onClick={this.handleAccordionClick}
+              />
+              <Accordion.Content active={this.state.accordionActive}>
+                <AdvancedOptionsForm
+                  handleGapsChange={this.handleGapsChange}
+                  handleDaysChange={this.handleDaysChange}
+                  handleEarliestTimeChange={this.handleEarliestTimeChange}
+                  handleLatestTimeChange={this.handleLatestTimeChange}
+                />
+              </Accordion.Content>
+            </Accordion>
+          </div>
         </div>
       </div>
     );

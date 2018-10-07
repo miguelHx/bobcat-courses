@@ -31,3 +31,6 @@ import 'semantic-ui-css/components/loader.min.css';
 
 // Sidebar
 import 'semantic-ui-css/components/sidebar.min.css';
+
+// Accordion
+import 'semantic-ui-css/components/accordion.min.css';
