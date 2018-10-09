@@ -80,7 +80,7 @@ class AdvancedOptionsForm extends React.Component {
           />
           <Form.Checkbox
             label='Maximize'
-            value='asc'
+            value='desc'
             checked={daysValue === 'desc'}
             onChange={this.handleDaysChange}
           />
