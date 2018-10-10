@@ -87,7 +87,7 @@ class AddCourse extends React.Component {
         <h3 className="add-course__header__title">Add a Course</h3>
         <div className="add-course__dropdown-wrapper">
           <Dropdown
-            placeholder={'Search For a Course'}
+            placeholder={'Type Course Here'}
             selectOnNavigation={false}
             search={customSearch}
             selection
