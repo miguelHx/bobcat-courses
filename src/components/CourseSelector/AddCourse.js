@@ -12,7 +12,7 @@ const customSearch = (options, query) => {
   const re = new RegExp('^' + query, 'i');
   return options.filter((option) => {
     // test original text, or without hyphen, or without space
-    return re.test(option.text.replace('-', '')) || re.test(option.text.replace('-', ' '));
+    return re.test(option.text.replace('-', '')) || re.test(option.text.replace('-', ' ')) || re.test(option.text);
   });
 };
 
