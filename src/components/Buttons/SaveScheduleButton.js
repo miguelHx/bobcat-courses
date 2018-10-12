@@ -4,6 +4,8 @@ import AuthService from "../../login/AuthService";
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import {extractSectionsFromSchedule} from "../../utils/WeeklyCalendarUtils";
 import Alert from 'react-s-alert';
+import PropTypes from 'prop-types';
+import './SaveScheduleButton.css';
 
 const saveSchedule = (schedule, term) => {
   let crns = [];
@@ -58,13 +60,13 @@ const saveSchedule = (schedule, term) => {
 const SaveScheduleButton = (props) => {
   const { isLoggedIn, selectedTerm, currSchedule } = props;
   return (
-    <div>
+    <div className="save-schedule-button">
       {/* if not logged in, render the button with popup, otherwise, render regular save schedule button */}
       { !isLoggedIn &&
         <Popup
           trigger={
                     <div className="app-root__popup-btn-wrapper">
-                      <Button color='yellow' size='small' disabled={!isLoggedIn} >Save Schedule</Button>
+                      <Button color='yellow' size='medium' disabled={!isLoggedIn} >Save</Button>
                     </div>
                   }
           content='You must be logged in to save schedules.'
@@ -75,14 +77,33 @@ const SaveScheduleButton = (props) => {
           onClick={() => { saveSchedule(currSchedule, selectedTerm.value) }}
           color='yellow'
           disabled={!isLoggedIn}
+          size='medium'
         >
-          Save Schedule
+          Save
         </Button>
       }
       <Alert stack={{limit: 2}} timeout={2000} />
     </div>
-
   );
+};
+
+SaveScheduleButton.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  selectedTerm: PropTypes.shape({
+    key: PropTypes.string,
+    value: PropTypes.string,
+    text: PropTypes.string,
+  }).isRequired,
+  currSchedule: PropTypes.shape({
+    custom_events: PropTypes.array,
+    info: PropTypes.shape({
+      earliest: PropTypes.number,
+      gaps: PropTypes.number,
+      latest: PropTypes.number,
+      number_of_days: PropTypes.number,
+    }),
+    schedule: PropTypes.object,
+  })
 };
 
 export default SaveScheduleButton;

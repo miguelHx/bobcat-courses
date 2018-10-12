@@ -7,7 +7,6 @@ import CourseSelector from '../CourseSelector/CourseSelector';
 import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
 import { extractSections } from '../../utils/ExtractSections';
 import { Message, Loader } from 'semantic-ui-react';
-import SaveScheduleButton from '../Buttons/SaveScheduleButton';
 import Schedules from '../Schedules/Schedules';
 import { setCurrPlanScheduleIndex } from "../../react-redux/actions/currPlanScheduleIndex";
 import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
@@ -402,12 +401,6 @@ class PlanSchedulePage extends React.Component {
         }
         { (selectedCourse === '' && validSchedules.length > 0) &&
         <div className="app-root__schedules-title-wrapper">
-          <h3 id="schedules-title__text">Schedules</h3>
-          <SaveScheduleButton
-            isLoggedIn={isLoggedIn}
-            selectedTerm={selectedTerm}
-            currSchedule={this.state.currSchedule}
-          />
           {
             // don't render calendars unless both conditions inside () are true
             // note: selectedCourse must get reset to undefined when running
@@ -416,6 +409,8 @@ class PlanSchedulePage extends React.Component {
               validSchedules={validSchedules}
               updateCurrSchedule={this.updateCurrSchedule}
               currIndex={currPlanScheduleIndex}
+              isLoggedIn={isLoggedIn}
+              selectedTerm={selectedTerm}
             />
           }
         </div>

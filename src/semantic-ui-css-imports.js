@@ -34,3 +34,6 @@ import 'semantic-ui-css/components/sidebar.min.css';
 
 // Accordion
 import 'semantic-ui-css/components/accordion.min.css';
+
+// Icons
+import 'semantic-ui-css/components/icon.min.css';
