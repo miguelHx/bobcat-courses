@@ -3,6 +3,8 @@ import { Button } from 'semantic-ui-react';
 import WeeklyCalendarHeader from './WeeklyCalendarHeader';
 import WeeklyCalendarView from './WeeklyCalendarView';
 import './Schedules.css';
+import SaveScheduleButton from "../Buttons/SaveScheduleButton";
+import SaveToCalendarButton from "../Buttons/SaveToCalendarButton";
 
 export default class Schedules extends React.Component {
   state = {
@@ -89,25 +91,19 @@ export default class Schedules extends React.Component {
     return (
       <div className="schedules__container">
         <div className="schedules__buttons-container">
+          <SaveScheduleButton
+            isLoggedIn={this.props.isLoggedIn}
+            selectedTerm={this.props.selectedTerm}
+            currSchedule={currSchedule}
+          />
           <div className="arrow-buttons__wrapper">
-            <Button
-              className="arrow-button"
-              color='blue'
-              size='small'
-              onClick={() => { this.handleLeftArrowButton() }}
-            >
-              Prev
-            </Button>
-            <h5 className="valid-schedule__counter">{currIdx+1}/{numValidSchedules}</h5>
-            <Button
-              className="arrow-button"
-              color='blue'
-              size='small'
-              onClick={() => { this.handleRightArrowButton() }}
-            >
-              Next
-            </Button>
+            <Button.Group>
+              <Button color="blue" icon='arrow left' onClick={() => { this.handleLeftArrowButton() }} />
+              <Button disabled content={<span className="valid-schedule__counter">{currIdx + 1}/{numValidSchedules}</span>} />
+              <Button color="blue" icon='arrow right' onClick={() => { this.handleRightArrowButton() }} />
+            </Button.Group>
           </div>
+          <SaveToCalendarButton />
         </div>
         <div className="calendar__top-header-divider"></div>
         <WeeklyCalendarHeader />

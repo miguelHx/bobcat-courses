@@ -11,18 +11,23 @@
   display: flex;
   padding: 0;
   margin: 0;
+  margin-bottom: 10px;
 }
 
 .arrow-buttons__wrapper {
-  display: inline-block;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .valid-schedule__counter {
-  display: inline-block;
-  margin-right: 10px;
-  margin-left: 10px;
+  color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
+
 .arrow-button {
   display: inline-block;
 }
