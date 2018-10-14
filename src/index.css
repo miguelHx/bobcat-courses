@@ -22,8 +22,8 @@ button:disabled {
   color: white;
 }
 
-.s-alert-box {
-  border-radius: 3px;
+.grow-font-size {
+  font-size: 1.2rem;
 }
 
 .login-signup-page__main-container {

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from '../../login/AuthService';
-import Alert from 'react-s-alert';
+import { ToastContainer, toast } from 'react-toastify';
 import './LoginPage.css';
 import { withSizes } from "react-sizes";
+import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 
 class LoginPage extends React.Component {
   componentWillMount() {
@@ -35,10 +36,7 @@ class LoginPage extends React.Component {
       .then((res) => {
         // if successful, we will redirect to home page and update login status
         this.handleLoginSuccess();
-        Alert.success("Log In Successful", {
-          position: 'top-right',
-          offset: 0,
-        });
+        toast.success("Login Successful 😎", TOAST_OPTIONS);
         this.props.history.replace('/');
       })
       .catch((err) => {
@@ -87,7 +85,7 @@ class LoginPage extends React.Component {
           </Form.Field>
           <Button type="submit" color="blue" size={isMobile ? 'big' : 'large'}>Log In</Button>
         </Form>
-        <Alert stack={{limit: 2}} timeout={2000} />
+        <ToastContainer autoClose={3500}/>
       </div>
     );
   }

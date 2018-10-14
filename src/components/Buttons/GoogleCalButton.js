@@ -1,12 +1,13 @@
 /* global gapi */
 
 import React from 'react';
-import Alert from 'react-s-alert';
+import { ToastContainer, toast } from 'react-toastify';
 import { Button } from 'semantic-ui-react';
 import { MONTH_TABLE } from '../../utils/MonthLookupTable';
 import { DAY_TABLE } from "../../utils/DayTableLookup";
 import { extractSectionsFromSchedule, convertTimeStringTo24 } from '../../utils/WeeklyCalendarUtils';
 import { getMon, getTue, getWed, getThu, getFri } from '../../utils/DayOfWeekFinder';
+import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 
 // Client ID and API key from the Developer Console
 const CLIENT_ID = '753790478110-vqi6frrhbhdnjiosc24l0rr5o4emi8sa.apps.googleusercontent.com';
@@ -41,7 +42,7 @@ class GoogleCalButton extends React.Component {
     return (
       [
         <Button key='btn' onClick={this.handleAuthClick} color='teal'>+ Google Calendar</Button>,
-        <Alert key='alert' stack={{limit: 2}} timeout={5000} />
+        <ToastContainer autoClose={3500}/>
       ]
     );
   }
@@ -110,18 +111,10 @@ class GoogleCalButton extends React.Component {
         summary: NEW_CAL_NAME,
       }
     }).then((response) => {
-      Alert.success(`Calendar created: ${response['result']['summary']}`, {
-        position: 'top-right',
-        offset: 0,
-        timeout: 'none',
-      });
+      toast.success(`Calendar created: ${response['result']['summary']}`, TOAST_OPTIONS);
       this.addEventsToCalendar(response.result.id);
     }).catch((error) => {
-      Alert.error(`Google ${error['result']['error']['message']}`, {
-        position: 'top-right',
-        offset: 0,
-        timeout: 'none',
-      });
+      toast.error(`Google ${error['result']['error']['message']}`, TOAST_OPTIONS);
       this.handleSignoutClick();
     });
   };
@@ -205,16 +198,10 @@ class GoogleCalButton extends React.Component {
   batchCallBack = (responseMap, rawBatchResponse) => {
     // Want to alert success or failure.
     if (rawBatchResponse.indexOf('error') >= 0) {
-      Alert.error('Unable to create events. Please try again later.', {
-        position: 'top-right',
-        offset: 0,
-      });
+      toast.error('Unable to create events. Please try again later.', TOAST_OPTIONS);
     }
     else {
-      Alert.success('Events created successfully. Check google calendar.', {
-        position: 'top-right',
-        offset: 0,
-      });
+      toast.success('Events created successfully. Check google calendar.', TOAST_OPTIONS);
       // sign out after finishing.
       this.handleSignoutClick();
     }

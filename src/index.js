@@ -6,6 +6,7 @@ import configureStore from './react-redux/store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
 import './semantic-ui-css-imports';
 import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const store = configureStore();
 

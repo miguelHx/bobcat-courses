@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
 import AuthService from '../../login/AuthService';
-import Alert from 'react-s-alert';
+import { ToastContainer, toast } from 'react-toastify';
 import './SignUpPage.css';
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import { withSizes } from "react-sizes";
-
+import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 
 class SignUpPage extends React.Component {
 
@@ -33,19 +33,13 @@ class SignUpPage extends React.Component {
       .then(res => {
         // success status lies between 200 to 300
         // if successful, want alert user, then attempt a log in.
-        Alert.success("Sign Up Successful", {
-          position: 'top-right',
-          offset: 0,
-        });
+        toast.success("Sign-up Successful 😝", TOAST_OPTIONS);
         let parsed = JSON.parse(userData);
         AuthService.login(parsed.username, parsed.password)
           .then((res) => {
             // if successful, we will redirect to home page and update login status
             this.props.updateLoginStatus();
-            Alert.success("Log In Successful", {
-              position: 'top-right',
-              offset: 0,
-            });
+            toast.success("Login Successful 😎", TOAST_OPTIONS);
             this.props.history.replace('/');
           })
           .catch((err) => {
@@ -206,7 +200,7 @@ class SignUpPage extends React.Component {
 
           <Button type="submit" color="blue" size={isMobile ? 'big' : 'large'}>Sign Up</Button>
         </Form>
-        <Alert stack={{limit: 2}} timeout={2000} />
+        <ToastContainer autoClose={3500}/>
       </div>
     );
   }

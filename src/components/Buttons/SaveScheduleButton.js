@@ -3,9 +3,10 @@ import { Button, Popup } from 'semantic-ui-react';
 import AuthService from "../../login/AuthService";
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import {extractSectionsFromSchedule} from "../../utils/WeeklyCalendarUtils";
-import Alert from 'react-s-alert';
+import { ToastContainer, toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import './SaveScheduleButton.css';
+import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 
 const saveSchedule = (schedule, term) => {
   let crns = [];
@@ -28,10 +29,7 @@ const saveSchedule = (schedule, term) => {
         sessionStorage.removeItem("tempSavedSchedules");
         sessionStorage.removeItem("savedSchedulesIndex");
         // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
-        Alert.success("Schedule Saved Successfully", {
-          position: 'top-right',
-          offset: 0,
-        });
+        toast.success("Schedule Saved 😊", TOAST_OPTIONS);
       }
       else {
         // error, schedule probably exists, update state error Message
@@ -42,18 +40,12 @@ const saveSchedule = (schedule, term) => {
         else {
           error = responseStatus['error'];
         }
-        Alert.error(error, {
-          position: 'top-right',
-          offset: 0,
-        });
+        toast.error(error, TOAST_OPTIONS);
       }
     })
     .catch(error => {
       // console.log(error);
-      Alert.error('An error has occurred.', {
-        position: 'top-right',
-        offset: 0,
-      });
+      toast.error('An error has occurred. 😔', TOAST_OPTIONS);
     });
 };
 
@@ -82,7 +74,7 @@ const SaveScheduleButton = (props) => {
           Save
         </Button>
       }
-      <Alert stack={{limit: 2}} timeout={2000} />
+      <ToastContainer autoClose={3500}/>
     </div>
   );
 };
