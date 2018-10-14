@@ -8,6 +8,7 @@ import SettingsPage from '../components/Pages/SettingsPage';
 import PlanSchedulePage from '../components/Pages/PlanSchedulePage';
 import SavedSchedulesPage from '../components/Pages/SavedSchedulesPage';
 import withAuth from '../login/withAuth';
+import { ToastContainer } from "react-toastify";
 
 // pages: 1. PlanSchedulePage 2. SavedSchedulesPage 3. Login Page 4. Register Page
 // will have authentication state in this component.  This means that when we log in, we want to update login state.
@@ -92,6 +93,7 @@ const AppRouter = (props) => {
           />
           <Route component={NotFoundPage} />
         </Switch>
+        <ToastContainer autoClose={3500}/>
       </div>
     </HashRouter>
   );

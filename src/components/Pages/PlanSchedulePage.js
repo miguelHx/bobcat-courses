@@ -1,5 +1,4 @@
 import React from 'react';
-import Alert from 'react-s-alert';
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import { connect } from 'react-redux';
 import CourseDetail from '../CourseDetail/CourseDetail';
@@ -10,7 +9,7 @@ import { Message, Loader } from 'semantic-ui-react';
 import Schedules from '../Schedules/Schedules';
 import { setCurrPlanScheduleIndex } from "../../react-redux/actions/currPlanScheduleIndex";
 import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
-import 'react-s-alert/dist/s-alert-default.css';
+import { ToastContainer } from 'react-toastify';
 import './PlanSchedulePage.css';
 
 // comparator used for sorting array of objects
@@ -415,7 +414,7 @@ class PlanSchedulePage extends React.Component {
           }
         </div>
         }
-        <Alert stack={{limit: 2}} timeout={2000} />
+        <ToastContainer autoClose={3500}/>
       </div>
     );
   }

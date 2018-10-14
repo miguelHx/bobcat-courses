@@ -7,9 +7,10 @@ import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
 import GoogleCalButton from '../Buttons/GoogleCalButton';
 import Schedules from '../Schedules/Schedules';
 import AuthService from '../../login/AuthService';
-import Alert from 'react-s-alert';
+import { ToastContainer, toast } from 'react-toastify';
 import { setCurrSavedScheduleIndex } from "../../react-redux/actions/currSavedScheduleIndex";
 import './SavedSchedulesPage.css';
+import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 
 const Nav = (props) => {
   return (
@@ -90,12 +91,7 @@ class SavedSchedulesPage extends React.Component {
       // on success, delete schedule from local state
       if (responseStatus['success']) {
         // schedule deleted, so notify user via Alert
-        Alert.info("Schedule Deleted.", {
-          position: 'top-right',
-          offset: 0,
-        });
-
-
+        toast.info("Schedule Deleted. ❌", TOAST_OPTIONS);
         // then update state accordingly
         if (newLength === 0) {
           this.setState(() => ({
@@ -125,10 +121,7 @@ class SavedSchedulesPage extends React.Component {
             }));
           })
           .catch(error => {
-            Alert.error(error, {
-              position: 'top-right',
-              offset: 0,
-            });
+            toast.error(error, TOAST_OPTIONS);
             // console.log(error);
           });
         }
@@ -136,18 +129,12 @@ class SavedSchedulesPage extends React.Component {
       }
       else {
         // error, schedule probably deleted, update state error Message
-        Alert.error(responseStatus['error'], {
-          position: 'top-right',
-          offset: 0,
-        });
+        toast.error(responseStatus['error'], TOAST_OPTIONS);
       }
     })
     .catch(error => {
       // console.log(error);
-      Alert.error(error, {
-        position: 'top-right',
-        offset: 0,
-      });
+      toast.error(error, TOAST_OPTIONS);
     });
 
   };
@@ -203,10 +190,8 @@ class SavedSchedulesPage extends React.Component {
             </Message>
           </div>
         }
-
-        <Alert stack={{limit: 2}} timeout={2000} />
+        <ToastContainer autoClose={3500}/>
       </div>
-
     );
   }
 }
