@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gapi-client": "^0.0.3",
     "jwt-decode": "^2.2.0",
     "lodash": "4.17.5",
     "moment": "^2.22.2",
