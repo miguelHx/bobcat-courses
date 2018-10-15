@@ -24,8 +24,8 @@ class GoogleCalListItem extends React.Component {
   initClient = () => {
     gapi.client.init({
       'clientId': '219116220037-uu341rn3io8hlmcohsdncs3q82re8vjo.apps.googleusercontent.com',
-      'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
-      'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+      'scope': 'https://www.googleapis.com/auth/calendar',
+      'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
     }).then(() => {
       this.GoogleAuth = gapi.auth2.getAuthInstance();
 
@@ -79,6 +79,33 @@ class GoogleCalListItem extends React.Component {
     }
   };
 
+  listUpcomingEvents = () => {
+    gapi.client.calendar.events.list({
+      'calendarId': 'primary',
+      'timeMin': (new Date()).toISOString(),
+      'showDeleted': false,
+      'singleEvents': true,
+      'maxResults': 10,
+      'orderBy': 'startTime'
+    }).then((response) => {
+      let events = response.result.items;
+      console.log('Upcoming events:');
+
+      if (events.length > 0) {
+        for (let i = 0; i < events.length; i++) {
+          let event = events[i];
+          let when = event.start.dateTime;
+          if (!when) {
+            when = event.start.date;
+          }
+          console.log(event.summary + ' (' + when + ')')
+        }
+      } else {
+        console.log('No upcoming events found.');
+      }
+    });
+  };
+
   /**
    * Listener called when user completes auth flow.  If the currentApiRequest
    * variable is set, then the user was prompted to authorize the application
@@ -87,9 +114,10 @@ class GoogleCalListItem extends React.Component {
    */
   updateSignInStatus = (isSignedIn) => {
 
-
-
     if (isSignedIn) {
+
+      this.listUpcomingEvents();
+
       this.isAuthorized = true;
       if (this.currentApiRequest) {
         this.sendAuthorizedApiRequest(this.currentApiRequest);
