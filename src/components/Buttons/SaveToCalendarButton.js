@@ -4,6 +4,7 @@ import './SaveToCalendarButton.css';
 import GoogleCalListItem from "./SaveToCalendarListItems/GoogleCalListItem";
 import MicrosoftCalListItem from "./SaveToCalendarListItems/MicrosoftCalListItem";
 import GenericCalListItem from "./SaveToCalendarListItems/GenericCalListItem";
+import PropTypes from 'prop-types';
 
 const SaveToCalendarButton = (props) => {
   return (
@@ -23,16 +24,25 @@ const PopupWithSaveToCalendarButton = (props) => (
   >
     <h4>Save to Your Calendar</h4>
     <List selection verticalAlign='middle' divided>
-      <GoogleCalListItem />
-      <MicrosoftCalListItem />
-      <GenericCalListItem />
+      <GoogleCalListItem currSchedule={props.currSchedule} />
+      <MicrosoftCalListItem currSchedule={props.currSchedule} />
+      <GenericCalListItem currSchedule={props.currSchedule} />
     </List>
   </Popup>
 );
 
-// SaveToCalendarButton.propTypes = {
-//
-// };
+PopupWithSaveToCalendarButton.propTypes = {
+  currSchedule: PropTypes.shape({
+    custom_events: PropTypes.array,
+    info: PropTypes.shape({
+      earliest: PropTypes.number,
+      gaps: PropTypes.number,
+      latest: PropTypes.number,
+      number_of_days: PropTypes.number,
+    }),
+    schedule: PropTypes.object,
+  }).isRequired
+};
 
 
 export default PopupWithSaveToCalendarButton;
