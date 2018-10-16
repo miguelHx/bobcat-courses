@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
-import { Button, Message } from 'semantic-ui-react';
+import {Loader, Message} from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
 import GoogleCalButton from '../Buttons/GoogleCalButton';
@@ -27,16 +27,19 @@ class SavedSchedulesPage extends React.Component {
     currSchedule: {},
     currSavedScheduleIndex: this.props.currSavedScheduleIndex, // for getting correct index of updated schedule after delete.
     savedSchedules: [],
-    error: undefined
+    error: undefined,
+    loadingSchedules: false,
   };
 
   componentDidMount() {
     if (AuthService.loggedIn()) {
+      this.setState({ loadingSchedules: true });
       // want to use 'cached' data from current session, only if saved schedules on server hasn't changed
       const tempSavedSchedules = sessionStorage.getItem("tempSavedSchedules");
       if (tempSavedSchedules !== null) {
         this.setState(() => ({
           savedSchedules: JSON.parse(tempSavedSchedules),
+          loadingSchedules: false,
         }));
         return;
       }
@@ -46,10 +49,10 @@ class SavedSchedulesPage extends React.Component {
         .then(response => {
         const data = response || [];
         if (data.length === 0) {
-          this.setState(() => ({ error: 'No saved schedules.' }));
+          this.setState(() => ({ error: 'No saved schedules.', loadingSchedules: false }));
           return;
         }
-        this.setState(() => ({ savedSchedules: data.reverse(), error: undefined }));
+        this.setState(() => ({ savedSchedules: data.reverse(), error: undefined, loadingSchedules: false }));
         // console.log(response.data);
       })
       .catch(error => {
@@ -108,7 +111,7 @@ class SavedSchedulesPage extends React.Component {
             this.props.dispatch(setCurrSavedScheduleIndex(currIdx));
           }
 
-
+          this.setState({ loadingSchedules: true });
           // fetch new schedules list after the deletion via api call just like in componentDidMount but with extra checks for index update.
           BobcatCoursesApi.fetchSavedSchedules(AuthService.getToken())
             .then(response => {
@@ -117,11 +120,13 @@ class SavedSchedulesPage extends React.Component {
             this.setState(() => ({
               currSchedule: data[currIdx],
               savedSchedules: data,
-              error: undefined
+              error: undefined,
+              loadingSchedules: false,
             }));
           })
           .catch(error => {
             toast.error(error, TOAST_OPTIONS);
+            this.setState({ loadingSchedules: false });
             // console.log(error);
           });
         }
@@ -148,7 +153,19 @@ class SavedSchedulesPage extends React.Component {
   render() {
     const { isLoggedIn } = this.props;
     // console.log("[saved schedules state]: ", this.state);
-    const { error } = this.state;
+    const { error, loadingSchedules } = this.state;
+
+    if (loadingSchedules) {
+      return (
+        <div className="saved-schedules__main-container">
+          <h1 className="saved-schedules__header-text">Your Saved Schedules</h1>
+          <div className="saved-schedules__loader-container">
+            <Loader className='loader' active>Loading Saved Schedules...</Loader>
+          </div>
+        </div>
+      );
+    }
+
     const { currSavedScheduleIndex } = this.props;
     // if not logged in, tell user that they must log in to see this page
     // provide them a link to login.
@@ -171,9 +188,11 @@ class SavedSchedulesPage extends React.Component {
             {
               this.state.savedSchedules.length > 0 &&
               <div className="saved-schedules__schedules-display">
-                <Button onClick={this.deleteSchedule} negative>Delete Schedule</Button>
-                <GoogleCalButton currSchedule={this.state.currSchedule}/>
+                <h1 className="saved-schedules__header-text">Your Saved Schedules</h1>
+                {/*<Button onClick={this.deleteSchedule} negative>Delete Schedule</Button>*/}
+                {/*<GoogleCalButton currSchedule={this.state.currSchedule}/>*/}
                 <Schedules
+                  leftButton='delete'
                   validSchedules={this.state.savedSchedules}
                   updateCurrSchedule={this.updateCurrSchedule}
                   currIndex={currSavedScheduleIndex}
