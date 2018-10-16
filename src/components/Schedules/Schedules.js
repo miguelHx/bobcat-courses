@@ -5,8 +5,10 @@ import WeeklyCalendarView from './WeeklyCalendarView';
 import './Schedules.css';
 import SaveScheduleButton from "../Buttons/SaveScheduleButton";
 import SaveToCalendarButton from "../Buttons/SaveToCalendarButton";
+import PropTypes from 'prop-types';
+import DeleteScheduleButton from "../Buttons/DeleteScheduleButton";
 
-export default class Schedules extends React.Component {
+class Schedules extends React.Component {
   state = {
     currIndex: 0,
   };
@@ -91,11 +93,23 @@ export default class Schedules extends React.Component {
     return (
       <div className="schedules__container">
         <div className="schedules__buttons-container">
-          <SaveScheduleButton
-            isLoggedIn={this.props.isLoggedIn}
-            selectedTerm={this.props.selectedTerm}
-            currSchedule={currSchedule}
-          />
+          {
+            this.props.leftButton === 'save' ?
+              (
+                <SaveScheduleButton
+                  isLoggedIn={this.props.isLoggedIn}
+                  selectedTerm={this.props.selectedTerm}
+                  currSchedule={currSchedule}
+                />
+              )
+                : // otherwise
+              (
+                <DeleteScheduleButton />
+              )
+
+
+          }
+
           <div className="arrow-buttons__wrapper">
             <Button.Group>
               <Button color="blue" icon='arrow left' onClick={() => { this.handleLeftArrowButton() }} />
@@ -103,7 +117,7 @@ export default class Schedules extends React.Component {
               <Button color="blue" icon='arrow right' onClick={() => { this.handleRightArrowButton() }} />
             </Button.Group>
           </div>
-          <SaveToCalendarButton />
+          <SaveToCalendarButton currSchedule={currSchedule}/>
         </div>
         <div className="calendar__top-header-divider"></div>
         <WeeklyCalendarHeader />
@@ -116,3 +130,9 @@ export default class Schedules extends React.Component {
     );
   }
 }
+
+Schedules.propTypes = {
+  leftButton: PropTypes.oneOf(['save', 'delete']).isRequired
+};
+
+export default Schedules;
