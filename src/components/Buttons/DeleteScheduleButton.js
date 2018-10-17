@@ -8,6 +8,7 @@ import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 import {setCurrSavedScheduleIndex} from "../../react-redux/actions/currSavedScheduleIndex";
 import PropTypes from 'prop-types';
 import './DeleteScheduleButton.css';
+import { connect } from "react-redux";
 
 
 const deleteSchedule = (schedule) => {
@@ -104,5 +105,10 @@ DeleteScheduleButton.propTypes = {
   })
 };
 
+const mapStateToProps = (state) => {
+  return {
+    currSavedScheduleIndex: state.currSavedScheduleIndex,
+  };
+};
 
-export default DeleteScheduleButton;
+export default connect(mapStateToProps)(DeleteScheduleButton);
