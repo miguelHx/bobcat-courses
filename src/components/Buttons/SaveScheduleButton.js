@@ -4,11 +4,13 @@ import AuthService from "../../login/AuthService";
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
 import {extractSectionsFromSchedule} from "../../utils/WeeklyCalendarUtils";
 import { ToastContainer, toast } from 'react-toastify';
+import { connect } from 'react-redux';
+import { updateRefreshSavedScheduleBoolean } from '../../react-redux/actions/refreshSavedSchedule';
 import PropTypes from 'prop-types';
 import './SaveScheduleButton.css';
 import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 
-const saveSchedule = (schedule, term) => {
+const saveSchedule = (schedule, term, reduxDispatch) => {
   let crns = [];
   const sectionsList = extractSectionsFromSchedule(schedule);
 
@@ -25,11 +27,9 @@ const saveSchedule = (schedule, term) => {
     .then(res => {
       const responseStatus = res;
       if (responseStatus['success']) {
-        // want to clear session storage of 'cached' saved schedules and index
-        sessionStorage.removeItem("tempSavedSchedules");
-        sessionStorage.removeItem("savedSchedulesIndex");
         // want to notify user, return msg to SaveScheduleButton to display as a popup or alert.
         toast.success("Schedule Saved 😊", TOAST_OPTIONS);
+        reduxDispatch(updateRefreshSavedScheduleBoolean(true));
       }
       else {
         // error, schedule probably exists, update state error Message
@@ -66,7 +66,7 @@ const SaveScheduleButton = (props) => {
       }
       { isLoggedIn &&
         <Button
-          onClick={() => { saveSchedule(currSchedule, selectedTerm.value) }}
+          onClick={() => { saveSchedule(currSchedule, selectedTerm.value, props.dispatch) }}
           color='yellow'
           disabled={!isLoggedIn}
           size='medium'
@@ -98,4 +98,4 @@ SaveScheduleButton.propTypes = {
   })
 };
 
-export default SaveScheduleButton;
+export default connect()(SaveScheduleButton);

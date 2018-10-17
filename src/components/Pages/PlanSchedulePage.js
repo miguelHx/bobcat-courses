@@ -405,6 +405,7 @@ class PlanSchedulePage extends React.Component {
             // note: selectedCourse must get reset to undefined when running
             // the algorithm
             <Schedules
+              leftButton='save'
               validSchedules={validSchedules}
               updateCurrSchedule={this.updateCurrSchedule}
               currIndex={currPlanScheduleIndex}
