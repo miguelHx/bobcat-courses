@@ -181,6 +181,26 @@ class BobcatCoursesApi {
       return error;
     });
   }
+
+  static updateUserPassword(postData, authToken) {
+    const request = new Request(`${ROOT_API_URL}/users/change-password/`, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      }),
+      body: postData
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+  }
 }
 
 export default BobcatCoursesApi;

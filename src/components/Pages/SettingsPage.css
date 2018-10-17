@@ -1,0 +1,15 @@
+.settings-page__main-container {
+  /*flex-direction: row;*/
+  /*justify-content: space-around;*/
+  background-color: white;
+  max-width: 500px;
+  margin: 0 auto 20rem auto;
+  padding: 15px 35px 40px 35px;
+  border-radius: 6px;
+  min-height: 400px;
+  height: auto;
+}
+
+.center-text {
+  text-align: center;
+}
