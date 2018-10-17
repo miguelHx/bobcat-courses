@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BobcatCoursesApi from "../../api/BobcatCoursesApi";
-import {Loader, Message, Button} from 'semantic-ui-react';
+import {Loader, Message} from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { extractSectionsFromSchedule } from '../../utils/WeeklyCalendarUtils';
 import Schedules from '../Schedules/Schedules';
@@ -181,13 +181,13 @@ class SavedSchedulesPage extends React.Component {
               this.props.savedSchedules.length > 0 &&
               <div className="saved-schedules__schedules-display">
                 <h1 className="saved-schedules__header-text">Your Saved Schedules</h1>
-                <Button onClick={this.deleteSchedule} negative>Delete Schedule</Button>
                 {/*<GoogleCalButton currSchedule={this.state.currSchedule}/>*/}
                 <Schedules
                   leftButton='delete'
                   validSchedules={this.props.savedSchedules}
                   updateCurrSchedule={this.updateCurrSchedule}
                   currIndex={currSavedScheduleIndex}
+                  deleteSchedule={this.deleteSchedule}
                 />
               </div>
             }

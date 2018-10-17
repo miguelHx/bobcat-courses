@@ -104,7 +104,7 @@ class Schedules extends React.Component {
               )
                 : // otherwise
               (
-                <DeleteScheduleButton />
+                <DeleteScheduleButton deleteScheduleHandler={this.props.deleteSchedule} />
               )
 
 
