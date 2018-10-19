@@ -26,6 +26,11 @@ button:disabled {
   font-size: 1.2rem;
 }
 
+.login-signup-page__main-container, .main-container,
+.saved-schedules__main-container, .settings-page__main-container {
+  box-shadow: 0 0 10px 1px #999;
+}
+
 .login-signup-page__main-container {
  /*flex-direction: row;*/
  /*justify-content: space-around;*/
