@@ -261,10 +261,18 @@ class PlanSchedulePage extends React.Component {
   };
 
   // TODO figure out an alternate way to filter, maybe using redux
+  /**
+   *
+   * @param schedules - array of received schedules from backend
+   * @param sections - sections stored in PlanSchedulePage state, contains check marks
+   * @param doFilterBool - whether or not we want to actually filter
+   * @returns {*} - returns a list of valid schedules filtered out
+   */
   filterSectionsFromSchedules = (schedules, sections, doFilterBool) => {
     if (!doFilterBool) {
       return schedules;
     }
+
     let stack = []; // using stack to keep track of schedule adding
     for (let i = 0; i < schedules.length; i++) {
       let currScheduleSections = extractSectionsFromSchedule(schedules[i]);
