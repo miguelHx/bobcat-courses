@@ -5,6 +5,7 @@ import currPlanScheduleIndexReducer from '../reducers/currPlanScheduleIndexReduc
 import currSavedScheduleIndexReducer from '../reducers/currSavedScheduleIndexReducer';
 import savedSchedulesReducer from '../reducers/savedSchedulesReducer';
 import refreshSavedScheduleReducer from '../reducers/refreshSavedScheduleReducer';
+import customEventsReducer from '../reducers/customEventsReducer';
 
 
 export default () => {
@@ -16,6 +17,7 @@ export default () => {
       currSavedScheduleIndex: currSavedScheduleIndexReducer,
       savedSchedules: savedSchedulesReducer,
       refreshSavedSchedule: refreshSavedScheduleReducer,
+      customEvents: customEventsReducer,
     })
   );
 };

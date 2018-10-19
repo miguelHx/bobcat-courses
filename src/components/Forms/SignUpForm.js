@@ -138,7 +138,6 @@ class SignUpForm extends React.Component {
               />
             </Form.Field>
           </Form.Group>
-
           <Form.Group widths='equal'>
             <Form.Field>
               <label>First Name</label>

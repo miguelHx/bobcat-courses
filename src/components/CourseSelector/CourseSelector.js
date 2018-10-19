@@ -4,7 +4,8 @@ import AddCourse from './AddCourse';
 import Courses from './Courses';
 import { Button, Accordion } from 'semantic-ui-react';
 import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
-import AdvancedOptionsForm from "./AdvancedOptionsForm";
+import AdvancedOptionsForm from "../Forms/AdvancedOptionsForm";
+import CustomEventModal from "./CustomEventModal";
 import './CourseSelector.css';
 
 const MAX_NUM_COURSES = 7;
@@ -122,6 +123,9 @@ class CourseSelector extends React.Component {
             >
               Generate Schedules
             </Button>
+          </div>
+          <div className="course-selector__custom-event-btn">
+            <CustomEventModal />
           </div>
           <div>
             <Accordion>

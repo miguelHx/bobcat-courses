@@ -14,3 +14,7 @@ export const SET_SAVED_SCHEDULES = 6;
 export const CLEAR_SAVED_SCHEDULES = 7;
 
 export const UPDATE_REFRESH_BOOLEAN = 8;
+
+export const ADD_CUSTOM_EVENT = 9;
+export const REMOVE_CUSTOM_EVENT = 10;
+export const EDIT_CUSTOM_EVENT = 11;

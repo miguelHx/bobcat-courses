@@ -28,6 +28,12 @@
   padding: 1rem;
 }
 
+.course-selector__custom-event-btn {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
 
 #course-selector__advanced-options-text {
   font-weight: bold;

@@ -40,3 +40,8 @@ import 'semantic-ui-css/components/icon.min.css';
 
 // List
 import 'semantic-ui-css/components/list.min.css';
+
+// Modal
+import 'semantic-ui-css/components/modal.min.css';
+import 'semantic-ui-css/components/transition.min.css';
+import 'semantic-ui-css/components/dimmer.min.css';
