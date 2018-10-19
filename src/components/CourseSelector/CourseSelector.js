@@ -7,12 +7,14 @@ import { clearSelectedCourse } from "../../react-redux/actions/selectedCourse";
 import AdvancedOptionsForm from "../Forms/AdvancedOptionsForm";
 import CustomEventModal from "./CustomEventModal";
 import './CourseSelector.css';
+import CustomEvents from "./CustomEvents/CustomEvents";
 
 const MAX_NUM_COURSES = 7;
 
 class CourseSelector extends React.Component {
   state = {
     courses: [],
+    customEvents: this.props.customEvents, // from redux store
     accordionActive: false,
     gaps: null,
     days: null,
@@ -95,7 +97,7 @@ class CourseSelector extends React.Component {
 
 
   render() {
-    const { selectedTerm } = this.props;
+    const { selectedTerm, customEvents } = this.props;
     const { courses } = this.state;
     return (
       <div className="course-selector__container">
@@ -110,6 +112,9 @@ class CourseSelector extends React.Component {
             courses={courses}
             handleDeleteOneCourse={this.handleDeleteOneCourse}
             clearErrorAndValidSchedules={this.props.clearErrorAndValidSchedules}
+          />
+          <CustomEvents
+            customEvents={customEvents}
           />
           <div className="course-selector__gen-button-wrapper">
             <Button
@@ -150,4 +155,10 @@ class CourseSelector extends React.Component {
   }
 }
 
-export default connect()(CourseSelector);
+const mapStateToProps = (state) => {
+  return {
+    customEvents: state.customEvents
+  };
+};
+
+export default connect(mapStateToProps)(CourseSelector);

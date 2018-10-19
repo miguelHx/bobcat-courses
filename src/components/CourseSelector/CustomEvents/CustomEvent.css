@@ -1,0 +1,12 @@
+.custom-event {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+}
+
+.custom-event__text {
+  color: black;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0;
+}

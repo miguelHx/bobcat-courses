@@ -60,6 +60,11 @@ class AddCourse extends React.Component {
     BobcatCoursesApi.searchCourses(params)
       .then(res => {
         let results = res || [];
+
+        if (!Array.isArray(results)) {
+          this.setState({ isFetching: false, error: 'An error has occurred.' });
+          return;
+        }
         if (results.length === 0) {
           this.setState({ isFetching: false });
           return;

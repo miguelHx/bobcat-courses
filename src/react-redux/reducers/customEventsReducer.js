@@ -19,7 +19,14 @@ const customEventsReducer = (state = defaultState, action) => {
     case EDIT_CUSTOM_EVENT:
       return action.payload; // payload should be the array
     case REMOVE_CUSTOM_EVENT:
-      return defaultState;
+      return state.filter((customEvent) => {
+        return !(
+          customEvent.event_name === action.payload.event_name &&
+          customEvent.start_time === action.payload.start_time &&
+          customEvent.end_time === action.payload.end_time &&
+          customEvent.days === action.payload.days
+        );
+      });
     default:
       return state;
   }
