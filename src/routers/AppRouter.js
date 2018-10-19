@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from '../components/Pages/LoginPage';
 import NavBar from '../components/NavBar/NavBar';
 import NotFoundPage from '../components/Pages/NotFoundPage';
@@ -19,7 +19,7 @@ import { ToastContainer } from "react-toastify";
 const AppRouter = (props) => {
   const { isLoggedIn, updateLoginStatus, updateLogoutStatus } = props;
   return (
-    <HashRouter >
+    <BrowserRouter basename={process.env.PUBLIC_URL} >
       <div>
         <NavBar
           history={props.history}
@@ -95,7 +95,7 @@ const AppRouter = (props) => {
         </Switch>
         <ToastContainer autoClose={3500}/>
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 
