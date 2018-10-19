@@ -9,7 +9,7 @@ import CustomEventModal from "./CustomEventModal";
 import './CourseSelector.css';
 import CustomEvents from "./CustomEvents/CustomEvents";
 
-const MAX_NUM_COURSES = 7;
+const MAX_NUM_COURSES = 6;
 
 class CourseSelector extends React.Component {
   state = {
@@ -121,7 +121,7 @@ class CourseSelector extends React.Component {
               primary
               onClick={() => {
                 const { days, gaps, earliest_time, latest_time } = this.state;
-                this.props.generateSchedules(courses, selectedTerm.value, days, gaps, earliest_time, latest_time);
+                this.props.generateSchedules(courses, selectedTerm.value, days, gaps, earliest_time, latest_time, customEvents);
               }}
               disabled={this.state.courses.length === 0}
               size='large'

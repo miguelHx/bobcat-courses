@@ -297,9 +297,9 @@ class PlanSchedulePage extends React.Component {
   };
 
 
-  generateSchedules = (courses, term, days, gaps, earliest_time, latest_time) => {
+  generateSchedules = (courses, term, days, gaps, earliest_time, latest_time, customEvents) => {
     // clear previous valid sections
-    this.setState(() => ({ loadingSchedules: true }));
+    this.setState(() => ({ loadingSchedules: true, error: undefined }));
     if (this.state.validSchedules.length > 0) {
       this.setState(() => ({ validSchedules: [] }));
     }
@@ -313,6 +313,7 @@ class PlanSchedulePage extends React.Component {
 
     let sections = this.state.sections;
     let data = JSON.stringify({
+      custom_events: customEvents,
       course_list: coursesList,
       filters: true,
       term: term,
@@ -320,7 +321,7 @@ class PlanSchedulePage extends React.Component {
       latest_time,
       gaps,
       days,
-      search_full: true
+      search_full: true,
     });
 
     BobcatCoursesApi.fetchValidSchedules(data)

@@ -28,6 +28,49 @@ const convert24to12HourFormat = (time24) => {
   }
 };
 
+const convert24HrIntegerTo12Hr = (time24Integer) => {
+  let timeStr = time24Integer.toString(10);
+  let output;
+  if (time24Integer < 1200) {
+    output = `${[timeStr.slice(0, 1), ':', timeStr.slice(1)].join('')}am`;
+  }
+  else if (time24Integer > 1200) {
+    output = `${[timeStr.slice(0, 2), ':', timeStr.slice(2)].join('')}pm`;
+  }
+  else {
+    return "Noon";
+  }
+  return output;
+};
+
+/**
+ *
+ * @param startTime - time integer in 24 hr format (i.e. 730, 800, 1200, 1400)
+ * @param endTime - same as above
+ */
+const convert24HrTimeRangeToString = (startTime, endTime) => {
+  const startTimeStr = startTime.toString(10);
+  const endTimeStr = endTime.toString(10);
+  let startHr, startMin, endHr, endMin;
+  if (startTimeStr.length <= 3) {
+    startHr = startTimeStr.charAt(0);
+    startMin = startTimeStr.substring(1, 3);
+  }
+  else {
+    startHr = startTimeStr.substring(0, 2);
+    startMin = startTimeStr.substring(2, startTimeStr.length);
+  }
+  if (endTimeStr.length <= 3) {
+    endHr = endTimeStr.charAt(0);
+    endMin = endTimeStr.substring(1, 3);
+  }
+  else {
+    endHr = endTimeStr.substring(0, 2);
+    endMin = endTimeStr.substring(2, endTimeStr.length);
+  }
+  return `${startHr}:${startMin}-${endHr}:${endMin}`;
+};
+
 // time12 := 3:30-4:20pm for example.
 // however, a TBD might show up, need to account for that.
 const convertTimeStringTo24 = (time12) => {
@@ -70,4 +113,4 @@ const convertTimeStringTo24 = (time12) => {
 
 
 
-export { extractSectionsFromSchedule, convert24to12HourFormat, convertTimeStringTo24 };
+export { extractSectionsFromSchedule, convert24to12HourFormat, convert24HrIntegerTo12Hr, convert24HrTimeRangeToString, convertTimeStringTo24 };

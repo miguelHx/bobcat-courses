@@ -5,7 +5,9 @@ import CalendarEvent from "./CalendarEvent";
 import {
   convertTimeStringTo24,
   extractSectionsFromSchedule,
-  convert24to12HourFormat
+  convert24HrTimeRangeToString,
+  convert24HrIntegerTo12Hr,
+  convert24to12HourFormat,
 } from '../../utils/WeeklyCalendarUtils';
 import './WeeklyCalendarView.css';
 
@@ -14,16 +16,106 @@ const TOP_OFFSET = 10;
 let colorsIdx = 0;
 
 let colors = [
+  { bg: '#d1ffbf', border: '#65db39', text: '#3c8222' }, // green
   { bg: '#bfecff', border: '#34aadc', text: '#1f6583' }, // blue
-  { bg: '#fff2bf', border: '#ffcc00', text: '#a68500' }, // yellow
   { bg: '#f3bfff', border: '#cc73e1', text: '#7b4488' }, // purple
   { bg: '#ffbfcb', border: '#ff2d55', text: '#a61d37' }, // red
   { bg: '#ffe5bf', border: '#ff9500', text: '#a66100' }, // orange
-  { bg: '#d1ffbf', border: '#65db39', text: '#3c8222' }, // green
   { bg: '#e0d3c1', border: '#a2845e', text: '#4d3c26' }, // brown
 ];
 
-export default class WeeklyCalendarView extends React.Component {
+let customEventColor =   { bg: '#fff2bf', border: '#ffcc00', text: '#a68500' }; // yellow
+
+  export default class WeeklyCalendarView extends React.Component {
+
+  generateCustomEvents = (startingHour, customEvents) => {
+
+    let startHr = (startingHour * 100).toString(10); // will be used for moment js
+    let hr;
+    if (startingHour < 10) {
+      hr = `0${startHr.substring(0, 1)}`;
+    }
+    else {
+      hr = startHr.substring(0, 2);
+    }
+    const min = startHr.slice(-2);
+    startHr = moment(`${hr}:${min}`, 'HH:mm');
+
+    let mon = [], tue = [], wed = [], thu = [], fri = [];
+
+    for (let i = 0; i < customEvents.length; i++) {
+      let currCustomEvent = customEvents[i];
+      // want start to end time in this format: '10:30-13:20' for example, in 24-hr format
+      let timeRanges = convert24HrTimeRangeToString(currCustomEvent['start_time'], currCustomEvent['end_time']);
+      timeRanges = timeRanges.split('-');
+      let sectionStart = moment(timeRanges[0], 'HH:mm');
+      let offset = ((sectionStart.diff(startHr, 'hours', true)) * HOUR_SLOT_HEIGHT) + TOP_OFFSET; // 10 original top offset in px and 50 for height of each hr-row
+
+      let sectionEnd = moment(timeRanges[1], 'HH:mm');
+      let difference = sectionEnd.diff(sectionStart, 'hours', true);
+      let height = difference * HOUR_SLOT_HEIGHT; // 50px * height for event
+
+      let days = currCustomEvent['days'];
+
+      for (let j = 0; j < days.length; j++) {
+        let currChar = days.charAt(j);
+        // create new element with computed offset and height of section div.
+        let newEventStyle = {
+          top: `${offset}px`,
+          backgroundColor: customEventColor.bg,
+          borderLeft: `4px solid ${customEventColor.border}`,
+          height: `${height}px`,
+        };
+
+        let newEventTextStyle = {
+          color: customEventColor.text,
+        };
+        // want event element to contain more details on hover
+        let newEventDOMelement = (
+          <CalendarEvent
+            key={`${currCustomEvent['event_name']}-${i}`}
+            eventstyle={newEventStyle}
+            textstyle={newEventTextStyle}
+            title={currCustomEvent['event_name']}
+          />
+        );
+        const startTime = convert24HrIntegerTo12Hr(currCustomEvent['start_time']);
+        const endTime = convert24HrIntegerTo12Hr(currCustomEvent['end_time']);
+        let popupElement = (
+          <Popup key={`${currCustomEvent['event_name']}-${i}-popup`} trigger={newEventDOMelement}>
+            <p className="popup-info"><b>{currCustomEvent['event_name']}</b></p>
+            <p className="popup-info">Time: {`${startTime}-${endTime}`}</p>
+          </Popup>
+        );
+        switch (currChar) {
+          case 'M':
+            mon.push(popupElement);
+            break;
+          case 'T':
+            tue.push(popupElement);
+            break;
+          case 'W':
+            wed.push(popupElement);
+            break;
+          case 'R':
+            thu.push(popupElement);
+            break;
+          case 'F':
+            fri.push(popupElement);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    return {
+      mon,
+      tue,
+      wed,
+      thu,
+      fri,
+    };
+  };
 
   generateCalendarEvents = (startingHour, allSections) => {
     let startHr = (startingHour * 100).toString(10); // will be used for moment js
@@ -205,6 +297,8 @@ export default class WeeklyCalendarView extends React.Component {
     const { startTime, endTime, currSchedule } = this.props;
     const allSections = extractSectionsFromSchedule(currSchedule);
     const dayOfWeekEvents = this.generateCalendarEvents(startTime, allSections);
+    const customEvents = this.generateCustomEvents(startTime, currSchedule['custom_events']);// will return an object with (key: value) being ('mon': []) for example)
+
     return (
       <div className="weekly-cal-view__container">
         <div className="weekly-cal-view__time-col">
@@ -213,22 +307,27 @@ export default class WeeklyCalendarView extends React.Component {
         <div className="weekly-cal-view__monday-col" id="monday">
           { this.renderWeekColumnRows(endTime-startTime) }
           { this.renderSections(dayOfWeekEvents['mondaySections']) }
+          { this.renderSections(customEvents['mon']) }
         </div>
         <div className="weekly-cal-view__tuesday-col" id="tuesday">
           { this.renderWeekColumnRows(endTime-startTime) }
           { this.renderSections(dayOfWeekEvents['tuesdaySections']) }
+          { this.renderSections(customEvents['tue']) }
         </div>
         <div className="weekly-cal-view__wednesday-col" id="wednesday">
           { this.renderWeekColumnRows(endTime-startTime) }
           { this.renderSections(dayOfWeekEvents['wednesdaySections']) }
+          { this.renderSections(customEvents['wed']) }
         </div>
         <div className="weekly-cal-view__thursday-col" id="thursday">
           { this.renderWeekColumnRows(endTime-startTime) }
           { this.renderSections(dayOfWeekEvents['thursdaySections']) }
+          { this.renderSections(customEvents['thu']) }
         </div>
         <div className="weekly-cal-view__friday-col" id="friday">
           { this.renderWeekColumnRows(endTime-startTime) }
           { this.renderSections(dayOfWeekEvents['fridaySections']) }
+          { this.renderSections(customEvents['fri']) }
         </div>
       </div>
     );
