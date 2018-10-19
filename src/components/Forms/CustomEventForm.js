@@ -2,9 +2,10 @@ import React from 'react';
 import {Form, Button, Checkbox, Message} from 'semantic-ui-react';
 import { CUSTOM_EVENT_TIMES } from "../../utils/TimeOptions";
 import { connect } from 'react-redux';
-import { addCustomEvent } from "../../react-redux/actions/customEvents";
+import {addCustomEvent, editCustomEvent} from "../../react-redux/actions/customEvents";
 import { toast } from 'react-toastify';
 import {TOAST_OPTIONS} from "../../utils/ToastOptions";
+import PropTypes from 'prop-types';
 
 // a sample event object:
 /*
@@ -85,35 +86,52 @@ class CustomEventForm extends React.Component {
     return false;
   };
 
+  handleCreateMode = (newCustomEvent, customEvents) => {
+    if (this.doesCustomEventExist(newCustomEvent, customEvents)) {
+      this.setState({ error: 'This Custom Event Already Exists or There are Overlapping Day(s).' });
+      return;
+    }
+    // once we pass all checks, want to dispatch action to redux store with new custom event object.
+    this.props.dispatch(addCustomEvent(newCustomEvent));
+    this.props.closeModal();
+    toast.success("Custom Event Added 😎", TOAST_OPTIONS);
+  };
+
+  handleEditMode = (oldCustomEvent, newCustomEvent) => {
+    this.props.dispatch(editCustomEvent(oldCustomEvent, newCustomEvent));
+    this.props.closeModal();
+    toast.success("Custom Event Edited ✍️", TOAST_OPTIONS);
+  };
+
   handleFormSubmit = (event) => {
     event.preventDefault();
 
     // want to do some error checking.
     const { event_name, start_time, end_time } = this.state;
-
     if (event_name === '') {
       this.setState({ error: 'You must enter an event name to proceed.' });
+      return;
+    }
+    const maxEventNameLength = 20;
+    if (event_name.length > maxEventNameLength) {
+      this.setState({ error: 'Event name is too long.' });
       return;
     }
     if (start_time === null || end_time === null) {
       this.setState({ error: 'Start Time or End Time has not been chosen.' });
       return;
     }
-
     // start time MUST NOT be after end time
     if (end_time <= start_time) {
       this.setState({ error: 'Start Time must be before End Time.' });
       return;
     }
-
     const { mon, tue, wed, thu, fri } = this.state;
     if ( !(mon || tue || wed || thu || fri) ) {
       this.setState({ error: 'You must choose at least one day of the week' });
       return;
     }
-
     let daysString = '';
-
     if (mon) {
       daysString = daysString.concat('M');
     }
@@ -129,7 +147,6 @@ class CustomEventForm extends React.Component {
     if (fri) {
       daysString = daysString.concat('F');
     }
-
     // one last check, does the custom event already exist in the store?
     const newCustomEvent = {
       event_name,
@@ -138,20 +155,17 @@ class CustomEventForm extends React.Component {
       days: daysString,
     };
     const { customEvents } = this.props;
-
-    if (this.doesCustomEventExist(newCustomEvent, customEvents)) {
-      this.setState({ error: 'This Custom Event Already Exists or There are Overlapping Day(s).' });
-      return;
+    if (this.props.mode === "create") {
+      this.handleCreateMode(newCustomEvent, customEvents);
     }
-
-    // once we pass all checks, want to dispatch action to redux store with new custom event object.
-    this.props.dispatch(addCustomEvent(newCustomEvent));
-    this.props.closeModal();
-    toast.success("Custom Event Added 😎", TOAST_OPTIONS);
+    else if (this.props.mode === "edit") {
+      this.handleEditMode(this.props.customEventObject, newCustomEvent);
+    }
   };
 
   render() {
     const { event_name, error } = this.state;
+    const { mode } = this.props;
     return (
       <Form onSubmit={this.handleFormSubmit}>
         {
@@ -228,11 +242,27 @@ class CustomEventForm extends React.Component {
             />
           </Form.Field>
         </Form.Group>
-        <Button color='green'>Add Custom Event</Button>
+        {
+          mode === "create" ?
+            (<Button color='green'>Add Custom Event</Button>)
+            :
+            (<Button color='orange'>Edit Custom Event</Button>)
+        }
+
       </Form>
     );
   }
 }
+
+CustomEventForm.propTypes = {
+  mode: PropTypes.oneOf(['edit', 'create']).isRequired,
+  customEventObject: PropTypes.shape({
+    event_name: PropTypes.string,
+    start_time: PropTypes.number,
+    end_time: PropTypes.number,
+    days: PropTypes.string,
+  })
+};
 
 const mapStateToProps = (state) => {
   return {

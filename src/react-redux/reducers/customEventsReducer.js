@@ -17,7 +17,20 @@ const customEventsReducer = (state = defaultState, action) => {
     case ADD_CUSTOM_EVENT:
       return [...state, action.payload]; // payload should be an event object
     case EDIT_CUSTOM_EVENT:
-      return action.payload; // payload should be the array
+      const index = state.findIndex((customEvent) => {
+        return (
+          customEvent.event_name === action.editEvent.event_name &&
+          customEvent.start_time === action.editEvent.start_time &&
+          customEvent.end_time === action.editEvent.end_time &&
+          customEvent.days === action.editEvent.days
+        );
+      });
+      const updatedObject = action.payload;
+      return [
+        ...state.slice(0, index), // everything before current event we are editing
+        updatedObject,
+        ...state.slice(index + 1) // everything after
+      ];
     case REMOVE_CUSTOM_EVENT:
       return state.filter((customEvent) => {
         return !(

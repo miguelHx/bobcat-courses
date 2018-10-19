@@ -1,25 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
-import { editCustomEvent, removeCustomEvent } from "../../../react-redux/actions/customEvents";
+import { removeCustomEvent } from "../../../react-redux/actions/customEvents";
 import PropTypes from 'prop-types';
 import './CustomEvent.css';
+import CustomEventModal from "../CustomEventModal";
 
 const CustomEvent = (props) => {
   return (
     <div className="custom-event">
       <p className="custom-event__text">{props.customEventObject.event_name}</p>
       <div>
-        <Button
-          color='orange'
-          size='mini'
-          compact
-          onClick={() => {
-            // props.dispatch(removeCustomEvent(props.customEventObject));
-          }}
-        >
-          (Edit)
-        </Button>
+        <CustomEventModal mode='edit' customEventObject={props.customEventObject} />
         <Button
           size='mini'
           compact

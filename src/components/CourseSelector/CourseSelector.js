@@ -130,7 +130,7 @@ class CourseSelector extends React.Component {
             </Button>
           </div>
           <div className="course-selector__custom-event-btn">
-            <CustomEventModal />
+            <CustomEventModal mode='create' />
           </div>
           <div>
             <Accordion>
