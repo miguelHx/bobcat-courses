@@ -125,6 +125,10 @@ button:disabled {
     padding: 0 1rem;
   }
 
+  .loader__container {
+    margin-top: 75px;
+  }
+
 }
 
 /* devices <= 640px */

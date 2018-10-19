@@ -35,13 +35,18 @@ class MobileNavBarMenu extends Component {
           handleButtonClick={this.handleButtonClick}
         />
       </Sidebar>,
-      <Menu.Item position='right' key='mobile-button'>
+      <Menu.Item
+        style={{cursor: 'pointer'}}
+        position='right'
+        key='mobile-button'
+        onClick={this.handleButtonClick}
+      >
         <HamburgerButton
           open={visible}
-          onClick={this.handleButtonClick}
           width={18}
           height={15}
           color='white'
+          onClick={() => {}}
         />
       </Menu.Item>
     ];

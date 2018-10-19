@@ -21,7 +21,7 @@ const NavBarMenuItemsMobile = (props) => {
       key='plan-schedule-mobile'
       onClick={props.handleButtonClick}
     >
-      Plan Schedule
+      <h4>Plan Schedule</h4>
     </Menu.Item>,
     <Menu.Item
       as={Nav} to="/saved-schedules"
@@ -29,7 +29,7 @@ const NavBarMenuItemsMobile = (props) => {
       key='saved-schedules-mobile'
       onClick={props.handleButtonClick}
     >
-      Saved Schedules
+      <h4>Saved Schedules</h4>
     </Menu.Item>,
     !isLoggedIn ?
       [
@@ -39,14 +39,18 @@ const NavBarMenuItemsMobile = (props) => {
           name='sign up'
           key='sign-up-mobile'
           onClick={props.handleButtonClick}
-        />,
+        >
+          <h4>Sign Up</h4>
+        </Menu.Item>,
         <Menu.Item
           as={Nav}
           to="/login"
           name='log in'
           key='log-in-mobile'
           onClick={props.handleButtonClick}
-        />
+        >
+          <h4>Log In</h4>
+        </Menu.Item>
       ]
       :
       [
@@ -56,7 +60,9 @@ const NavBarMenuItemsMobile = (props) => {
           name='settings'
           key='settings-mobile'
           onClick={props.handleButtonClick}
-        />,
+        >
+          <h4>Settings</h4>
+        </Menu.Item>,
         <Menu.Item key='log-out-mobile'>
           <Button
             onClick={() => {
@@ -83,14 +89,14 @@ const NavBarMenuItemsFull = (props) => {
       name='plan-schedule'
       key='plan-schedule-full'
     >
-      Plan Schedule
+      <h4>Plan Schedule</h4>
     </Menu.Item>,
     <Menu.Item
       as={Nav} to="/saved-schedules"
       name='saved-schedules'
       key='saved-schedules-full'
     >
-      Saved Schedules
+      <h4>Saved Schedules</h4>
     </Menu.Item>,
     !isLoggedIn ?
       <Menu.Menu position='right' key='logged-out-options-full'>
@@ -98,12 +104,16 @@ const NavBarMenuItemsFull = (props) => {
           as={Nav}
           to="/signup"
           name='sign up'
-        />
+        >
+          <h4>Sign Up</h4>
+        </Menu.Item>
         <Menu.Item
           as={Nav}
           to="/login"
           name='log in'
-        />
+        >
+          <h4>Log In</h4>
+        </Menu.Item>
       </Menu.Menu>
       : // or
       <Menu.Menu position='right' key='logged-in-options-full'>
@@ -111,7 +121,9 @@ const NavBarMenuItemsFull = (props) => {
           as={Nav}
           to="/settings"
           name='settings'
-        />
+        >
+          <h4>Settings</h4>
+        </Menu.Item>
         <Menu.Item>
           <Button
             onClick={() => {
