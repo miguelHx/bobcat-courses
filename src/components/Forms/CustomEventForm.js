@@ -19,6 +19,22 @@ import PropTypes from 'prop-types';
 
 class CustomEventForm extends React.Component {
 
+  componentDidMount() {
+    const customEvent = this.props.customEventObject;
+    if (customEvent) {
+      this.setState({
+        event_name: customEvent.event_name,
+        start_time: customEvent.start_time,
+        end_time: customEvent.end_time,
+        mon: customEvent.days.indexOf('M') > -1,
+        tue: customEvent.days.indexOf('T') > -1,
+        wed: customEvent.days.indexOf('W') > -1,
+        thu: customEvent.days.indexOf('R') > -1,
+        fri: customEvent.days.indexOf('F') > -1,
+      });
+    }
+  }
+
   state = {
     event_name: '',
     start_time: null,
@@ -166,6 +182,7 @@ class CustomEventForm extends React.Component {
   render() {
     const { event_name, error } = this.state;
     const { mode } = this.props;
+
     return (
       <Form onSubmit={this.handleFormSubmit}>
         {
@@ -211,6 +228,7 @@ class CustomEventForm extends React.Component {
               label='Mon'
               value='M'
               onClick={this.handleCheckBoxChange}
+              checked={this.state.mon}
             />
           </Form.Field>
           <Form.Field>
@@ -218,6 +236,7 @@ class CustomEventForm extends React.Component {
               label='Tue'
               value='T'
               onClick={this.handleCheckBoxChange}
+              checked={this.state.tue}
             />
           </Form.Field>
           <Form.Field>
@@ -225,6 +244,7 @@ class CustomEventForm extends React.Component {
               label='Wed'
               value='W'
               onClick={this.handleCheckBoxChange}
+              checked={this.state.wed}
             />
           </Form.Field>
           <Form.Field>
@@ -232,6 +252,7 @@ class CustomEventForm extends React.Component {
               label='Thu'
               value='R'
               onClick={this.handleCheckBoxChange}
+              checked={this.state.thu}
             />
           </Form.Field>
           <Form.Field>
@@ -239,6 +260,7 @@ class CustomEventForm extends React.Component {
               label='Fri'
               value='F'
               onClick={this.handleCheckBoxChange}
+              checked={this.state.fri}
             />
           </Form.Field>
         </Form.Group>
