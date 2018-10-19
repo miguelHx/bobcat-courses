@@ -9,10 +9,10 @@ import './AddCourse.css';
 
 
 const customSearch = (options, query) => {
-  const re = new RegExp('^' + query, 'i');
+  const re = new RegExp(query, 'i');
   return options.filter((option) => {
     // test original text, or without hyphen, or without space
-    return re.test(option.text.replace('-', '')) || re.test(option.text.replace('-', ' ')) || re.test(option.text);
+    return re.test(option.text.toLowerCase()) || re.test(option.text.replace('-', ' ').toLowerCase()) || re.test(option.text.replace('-', '').toLowerCase());
   });
 };
 
