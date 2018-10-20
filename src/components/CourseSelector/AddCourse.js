@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import debounce  from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { Dropdown } from 'semantic-ui-react';
 import BobcatCoursesApi from '../../api/BobcatCoursesApi';
@@ -48,7 +48,7 @@ class AddCourse extends React.Component {
     this.props.clearErrorAndValidSchedules();
   };
 
-  handleSearch = _.debounce(async (event, data) => {
+  handleSearch = debounce(async (event, data) => {
     this.setState(() => ({ isFetching: true }));
     const query = encodeURIComponent(data.searchQuery);
     if (query === '') {
