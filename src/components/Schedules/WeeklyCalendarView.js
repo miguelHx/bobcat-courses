@@ -11,7 +11,7 @@ import {
 } from '../../utils/WeeklyCalendarUtils';
 import './WeeklyCalendarView.css';
 
-const HOUR_SLOT_HEIGHT = 45;
+const HOUR_SLOT_HEIGHT = 50;
 const TOP_OFFSET = 10;
 let colorsIdx = 0;
 

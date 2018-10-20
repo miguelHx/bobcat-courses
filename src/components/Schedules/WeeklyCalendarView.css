@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   top: 10px;
-  height: 45px; /* want to change according to width of the screen */
+  height: 50px; /* want to change according to width of the screen */
   width: 100%;
   border-top-color: rgb(229, 229, 229);
   border-top-style: solid;
@@ -23,7 +23,7 @@
   font-family: 'SFNSText', 'Helvetica Neue', sans-serif;
   font-size: 12px;
   font-weight: 300;
-  height: 45px; /* want to also change this according to the screen size */
+  height: 50px; /* want to also change this according to the screen size */
   opacity: 1;
   padding-right: 5px;
   text-align: right;
