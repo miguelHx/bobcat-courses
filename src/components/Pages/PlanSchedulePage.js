@@ -386,7 +386,7 @@ class PlanSchedulePage extends React.Component {
             :
             <div className="app-root__error-msg-wrapper">
               <Message info>
-                <p>Add some courses and then press the 'Generate Schedules' button see your schedules.</p>
+                <h4>Add some courses and then press the 'Generate Schedules' button see your schedules.</h4>
               </Message>
             </div>
           )
@@ -403,7 +403,7 @@ class PlanSchedulePage extends React.Component {
           this.state.error &&
           <div className="app-root__error-msg-wrapper">
             <Message negative>
-              <p>{this.state.error}</p>
+              <h4>{this.state.error}</h4>
             </Message>
           </div>
         }

@@ -169,8 +169,7 @@ class SavedSchedulesPage extends React.Component {
           <div>
             { error &&  <div className="saved-schedules__warning-msg-wrapper">
                           <Message warning>
-                            {error} Plan your schedule <Nav to="/">here </Nav>
-                            and then click the 'Save Schedule' button.
+                            <h4>{error} Plan your schedule <Nav to="/">here </Nav>and then click the 'Save Schedule' button.</h4>
                           </Message>
                         </div>
             }
@@ -197,7 +196,7 @@ class SavedSchedulesPage extends React.Component {
         { !isLoggedIn &&
           <div className="saved-schedules__warning-msg-wrapper">
             <Message warning>
-              Must be logged in to view saved schedules.&nbsp;<Nav to="/login">Login here</Nav>.
+              <h4>Must be logged in to view saved schedules.&nbsp;<Nav to="/login">Login here</Nav>.</h4>
             </Message>
           </div>
         }

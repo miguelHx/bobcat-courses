@@ -87,10 +87,12 @@ class UpdatePasswordForm extends React.Component {
       <div className='update-password-form'>
         <Message
           attached
-          header='Change Your Password'
-          content='Fill out the form below to change your password.'
           warning
-        />
+        >
+          <Message.Header>Change Your Password</Message.Header>
+          <p>Fill out the form below to change your password.</p>
+          <p>Logged in as <b>{AuthService.getUsername()}</b></p>
+        </Message>
         <Form
           className='attached fluid segment'
           onSubmit={this.handleSubmit}
