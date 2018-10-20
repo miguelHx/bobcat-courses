@@ -1,5 +1,5 @@
 export const EARLIEST_TIMES = [
-  { key: 'none', value: null, text: 'N/A' },
+  { key: 'none', value: null, text: 'No Time' },
   { key: '730am', value: 730, text: '7:30am' },
   { key: '8am', value: 800, text: '8:00am' },
   { key: '830am', value: 830, text: '8:30am' },
@@ -13,7 +13,7 @@ export const EARLIEST_TIMES = [
 ];
 
 export const LATEST_TIMES = [
-  { key: 'none', value: null, text: 'N/A' },
+  { key: 'none', value: null, text: 'No Time' },
   { key: '3pm', value: 1500, text: '3:00pm' },
   { key: '330pm', value: 1530, text: '3:30pm' },
   { key: '4pm', value: 1600, text: '4:00pm' },
