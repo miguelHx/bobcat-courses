@@ -7,6 +7,7 @@ import SaveScheduleButton from "../Buttons/SaveScheduleButton";
 import SaveToCalendarButton from "../Buttons/SaveToCalendarButton";
 import PropTypes from 'prop-types';
 import DeleteScheduleButton from "../Buttons/DeleteScheduleButton";
+import ScheduleSectionsList from './ScheduleSectionsList/ScheduleSectionsList';
 
 class Schedules extends React.Component {
   state = {
@@ -126,6 +127,8 @@ class Schedules extends React.Component {
           startTime={start}
           endTime={end}
         />
+        <h1 className="center-text">Sections Info</h1>
+        <ScheduleSectionsList currSchedule={currSchedule} />
       </div>
     );
   }

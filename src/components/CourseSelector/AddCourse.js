@@ -48,7 +48,7 @@ class AddCourse extends React.Component {
     this.props.clearErrorAndValidSchedules();
   };
 
-  handleSearch = _.debounce((event, data) => {
+  handleSearch = _.debounce(async (event, data) => {
     this.setState(() => ({ isFetching: true }));
     const query = encodeURIComponent(data.searchQuery);
     if (query === '') {
