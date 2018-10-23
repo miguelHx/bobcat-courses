@@ -34,11 +34,11 @@ const saveSchedule = (schedule, term, reduxDispatch) => {
       else {
         // error, schedule probably exists, update state error Message
         let error;
-        if (responseStatus['type'] === 'already_exists') {
+        if (responseStatus['error_code'] === 104) {
           error = `Schedule already saved (#${responseStatus['schedule_index']+1})`;
         }
         else {
-          error = responseStatus['error'];
+          error = responseStatus['error_description'];
         }
         toast.error(error, TOAST_OPTIONS);
       }

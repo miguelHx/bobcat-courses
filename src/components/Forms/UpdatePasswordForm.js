@@ -18,15 +18,13 @@ class UpdatePasswordForm extends React.Component {
   updateUserPassword = (postData) => {
     BobcatCoursesApi.updateUserPassword(postData, AuthService.getToken())
       .then(res => {
+        console.log(res);
         if (res['success']) {
           toast.success("Password Changed Successfully 🤗", TOAST_OPTIONS);
           this.setState({ oldPassword: '', newPassword: '', confirmNewPassword: '', error: '' });
         }
-        else if (res['fail'] === "password_incorrect") {
-          this.setState({ oldPassword: '', newPassword: '', confirmPassword: '', error: 'Old Password Incorrect' });
-        }
-        else if (res['fail']) {
-          this.setState({ oldPassword: '', newPassword: '', confirmPassword: '', error: res['fail'] });
+        else if (res['error_code'] === 107) {
+          this.setState({ oldPassword: '', newPassword: '', confirmPassword: '', error: res['error_description'] });
         }
         else {
           this.setState({ oldPassword: '', newPassword: '', confirmPassword: '', error: 'An error has occurred.' });

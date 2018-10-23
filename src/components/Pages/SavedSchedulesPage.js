@@ -125,7 +125,9 @@ class SavedSchedulesPage extends React.Component {
       }
       else {
         // error, schedule probably deleted, update state error Message
-        toast.error(responseStatus['error'], TOAST_OPTIONS);
+        if (responseStatus['error_code'] === 105) {
+          toast.error(responseStatus['error_description'], TOAST_OPTIONS);
+        }
       }
     })
     .catch(error => {
