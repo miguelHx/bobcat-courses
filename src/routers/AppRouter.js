@@ -7,6 +7,7 @@ import SignUpPage from '../components/Pages/SignUpPage';
 import SettingsPage from '../components/Pages/SettingsPage';
 import PlanSchedulePage from '../components/Pages/PlanSchedulePage';
 import SavedSchedulesPage from '../components/Pages/SavedSchedulesPage';
+import ForgotPasswordPage from '../components/Pages/ForgotPasswordPage';
 import withAuth from '../login/withAuth';
 import { ToastContainer } from "react-toastify";
 
@@ -87,6 +88,18 @@ const AppRouter = (props) => {
                 <SettingsPage
                   isLoggedIn={isLoggedIn} // will use to toggle save schedules button
                   {...props} // props from react router.
+                />
+              );
+            }}
+          />
+          <Route
+            path="/forgot-password"
+            exact={true}
+            component={(props) => {
+              return (
+                <ForgotPasswordPage
+                  isLoggedIn={isLoggedIn}
+                  {...props}
                 />
               );
             }}

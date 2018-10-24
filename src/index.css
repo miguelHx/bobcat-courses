@@ -27,7 +27,8 @@ button:disabled {
 }
 
 .login-signup-page__main-container, .main-container,
-.saved-schedules__main-container, .settings-page__main-container {
+.saved-schedules__main-container, .settings-page__main-container,
+.forgot-password-page__main-container {
   box-shadow: 0 0 10px 1px #999;
 }
 
@@ -40,6 +41,16 @@ button:disabled {
   padding: 20px 35px 40px 35px;
   border-radius: 6px;
   min-height: 400px;
+  height: auto;
+}
+
+.forgot-password-page__main-container {
+  background-color: white;
+  max-width: 500px;
+  margin: 0 auto 20rem auto;
+  padding: 20px 35px 25px 35px;
+  border-radius: 6px;
+  min-height: 300px;
   height: auto;
 }
 

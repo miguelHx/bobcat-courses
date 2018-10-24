@@ -201,6 +201,26 @@ class BobcatCoursesApi {
       return error;
     });
   }
+
+  static forgotPassword(postData) {
+    const request = new Request(`${ROOT_API_URL}/users/forgot-password/`, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      body: postData
+    });
+
+    return fetch(request).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    }).catch(error => {
+      return error;
+    });
+  }
+
 }
 
 export default BobcatCoursesApi;

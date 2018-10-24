@@ -1,6 +1,7 @@
 import React from 'react';
 import AuthService from "../../login/AuthService";
 import {toast} from "react-toastify";
+import { Link } from 'react-router-dom';
 import {TOAST_OPTIONS} from "../../utils/ToastOptions";
 import {Button, Form, Message} from "semantic-ui-react";
 import { withSizes } from "react-sizes";
@@ -72,6 +73,10 @@ class LoginForm extends React.Component {
               required
             />
           </Form.Field>
+          <Link to='signup'>Not Registered?</Link><span> | </span>
+          <Link to='forgot-password'>Forgot Password?</Link>
+          <br></br>
+          <br></br>
           <Button type="submit" color="blue" size={isMobile ? 'big' : 'large'}>Log In</Button>
         </Form>
       </div>
