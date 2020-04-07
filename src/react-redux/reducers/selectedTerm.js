@@ -1,6 +1,6 @@
 import { SET_SELECTED_TERM } from "../actions/actionTypes";
 
-const selectedTermDefaultState = { text: 'Spring 2020', value: '202010' };
+const selectedTermDefaultState = { text: 'Fall 2020', value: '202030' };
 
 const selectedTermReducer = (state = selectedTermDefaultState, action) => {
   switch (action.type) {

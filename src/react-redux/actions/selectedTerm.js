@@ -1,7 +1,7 @@
 import { SET_SELECTED_TERM, DO_NOTHING } from "./actionTypes";
 
 const TERM_OPTIONS = [
-  { key: 'Spring 2020', value: '202010', text: 'Spring 2020' },
+  { key: 'Fall 2020', value: '202030', text: 'Fall 2020' },
 ];
 
 // ADD SELECTED COURSE
