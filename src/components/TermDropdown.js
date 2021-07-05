@@ -6,7 +6,7 @@ import { clearSelectedCourse } from "../react-redux/actions/selectedCourse";
 import { setSelectedTerm } from "../react-redux/actions/selectedTerm";
 
 const TERM_OPTIONS = [
-  { key: 'Spring 2021', value: '202110', text: 'Spring 2021' },
+  { key: 'Fall 2021', value: '202130', text: 'Fall 2021' },
 ];
 
 
