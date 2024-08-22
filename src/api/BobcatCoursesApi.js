@@ -1,6 +1,15 @@
 const ROOT_API_URL = 'https://cse120-course-planner.herokuapp.com/api';
+const searchCoursesData = require('./searchCoursesData.json');
+const courseSectionsData = require('./courseSectionsData.json');
+const validScheduleData = require('./validSchedulesData.json');
 
 class BobcatCoursesApi {
+
+  static searchCoursesDummyData() {
+    return new Promise((resolve, reject) => {
+      resolve(searchCoursesData);
+    })
+  }
 
   /**
    * Searches courses given a parameter of a course search query and term
@@ -49,6 +58,12 @@ class BobcatCoursesApi {
     });
   }
 
+  static fetchCourseDummyData() {
+    return  new Promise((resolve, reject) => {
+      resolve(courseSectionsData);
+    })
+  }
+
   /**
    * Fetches course data with its respective sections
    * @param postData - a stringified object that contains an array called course_list
@@ -74,6 +89,11 @@ class BobcatCoursesApi {
     });
   }
 
+  static fetchValidSchedulesDummyData() {
+    return new Promise((resolve, reject) => {
+      resolve(validScheduleData)
+    });
+  }
   /**
    * Gets valid generated schedules given a list of courses, the term, and the
    * search full option.

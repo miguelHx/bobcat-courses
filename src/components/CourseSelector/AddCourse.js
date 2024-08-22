@@ -57,7 +57,7 @@ class AddCourse extends React.Component {
     }
     const { selectedTerm } = this.props;
     let params = `course=${query}&term=${selectedTerm.value}`;
-    BobcatCoursesApi.searchCourses(params)
+    BobcatCoursesApi.searchCoursesDummyData(params)
       .then(res => {
         let results = res || [];
 

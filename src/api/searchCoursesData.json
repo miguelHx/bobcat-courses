@@ -1,0 +1,9 @@
+[
+  {"name": "MATH-21", "description": "Calculus I"},
+  {"name": "PHYS-8", "description": "Newtonian Mechanics"},
+  {"name": "PHYS-9", "description": "Electricity and Magnetism"},
+  {"name": "WRI-1", "description": "Writing"},
+  {"name": "CSE-20", "description": "Intro to Computer Science I"},
+  {"name": "CSE-21", "description": "Intro to Computer Science II"},
+  {"name": "MATH-22", "description": "Calculus II"}
+]

@@ -222,7 +222,7 @@ class PlanSchedulePage extends React.Component {
         term: term,
     });
 
-    BobcatCoursesApi.fetchCourseData(data)
+    BobcatCoursesApi.fetchCourseDummyData(data)
     .then(res => {
       const data = res[course];
       sections[course] = this.postRequestDataExtractor(data);
@@ -320,19 +320,19 @@ class PlanSchedulePage extends React.Component {
     this.props.dispatch(clearSelectedCourse());
 
     let sections = this.state.sections;
-    let data = JSON.stringify({
-      custom_events: customEvents,
-      course_list: coursesList,
-      filters: true,
-      term: term,
-      earliest_time,
-      latest_time,
-      gaps,
-      days,
-      search_full: true,
-    });
+    // let data = JSON.stringify({
+    //   custom_events: customEvents,
+    //   course_list: coursesList,
+    //   filters: true,
+    //   term: term,
+    //   earliest_time,
+    //   latest_time,
+    //   gaps,
+    //   days,
+    //   search_full: true,
+    // });
 
-    BobcatCoursesApi.fetchValidSchedules(data)
+    BobcatCoursesApi.fetchValidSchedulesDummyData()
     .then(res => {
       let error = undefined;
       let data = res || [];
@@ -341,7 +341,7 @@ class PlanSchedulePage extends React.Component {
         error = 'No Valid Schedules found due to time conflicts. Please choose different courses and try again.';
       }
       else {
-        data = this.filterSectionsFromSchedules(data, sections, true);
+        data = this.filterSectionsFromSchedules(data, sections, false);
         if (data.length === 0) {
           error = 'No valid schedules found. Please select more sections and try again.';
         }
@@ -350,7 +350,7 @@ class PlanSchedulePage extends React.Component {
       this.setState(() => ({ validSchedules: data, error: error, loadingSchedules: false }));
     })
     .catch(error => {
-      // console.log(error);
+      console.log(error);
       this.setState(() => ({ loadingSchedules: false, error: 'An error has occurred.' }));
     });
 

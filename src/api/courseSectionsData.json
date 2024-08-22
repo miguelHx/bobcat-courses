@@ -1,0 +1,37 @@
+{
+  "MATH-21": [
+    {"course_id": "MATH-21-01", "subject": "Mathematics", "course_name": "Calculus I", "type": "LECT", "days": "MWF", "hours": "8:30-9:20am", "room": "KOLLIG 208", "instructor": "Staff", "capacity": 120, "enrolled": 0, "crn": "11111", "lecture_crn": null, "units": 4 },
+    {"course_id": "MATH-21-02D", "subject": "Mathematics", "course_name": "Calculus I", "type": "DISC", "days": "WF", "hours": "10:30-1:00pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "11112", "lecture_crn": "11111", "units": 0},
+    {"course_id": "MATH-21-03D", "subject": "Mathematics", "course_name": "Calculus I", "type": "DISC", "days": "TR", "hours": "1:30-3:00pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "11113", "lecture_crn": "11111", "units": 0}
+  ],
+  "PHYS-8": [
+    {"course_id": "PHYS-8-01", "subject": "Physics", "course_name": "Newtonian Mechanics", "type": "LECT", "days": "TR", "hours": "9:30-11:00am", "room": "KOLLIG 208", "instructor": "Staff", "capacity": 120, "enrolled": 0, "crn": "22222", "lecture_crn": null, "units": 4 },
+    {"course_id": "PHYS-8-04D", "subject": "Physics", "course_name": "Newtonian Mechanics", "type": "DISC", "days": "WF", "hours": "5:30-7:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "22223", "lecture_crn": "22222", "units": 0},
+    {"course_id": "PHYS-8-05D", "subject": "Physics", "course_name": "Newtonian Mechanics", "type": "DISC", "days": "WF", "hours": "1:30-3:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "22224", "lecture_crn": "22222", "units": 0}
+  ],
+  "PHYS-9": [
+    {"course_id": "PHYS-9-01", "subject": "Physics", "course_name": "Electricity and Magnetism", "type": "LECT", "days": "TR", "hours": "9:30-11:00am", "room": "KOLLIG 208", "instructor": "Staff", "capacity": 120, "enrolled": 0, "crn": "33333", "lecture_crn": null, "units": 4 },
+    {"course_id": "PHYS-9-06D", "subject": "Physics", "course_name": "Electricity and Magnetism", "type": "DISC", "days": "TR", "hours": "5:30-7:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "33334", "lecture_crn": "33333", "units": 0},
+    {"course_id": "PHYS-9-07D", "subject": "Physics", "course_name": "Electricity and Magnetism", "type": "DISC", "days": "WF", "hours": "1:30-3:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "33335", "lecture_crn": "33333", "units": 0}
+  ],
+  "WRI-1": [
+    {"course_id": "WRI-1-01", "subject": "Writing", "course_name": "Intro to College Writing", "type": "LECT", "days": "M", "hours": "7:00-10:20pm", "room": "KOLLIG 208", "instructor": "Staff", "capacity": 30, "enrolled": 0, "crn": "44444", "lecture_crn": null, "units": 4 },
+    {"course_id": "WRI-1-02", "subject": "Writing", "course_name": "Intro to College Writing", "type": "LECT", "days": "T", "hours": "5:30-7:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 30, "enrolled": 0,"crn": "44445", "lecture_crn": null, "units": 4},
+    {"course_id": "WRI-1-03", "subject": "Writing", "course_name": "Intro to College Writing", "type": "LECT", "days": "T", "hours": "7:30-10:20am", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 30, "enrolled": 0,"crn": "44446", "lecture_crn": null, "units": 4}
+  ],
+  "CSE-20": [
+    {"course_id": "CSE-20-01", "subject": "Computer Science", "course_name": "Intro to Computing I", "type": "LECT", "days": "MWF", "hours": "2:30-3:20pm", "room": "KOLLIG 208", "instructor": "Staff", "capacity": 120, "enrolled": 0, "crn": "55555", "lecture_crn": null, "units": 4 },
+    {"course_id": "CSE-20-01L", "subject": "Computer Science", "course_name": "Intro to Computing I", "type": "LAB", "days": "TR", "hours": "5:30-7:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "55556", "lecture_crn": "55555", "units": 0},
+    {"course_id": "CSE-20-02L", "subject": "Computer Science", "course_name": "Intro to Computing I", "type": "LAB", "days": "WF", "hours": "4:00-5:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "55557", "lecture_crn": "55555", "units": 0}
+  ],
+  "CSE-21": [
+    {"course_id": "CSE-21-01", "subject": "Computer Science", "course_name": "Intro to Computing II", "type": "LECT", "days": "MWF", "hours": "3:30-4:20pm", "room": "KOLLIG 208", "instructor": "Staff", "capacity": 120, "enrolled": 0, "crn": "55555", "lecture_crn": null, "units": 4 },
+    {"course_id": "CSE-21-03L", "subject": "Computer Science", "course_name": "Intro to Computing II", "type": "LAB", "days": "MW", "hours": "5:30-7:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "55556", "lecture_crn": "55555", "units": 0},
+    {"course_id": "CSE-21-04L", "subject": "Computer Science", "course_name": "Intro to Computing II", "type": "LAB", "days": "TR", "hours": "1:30-3:20pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "55557", "lecture_crn": "55555", "units": 0}
+  ],
+  "MATH-22": [
+    {"course_id": "MATH-22-01", "subject": "Mathematics", "course_name": "Calculus II", "type": "LECT", "days": "MWF", "hours": "7:30-8:20am", "room": "KOLLIG 208", "instructor": "Staff", "capacity": 120, "enrolled": 0, "crn": "77777", "lecture_crn": null, "units": 4 },
+    {"course_id": "MATH-22-02D", "subject": "Mathematics", "course_name": "Calculus II", "type": "DISC", "days": "WF", "hours": "11:30-2:00pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "77778", "lecture_crn": "77777", "units": 0},
+    {"course_id": "MATH-22-03D", "subject": "Mathematics", "course_name": "Calculus II", "type": "DISC", "days": "TR", "hours": "1:30-3:00pm", "room": "KOLLIG 209", "instructor": "Staff", "capacity": 120, "enrolled": 0,"crn": "77779", "lecture_crn": "77777", "units": 0}
+  ]
+}
