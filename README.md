@@ -2,6 +2,9 @@
 ### Live Website: https://miguelhx.github.io/bobcat-courses/#/
 Course Planner for UC Merced Students.
 
+<img width="1960" alt="Screenshot 2024-08-22 at 2 27 33 PM" src="https://github.com/user-attachments/assets/28babbc0-8737-42e2-9569-3a43d6a18a89">
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
